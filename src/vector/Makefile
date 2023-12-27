@@ -1,8 +1,8 @@
 #!/usr/bin/make
 #
-# BDX				December 05, 2023
+# BDX						December 05, 2023
 #
-# source: src/Makefile
+# source: src/vector/Makefile
 # author: @misael-diaz
 #
 # Synopsis:
@@ -14,16 +14,12 @@
 # (at your option) any later version.
 #
 
-all: tests
+include make-inc
 
-utils:
-	@$(MAKE) -C util
-vectors: utils
-	@$(MAKE) -C vector
-tests: utils vectors
-	@$(MAKE) -C test
+all: $(VECTOR_OBJ)
+
+$(VECTOR_OBJ): $(HEADERS) $(VECTOR_CXX)
+	$(CXX) $(INC) $(CXXOPT) -c $(VECTOR_CXX) -o $(VECTOR_OBJ)
 
 clean:
-	@$(MAKE) -C util clean
-	@$(MAKE) -C vector clean
-	@$(MAKE) -C test clean
+	/bin/rm -f *.obj
