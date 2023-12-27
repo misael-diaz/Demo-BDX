@@ -77,6 +77,9 @@ void Util_Clear (void)
 		void *data = node->data;
 		node = (m_chain_t*) Util_Free(data);
 	}
+
+	m_size = 0;
+	m_count = 0;
 }
 
 void *Util_Malloc (size_t const sz)
