@@ -1,0 +1,26 @@
+#
+# BDX						December 05, 2023
+#
+# source: src/test/util/make-inc
+# author: @misael-diaz
+#
+# Synopsis:
+# Defines the include file for building the program with GNU make.
+#
+# Copyright (c) 2023 Misael Diaz-Maldonado
+# This file is released under the GNU General Public License as published
+# by the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+
+INC = -I../../../include
+
+UTIL_H = ../../../include/util.h
+HEADERS = $(UTIL_H)
+
+TEST_CXX = test.cpp
+TEST_OBJ = test.obj
+TEST_BIN = test.bin
+
+UTIL_OBJ = ../../../src/util/util.obj
+OBJS     = $(UTIL_OBJ) $(TEST_OBJ)
