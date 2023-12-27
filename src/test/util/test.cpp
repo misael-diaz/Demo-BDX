@@ -2,16 +2,21 @@
 #include <cstring>
 
 #include "util.h"
+#include "Vector.h"
 
 void tutil1(void);
 void tutil2(void);
 void tutil3(void);
+void tutil4(void);
+void tutil5(void);
 
 int main ()
 {
 	tutil1();
 	tutil2();
 	tutil3();
+	tutil4();
+	tutil5();
 	return 0;
 }
 
@@ -69,6 +74,26 @@ void tutil3 (void)
 		printf("FAIL\n");
 	} else {
 		printf("PASS\n");
+	}
+
+	Util_Clear();
+}
+
+void tutil4 (void)
+{
+	Vector *vector = new Vector();
+	delete(vector);
+}
+
+void tutil5 (void)
+{
+	Vector *vectors[] = {NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL};
+	size_t const numel = 8;
+	for (size_t i = 0; i != numel; ++i) {
+		vectors[i] = new Vector();
+		if (!vectors[i]) {
+			return;
+		}
 	}
 
 	Util_Clear();

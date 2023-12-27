@@ -1,7 +1,7 @@
 #
 # BDX						December 05, 2023
 #
-# source: src/test/util/make-inc
+# source: src/vector/make-inc
 # author: @misael-diaz
 #
 # Synopsis:
@@ -13,15 +13,11 @@
 # (at your option) any later version.
 #
 
-INC = -I../../../include
+INC = -I../../include
 
-UTIL_H = ../../../include/util.h
-HEADERS = $(UTIL_H)
+UTIL_H   = ../../include/util.h
+VECTOR_H = ../../include/Vector.h
+HEADERS = $(UTIL_H) $(VECTOR_H)
 
-TEST_CXX = test.cpp
-TEST_OBJ = test.obj
-TEST_BIN = test.bin
-
-UTIL_OBJ = ../../../src/util/util.obj
-VECTOR_OBJ = ../../../src/vector/Vector.obj
-OBJS     = $(UTIL_OBJ) $(VECTOR_OBJ) $(TEST_OBJ)
+VECTOR_CXX = Vector.cpp
+VECTOR_OBJ = Vector.obj
