@@ -3,12 +3,14 @@
 
 #include "util.h"
 #include "Vector.h"
+#include "BDXObject.h"
 
 void tutil1(void);
 void tutil2(void);
 void tutil3(void);
 void tutil4(void);
 void tutil5(void);
+void tutil6(void);
 
 int main ()
 {
@@ -17,6 +19,7 @@ int main ()
 	tutil3();
 	tutil4();
 	tutil5();
+	tutil6();
 	return 0;
 }
 
@@ -96,5 +99,13 @@ void tutil5 (void)
 		}
 	}
 
+	Util_Clear();
+}
+
+void tutil6 (void)
+{
+	Vector *r = new Vector();
+	BDXObject *obj = new BDXObject(r);
+	delete(obj);
 	Util_Clear();
 }
