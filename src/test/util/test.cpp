@@ -87,8 +87,8 @@ void tutil4 (void)
 
 void tutil5 (void)
 {
-	Vector *vectors[] = {NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL};
 	size_t const numel = 8;
+	Vector **vectors = (Vector**) Util_Malloc(numel * sizeof(Vector*));
 	for (size_t i = 0; i != numel; ++i) {
 		vectors[i] = new Vector();
 		if (!vectors[i]) {
