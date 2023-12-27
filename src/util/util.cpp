@@ -69,6 +69,16 @@ void *Util_Free (void *p)
 	return NULL;
 }
 
+void Util_Clear (void)
+{
+	m_chain_t *next = NULL;
+	for (m_chain_t *node = m_chain.next; node; node = next) {
+		next = node->next;
+		void *data = node->data;
+		node = (m_chain_t*) Util_Free(data);
+	}
+}
+
 void *Util_Malloc (size_t const sz)
 {
 	size_t const size = sizeof(m_chain_t) + sz;
