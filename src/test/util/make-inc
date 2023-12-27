@@ -16,12 +16,15 @@
 INC = -I../../../include
 
 UTIL_H = ../../../include/util.h
-HEADERS = $(UTIL_H)
+VECTOR_H = ../../../include/Vector.h
+OBJECT_H = ../../../include/BDXObject.h
+HEADERS = $(UTIL_H) $(VECTOR_H) $(OBJECT_H)
 
 TEST_CXX = test.cpp
 TEST_OBJ = test.obj
 TEST_BIN = test.bin
 
-UTIL_OBJ = ../../../src/util/util.obj
+UTIL_OBJ   = ../../../src/util/util.obj
 VECTOR_OBJ = ../../../src/vector/Vector.obj
-OBJS     = $(UTIL_OBJ) $(VECTOR_OBJ) $(TEST_OBJ)
+OBJECT_OBJ = ../../../src/object/BDXObject.obj
+OBJS       = $(UTIL_OBJ) $(VECTOR_OBJ) $(OBJECT_OBJ) $(TEST_OBJ)
