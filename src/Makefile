@@ -26,9 +26,11 @@ objects: utils vectors
 	@$(MAKE) -C object
 particles: utils ids vectors objects
 	@$(MAKE) -C particle
-systems: utils ids vectors objects particles
+spheres: utils ids vectors objects particles
+	@$(MAKE) -C sphere
+systems: utils ids vectors objects particles spheres
 	@$(MAKE) -C box
-tests: utils ids vectors objects particles systems
+tests: utils ids vectors objects particles spheres systems
 	@$(MAKE) -C test
 
 clean:
@@ -37,5 +39,6 @@ clean:
 	@$(MAKE) -C vector clean
 	@$(MAKE) -C object clean
 	@$(MAKE) -C particle clean
+	@$(MAKE) -C sphere clean
 	@$(MAKE) -C box clean
 	@$(MAKE) -C test clean

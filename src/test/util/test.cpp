@@ -7,7 +7,10 @@
 #include "Vector.h"
 #include "BDXObject.h"
 #include "Particle.h"
+#include "Sphere.h"
 #include "BoundingBox.h"
+
+#define VERBOSE 0
 
 void tutil1(void);
 void tutil2(void);
@@ -18,6 +21,7 @@ void tutil6(void);
 void tutil7(void);
 void tutil8(void);
 void tutil9(void);
+void tutil10(void);
 
 int main ()
 {
@@ -30,6 +34,7 @@ int main ()
 	tutil7();
 	tutil8();
 	tutil9();
+	tutil10();
 	return 0;
 }
 
@@ -166,3 +171,64 @@ void tutil9 (void)
 	delete(bb);
 	Util_Clear();
 }
+
+#if VERBOSE
+void tutil10 (void)
+{
+	size_t const numel = 256;
+	size_t const size = numel * sizeof(Sphere*);
+	Sphere **spheres = (Sphere**) Util_Malloc(size);
+	if (!spheres) {
+		return;
+	}
+
+	for (size_t i = 0; i != numel; ++i) {
+
+		ID *id = new ID(i);
+		double const x = rand();
+		double const y = rand();
+		double const z = rand();
+		Vector *r = new Vector(x, y, z);
+		double const frand_max = RAND_MAX;
+		double const a = rand() / frand_max;
+		Sphere *sphere = new Sphere(r, id, a);
+		if (!sphere) {
+			break;
+		}
+
+		printf("radius: %f\n", sphere->radius());
+		spheres[i] = sphere;
+	}
+
+	Util_Clear();
+}
+#else
+void tutil10 (void)
+{
+	size_t const numel = 256;
+	size_t const size = numel * sizeof(Sphere*);
+	Sphere **spheres = (Sphere**) Util_Malloc(size);
+	if (!spheres) {
+		return;
+	}
+
+	for (size_t i = 0; i != numel; ++i) {
+
+		ID *id = new ID(i);
+		double const x = rand();
+		double const y = rand();
+		double const z = rand();
+		Vector *r = new Vector(x, y, z);
+		double const frand_max = RAND_MAX;
+		double const a = rand() / frand_max;
+		Sphere *sphere = new Sphere(r, id, a);
+		if (!sphere) {
+			break;
+		}
+
+		spheres[i] = sphere;
+	}
+
+	Util_Clear();
+}
+#endif
