@@ -18,15 +18,21 @@ all: tests
 
 utils:
 	@$(MAKE) -C util
+ids: utils
+	@$(MAKE) -C id
 vectors: utils
 	@$(MAKE) -C vector
 objects: utils vectors
 	@$(MAKE) -C object
-tests: utils vectors objects
+particles: utils ids vectors objects
+	@$(MAKE) -C particle
+tests: utils ids vectors objects particles
 	@$(MAKE) -C test
 
 clean:
 	@$(MAKE) -C util clean
+	@$(MAKE) -C id clean
 	@$(MAKE) -C vector clean
 	@$(MAKE) -C object clean
+	@$(MAKE) -C particle clean
 	@$(MAKE) -C test clean

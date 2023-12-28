@@ -1,9 +1,12 @@
 #include <cstdio>
 #include <cstring>
+#include <cstdlib>
 
 #include "util.h"
+#include "ID.h"
 #include "Vector.h"
 #include "BDXObject.h"
+#include "Particle.h"
 
 void tutil1(void);
 void tutil2(void);
@@ -11,6 +14,8 @@ void tutil3(void);
 void tutil4(void);
 void tutil5(void);
 void tutil6(void);
+void tutil7(void);
+void tutil8(void);
 
 int main ()
 {
@@ -20,6 +25,8 @@ int main ()
 	tutil4();
 	tutil5();
 	tutil6();
+	tutil7();
+	tutil8();
 	return 0;
 }
 
@@ -107,5 +114,41 @@ void tutil6 (void)
 	Vector *r = new Vector();
 	BDXObject *obj = new BDXObject(r);
 	delete(obj);
+	Util_Clear();
+}
+
+void tutil7 (void)
+{
+	ID *id = new ID();
+	Vector *r = new Vector();
+	Particle *particle = new Particle(r, id);
+	delete(particle);
+	Util_Clear();
+}
+
+void tutil8 (void)
+{
+	size_t const numel = 256;
+	size_t const size = numel * sizeof(Particle*);
+	Particle **particles = (Particle**) Util_Malloc(size);
+	if (!particles) {
+		return;
+	}
+
+	for (size_t i = 0; i != numel; ++i) {
+
+		ID *id = new ID(i);
+		double const x = rand();
+		double const y = rand();
+		double const z = rand();
+		Vector *r = new Vector(x, y, z);
+		Particle *particle = new Particle(r, id);
+		if (!particle) {
+			break;
+		}
+
+		particles[i] = particle;
+	}
+
 	Util_Clear();
 }
