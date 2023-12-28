@@ -20,7 +20,8 @@ ID_H       = ../../../include/ID.h
 VECTOR_H   = ../../../include/Vector.h
 OBJECT_H   = ../../../include/BDXObject.h
 PARTICLE_H = ../../../include/Particle.h
-HEADERS = $(UTIL_H) $(ID_H) $(VECTOR_H) $(OBJECT_H) $(PARTICLE_H)
+BOX_H      = ../../../include/BoundingBox.h
+HEADERS = $(UTIL_H) $(ID_H) $(VECTOR_H) $(OBJECT_H) $(PARTICLE_H) $(BOX_H)
 
 TEST_CXX = test.cpp
 TEST_OBJ = test.obj
@@ -31,4 +32,11 @@ ID_OBJ       = ../../../src/id/ID.obj
 VECTOR_OBJ   = ../../../src/vector/Vector.obj
 OBJECT_OBJ   = ../../../src/object/BDXObject.obj
 PARTICLE_OBJ = ../../../src/particle/Particle.obj
-OBJS = $(UTIL_OBJ) $(ID_OBJ) $(VECTOR_OBJ) $(OBJECT_OBJ) $(PARTICLE_OBJ) $(TEST_OBJ)
+BOX_OBJ      = ../../../src/box/BoundingBox.obj
+OBJS = $(UTIL_OBJ)\
+       $(ID_OBJ)\
+       $(VECTOR_OBJ)\
+       $(OBJECT_OBJ)\
+       $(PARTICLE_OBJ)\
+       $(BOX_OBJ)\
+       $(TEST_OBJ)
