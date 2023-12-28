@@ -7,6 +7,7 @@
 #include "Vector.h"
 #include "BDXObject.h"
 #include "Particle.h"
+#include "BoundingBox.h"
 
 void tutil1(void);
 void tutil2(void);
@@ -16,6 +17,7 @@ void tutil5(void);
 void tutil6(void);
 void tutil7(void);
 void tutil8(void);
+void tutil9(void);
 
 int main ()
 {
@@ -27,6 +29,7 @@ int main ()
 	tutil6();
 	tutil7();
 	tutil8();
+	tutil9();
 	return 0;
 }
 
@@ -150,5 +153,16 @@ void tutil8 (void)
 		particles[i] = particle;
 	}
 
+	Util_Clear();
+}
+
+void tutil9 (void)
+{
+	Vector *r = new Vector();
+	double const length = 16;
+	double const width = 16;
+	double const height = 32;
+	BoundingBox *bb = new BoundingBox(r, length, width, height);
+	delete(bb);
 	Util_Clear();
 }
