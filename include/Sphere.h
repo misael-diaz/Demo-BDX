@@ -2,6 +2,7 @@
 #define GUARD_BDX_SPHERE_H
 
 struct ID;
+struct Kind;
 struct Vector;
 struct BDXObject;
 struct Particle;
@@ -13,7 +14,8 @@ class Sphere : Particle
 	public:
 	Vector *r = NULL;
 	ID *id = NULL;
-	Sphere(Vector *r, ID *id, double const a);
+	Kind *kind = NULL;
+	Sphere(Vector *r, ID *id, Kind *kind, double const a);
 	double radius() const;
 	void *operator new(size_t size);
 	void operator delete(void *p);

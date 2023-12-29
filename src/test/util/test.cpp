@@ -4,6 +4,7 @@
 
 #include "util.h"
 #include "ID.h"
+#include "Kind.h"
 #include "Vector.h"
 #include "BDXObject.h"
 #include "Particle.h"
@@ -128,8 +129,9 @@ void tutil6 (void)
 void tutil7 (void)
 {
 	ID *id = new ID();
+	Kind *kind = new Kind();
 	Vector *r = new Vector();
-	Particle *particle = new Particle(r, id);
+	Particle *particle = new Particle(r, id, kind);
 	delete(particle);
 	Util_Clear();
 }
@@ -146,11 +148,12 @@ void tutil8 (void)
 	for (size_t i = 0; i != numel; ++i) {
 
 		ID *id = new ID(i);
+		Kind *kind = new Kind();
 		double const x = rand();
 		double const y = rand();
 		double const z = rand();
 		Vector *r = new Vector(x, y, z);
-		Particle *particle = new Particle(r, id);
+		Particle *particle = new Particle(r, id, kind);
 		if (!particle) {
 			break;
 		}
@@ -185,13 +188,14 @@ void tutil10 (void)
 	for (size_t i = 0; i != numel; ++i) {
 
 		ID *id = new ID(i);
+		Kind *kind = new Kind();
 		double const x = rand();
 		double const y = rand();
 		double const z = rand();
 		Vector *r = new Vector(x, y, z);
 		double const frand_max = RAND_MAX;
 		double const a = rand() / frand_max;
-		Sphere *sphere = new Sphere(r, id, a);
+		Sphere *sphere = new Sphere(r, id, kind, a);
 		if (!sphere) {
 			break;
 		}
@@ -215,13 +219,14 @@ void tutil10 (void)
 	for (size_t i = 0; i != numel; ++i) {
 
 		ID *id = new ID(i);
+		Kind *kind = new Kind();
 		double const x = rand();
 		double const y = rand();
 		double const z = rand();
 		Vector *r = new Vector(x, y, z);
 		double const frand_max = RAND_MAX;
 		double const a = rand() / frand_max;
-		Sphere *sphere = new Sphere(r, id, a);
+		Sphere *sphere = new Sphere(r, id, kind, a);
 		if (!sphere) {
 			break;
 		}
