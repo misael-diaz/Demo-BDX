@@ -5,10 +5,17 @@
 #include "BDXObject.h"
 #include "Particle.h"
 
-Particle::Particle (Vector *r, Vector *u, Vector *E, ID *id, Kind *kind) : BDXObject(r)
+Particle::Particle (Vector *r,
+		    Vector *u,
+		    Vector *E,
+		    Vector *d,
+		    ID *id,
+		    Kind *kind):
+		    BDXObject(r)
 {
 	this->u = u;
 	this->E = E;
+	this->d = d;
 	this->id = id;
 	this->kind = kind;
 }
