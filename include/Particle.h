@@ -8,7 +8,6 @@ struct BDXObject;
 
 struct Particle : BDXObject
 {
-	Vector *r = NULL;
 	ID *id = NULL;
 	Kind *kind = NULL;
 	Particle(Vector *r, ID *id, Kind *kind);

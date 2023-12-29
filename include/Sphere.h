@@ -12,9 +12,6 @@ class Sphere : Particle
 	private:
 	double a = 1.0;
 	public:
-	Vector *r = NULL;
-	ID *id = NULL;
-	Kind *kind = NULL;
 	Sphere(Vector *r, ID *id, Kind *kind, double const a);
 	double radius() const;
 	void *operator new(size_t size);
