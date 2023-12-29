@@ -8,9 +8,10 @@ struct BDXObject;
 
 struct Particle : BDXObject
 {
+	Vector *u = NULL;
 	ID *id = NULL;
 	Kind *kind = NULL;
-	Particle(Vector *r, ID *id, Kind *kind);
+	Particle(Vector *r, Vector *u, ID *id, Kind *kind);
 	virtual void ia(const Particle *particle) = 0;
 	void *operator new(size_t size);
 	void operator delete(void *p);
