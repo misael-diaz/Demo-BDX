@@ -113,7 +113,7 @@ void tutil5 (void)
 	for (size_t i = 0; i != numel; ++i) {
 		vectors[i] = new Vector();
 		if (!vectors[i]) {
-			return;
+			break;
 		}
 	}
 
@@ -123,6 +123,11 @@ void tutil5 (void)
 void tutil6 (void)
 {
 	Vector *r = new Vector();
+	if (!r) {
+		Util_Clear();
+		return;
+	}
+
 	BDXObject *obj = new BDXObject(r);
 	delete(obj);
 	Util_Clear();
@@ -183,6 +188,10 @@ void tutil8 (void)
 void tutil9 (void)
 {
 	Vector *r = new Vector();
+	if (!r) {
+		return;
+	}
+
 	double const length = 16;
 	double const width = 16;
 	double const height = 32;
@@ -204,14 +213,38 @@ void tutil10 (void)
 	for (size_t i = 0; i != numel; ++i) {
 
 		ID *id = new ID(i);
+		if (!id) {
+			break;
+		}
+
 		Kind *kind = new Kind();
+		if (!kind) {
+			break;
+		}
+
 		double const x = rand();
 		double const y = rand();
 		double const z = rand();
 		Vector *r = new Vector(x, y, z);
+		if (!r) {
+			break;
+		}
+
 		Vector *u = new Vector();
+		if (!u) {
+			break;
+		}
+
 		Vector *E = new Vector();
+		if (!E) {
+			break;
+		}
+
 		Vector *d = new Vector(0, 0, 1);
+		if (!d) {
+			break;
+		}
+
 		double const frand_max = RAND_MAX;
 		double const a = rand() / frand_max;
 		Sphere *sphere = new Sphere(r, u, E, d, id, kind, a);
@@ -238,14 +271,38 @@ void tutil10 (void)
 	for (size_t i = 0; i != numel; ++i) {
 
 		ID *id = new ID(i);
+		if (!id) {
+			break;
+		}
+
 		Kind *kind = new Kind();
+		if (!kind) {
+			break;
+		}
+
 		double const x = rand();
 		double const y = rand();
 		double const z = rand();
 		Vector *r = new Vector(x, y, z);
+		if (!r) {
+			break;
+		}
+
 		Vector *u = new Vector();
+		if (!u) {
+			break;
+		}
+
 		Vector *E = new Vector();
+		if (!E) {
+			break;
+		}
+
 		Vector *d = new Vector(0, 0, 1);
+		if (!d) {
+			break;
+		}
+
 		double const frand_max = RAND_MAX;
 		double const a = rand() / frand_max;
 		Sphere *sphere = new Sphere(r, u, E, d, id, kind, a);
