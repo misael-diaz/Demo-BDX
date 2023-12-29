@@ -209,9 +209,10 @@ void tutil10 (void)
 		double const y = rand();
 		double const z = rand();
 		Vector *r = new Vector(x, y, z);
+		Vector *u = new Vector();
 		double const frand_max = RAND_MAX;
 		double const a = rand() / frand_max;
-		Sphere *sphere = new Sphere(r, id, kind, a);
+		Sphere *sphere = new Sphere(r, u, id, kind, a);
 		if (!sphere) {
 			break;
 		}
@@ -240,9 +241,10 @@ void tutil10 (void)
 		double const y = rand();
 		double const z = rand();
 		Vector *r = new Vector(x, y, z);
+		Vector *u = new Vector();
 		double const frand_max = RAND_MAX;
 		double const a = rand() / frand_max;
-		Sphere *sphere = new Sphere(r, id, kind, a);
+		Sphere *sphere = new Sphere(r, u, id, kind, a);
 		if (!sphere) {
 			break;
 		}

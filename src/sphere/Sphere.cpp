@@ -9,10 +9,11 @@
 #include "Sphere.h"
 
 Sphere::Sphere (Vector *r,
+		Vector *u,
 		ID *id,
 		Kind *kind,
 		double const a):
-		Particle(r, id, kind),
+		Particle(r, u, id, kind),
 		a(a)
 {
 	return;
