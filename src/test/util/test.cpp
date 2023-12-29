@@ -37,6 +37,7 @@ int main ()
 	tutil8();
 	tutil9();
 	tutil10();
+	Util_Clear();
 	return 0;
 }
 
