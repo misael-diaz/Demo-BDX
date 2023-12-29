@@ -10,10 +10,11 @@
 
 Sphere::Sphere (Vector *r,
 		Vector *u,
+		Vector *E,
 		ID *id,
 		Kind *kind,
 		double const a):
-		Particle(r, u, id, kind),
+		Particle(r, u, E, id, kind),
 		a(a)
 {
 	return;
