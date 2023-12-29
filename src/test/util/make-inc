@@ -17,12 +17,20 @@ INC = -I../../../include
 
 UTIL_H     = ../../../include/util.h
 ID_H       = ../../../include/ID.h
+KIND_H     = ../../../include/Kind.h
 VECTOR_H   = ../../../include/Vector.h
 OBJECT_H   = ../../../include/BDXObject.h
 PARTICLE_H = ../../../include/Particle.h
 SPHERE_H   = ../../../include/Sphere.h
 BOX_H      = ../../../include/BoundingBox.h
-HEADERS = $(UTIL_H) $(ID_H) $(VECTOR_H) $(OBJECT_H) $(PARTICLE_H) $(SPHERE_H) $(BOX_H)
+HEADERS = $(UTIL_H)\
+	  $(ID_H)\
+	  $(KIND_H)\
+	  $(VECTOR_H)\
+	  $(OBJECT_H)\
+	  $(PARTICLE_H)\
+	  $(SPHERE_H)\
+	  $(BOX_H)
 
 TEST_CXX = test.cpp
 TEST_OBJ = test.obj
@@ -30,6 +38,7 @@ TEST_BIN = test.bin
 
 UTIL_OBJ     = ../../../src/util/util.obj
 ID_OBJ       = ../../../src/id/ID.obj
+KIND_OBJ     = ../../../src/kind/Kind.obj
 VECTOR_OBJ   = ../../../src/vector/Vector.obj
 OBJECT_OBJ   = ../../../src/object/BDXObject.obj
 PARTICLE_OBJ = ../../../src/particle/Particle.obj
@@ -37,6 +46,7 @@ SPHERE_OBJ   = ../../../src/sphere/Sphere.obj
 BOX_OBJ      = ../../../src/box/BoundingBox.obj
 OBJS = $(UTIL_OBJ)\
        $(ID_OBJ)\
+       $(KIND_OBJ)\
        $(VECTOR_OBJ)\
        $(OBJECT_OBJ)\
        $(PARTICLE_OBJ)\

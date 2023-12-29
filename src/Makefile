@@ -20,22 +20,25 @@ utils:
 	@$(MAKE) -C util
 ids: utils
 	@$(MAKE) -C id
+kinds: utils
+	@$(MAKE) -C kind
 vectors: utils
 	@$(MAKE) -C vector
 objects: utils vectors
 	@$(MAKE) -C object
-particles: utils ids vectors objects
+particles: utils ids kinds vectors objects
 	@$(MAKE) -C particle
-spheres: utils ids vectors objects particles
+spheres: utils ids kinds vectors objects particles
 	@$(MAKE) -C sphere
-systems: utils ids vectors objects particles spheres
+systems: utils ids kinds vectors objects particles spheres
 	@$(MAKE) -C box
-tests: utils ids vectors objects particles spheres systems
+tests: utils ids kinds vectors objects particles spheres systems
 	@$(MAKE) -C test
 
 clean:
 	@$(MAKE) -C util clean
 	@$(MAKE) -C id clean
+	@$(MAKE) -C kind clean
 	@$(MAKE) -C vector clean
 	@$(MAKE) -C object clean
 	@$(MAKE) -C particle clean
