@@ -1,0 +1,23 @@
+#
+# BDX						December 05, 2023
+#
+# source: src/kind/make-inc
+# author: @misael-diaz
+#
+# Synopsis:
+# Defines the include file for building the program with GNU make.
+#
+# Copyright (c) 2023 Misael Diaz-Maldonado
+# This file is released under the GNU General Public License as published
+# by the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+
+INC = -I../../include
+
+UTIL_H = ../../include/util.h
+KIND_H = ../../include/Kind.h
+HEADERS = $(UTIL_H) $(KIND_H)
+
+KIND_CXX = Kind.cpp
+KIND_OBJ = Kind.obj
