@@ -12,6 +12,7 @@ struct Kind
 	kind_t kind;
 	Kind();
 	Kind(kind_t const kind);
+	kind_t k(void) const;
 	void *operator new(size_t size);
 	void operator delete(void *p);
 };
