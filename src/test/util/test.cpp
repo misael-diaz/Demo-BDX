@@ -245,9 +245,14 @@ void tutil10 (void)
 			break;
 		}
 
+		Vector *F = new Vector();
+		if (!F) {
+			break;
+		}
+
 		double const frand_max = RAND_MAX;
 		double const a = rand() / frand_max;
-		Sphere *sphere = new Sphere(r, u, E, d, id, kind, a);
+		Sphere *sphere = new Sphere(r, u, E, d, F, id, kind, a);
 		if (!sphere) {
 			break;
 		}
@@ -303,9 +308,14 @@ void tutil10 (void)
 			break;
 		}
 
+		Vector *F = new Vector();
+		if (!F) {
+			break;
+		}
+
 		double const frand_max = RAND_MAX;
 		double const a = rand() / frand_max;
-		Sphere *sphere = new Sphere(r, u, E, d, id, kind, a);
+		Sphere *sphere = new Sphere(r, u, E, d, F, id, kind, a);
 		if (!sphere) {
 			break;
 		}

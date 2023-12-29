@@ -12,10 +12,12 @@ class Sphere : Particle
 	private:
 	double a = 1.0;
 	public:
+	Vector *F = NULL;
 	Sphere(Vector *r,
 	       Vector *u,
 	       Vector *E,
 	       Vector *d,
+	       Vector *F,
 	       ID *id,
 	       Kind *kind,
 	       double const a);
