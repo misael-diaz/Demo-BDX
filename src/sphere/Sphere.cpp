@@ -12,13 +12,14 @@ Sphere::Sphere (Vector *r,
 		Vector *u,
 		Vector *E,
 		Vector *d,
+		Vector *F,
 		ID *id,
 		Kind *kind,
 		double const a):
 		Particle(r, u, E, d, id, kind),
 		a(a)
 {
-	return;
+	this->F = F;
 }
 
 double Sphere::radius () const
