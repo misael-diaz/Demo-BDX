@@ -11,6 +11,7 @@
 #include "Sphere.h"
 #include "BoundingBox.h"
 
+#define COMPILE 0
 #define VERBOSE 0
 
 void tutil1(void);
@@ -126,6 +127,7 @@ void tutil6 (void)
 	Util_Clear();
 }
 
+#if COMPILE
 void tutil7 (void)
 {
 	ID *id = new ID();
@@ -135,7 +137,14 @@ void tutil7 (void)
 	delete(particle);
 	Util_Clear();
 }
+#else
+void tutil7 (void)
+{
+	return;
+}
+#endif
 
+#if COMPILE
 void tutil8 (void)
 {
 	size_t const numel = 256;
@@ -163,6 +172,12 @@ void tutil8 (void)
 
 	Util_Clear();
 }
+#else
+void tutil8 (void)
+{
+	return;
+}
+#endif
 
 void tutil9 (void)
 {

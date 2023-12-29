@@ -1,3 +1,5 @@
+#include <cstdio>
+
 #include "util.h"
 #include "ID.h"
 #include "Kind.h"
@@ -19,6 +21,26 @@ Sphere::Sphere (Vector *r,
 double Sphere::radius () const
 {
 	return this->a;
+}
+
+void Sphere::ia (const Particle *particle)
+{
+	const Particle *that = particle;
+	const Kind *kind = that->kind;
+	kind_t const k = kind->k();
+	switch(k){
+		case SPHERE:
+		printf("sphere-sphere interaction\n");
+		break;
+		case JANUS:
+		printf("sphere-janus interaction\n");
+		break;
+		case SPHEROID:
+		printf("sphere-spheroid interaction\n");
+		break;
+		default:
+		printf("defaults to sphere-sphere interaction\n");
+	}
 }
 
 void *Sphere::operator new (size_t size)

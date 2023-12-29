@@ -14,6 +14,7 @@ class Sphere : Particle
 	public:
 	Sphere(Vector *r, ID *id, Kind *kind, double const a);
 	double radius() const;
+	void ia(const Particle *particle);
 	void *operator new(size_t size);
 	void operator delete(void *p);
 };
