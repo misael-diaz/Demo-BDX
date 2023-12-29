@@ -7,9 +7,9 @@ struct Vector;
 struct BDXObject;
 struct Particle;
 
-class Sphere : Particle
+struct Sphere : Particle
 {
-	private:
+	protected:
 	double a = 1.0;
 	public:
 	Vector *F = NULL;
