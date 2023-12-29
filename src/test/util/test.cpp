@@ -9,6 +9,7 @@
 #include "BDXObject.h"
 #include "Particle.h"
 #include "Sphere.h"
+#include "Janus.h"
 #include "BoundingBox.h"
 
 #define COMPILE 0
@@ -24,6 +25,7 @@ void tutil7(void);
 void tutil8(void);
 void tutil9(void);
 void tutil10(void);
+void tutil11(void);
 
 int main ()
 {
@@ -37,6 +39,7 @@ int main ()
 	tutil8();
 	tutil9();
 	tutil10();
+	tutil11();
 	Util_Clear();
 	return 0;
 }
@@ -321,6 +324,225 @@ void tutil10 (void)
 		}
 
 		spheres[i] = sphere;
+	}
+
+	Util_Clear();
+}
+#endif
+
+#if VERBOSE
+void tutil11 (void)
+{
+	size_t const numel = 256;
+	size_t const size = numel * sizeof(Particle*);
+	Particle **particles = (Particle**) Util_Malloc(size);
+	if (!particles) {
+		return;
+	}
+
+	for (size_t i = 0; i != numel; ++i) {
+
+		ID *id = new ID(i);
+		if (!id) {
+			break;
+		}
+
+		double const min_k = 0;
+		double const max_k = 2;
+		double const k = min_k + (max_k - min_k) * (rand() / ((double) RAND_MAX));
+		Kind *kind = new Kind((kind_t) k);
+		if (!kind) {
+			break;
+		}
+
+		double const x = rand();
+		double const y = rand();
+		double const z = rand();
+		Vector *r = new Vector(x, y, z);
+		if (!r) {
+			break;
+		}
+
+		Vector *u = new Vector();
+		if (!u) {
+			break;
+		}
+
+		Vector *E = new Vector();
+		if (!E) {
+			break;
+		}
+
+		Vector *d = new Vector(0, 0, 1);
+		if (!d) {
+			break;
+		}
+
+		Vector *F = new Vector();
+		if (!F) {
+			break;
+		}
+
+		double const frand_max = RAND_MAX;
+		double const a = rand() / frand_max;
+
+		Vector *T = NULL;
+		Particle *particle = NULL;
+		switch (kind->k())
+		{
+			case SPHERE:
+			particle = new Sphere(r, u, E, d, F, id, kind, a);
+			if (!particle) {
+				Util_Clear();
+				return;
+			}
+
+			break;
+
+			case JANUS:
+			T = new Vector();
+			if (!T) {
+				Util_Clear();
+				return;
+			}
+
+			particle = new Janus(r, u, E, d, F, T, id, kind, a);
+			if (!particle) {
+				Util_Clear();
+				return;
+			}
+
+			break;
+
+			// shut up compiler
+			case SPHEROID:
+			particle = new Sphere(r, u, E, d, F, id, kind, a);
+			if (!particle) {
+				Util_Clear();
+				return;
+			}
+
+			break;
+
+			default:
+			particle = new Sphere(r, u, E, d, F, id, kind, a);
+			if (!particle) {
+				break;
+			}
+		}
+
+		particles[i] = particle;
+	}
+
+	Particle *particle = particles[0];
+	for (size_t i = 1; i != numel; ++i) {
+		particle->ia(particles[i]);
+	}
+
+	Util_Clear();
+}
+#else
+void tutil11 (void)
+{
+	size_t const numel = 256;
+	size_t const size = numel * sizeof(Particle*);
+	Particle **particles = (Particle**) Util_Malloc(size);
+	if (!particles) {
+		return;
+	}
+
+	for (size_t i = 0; i != numel; ++i) {
+
+		ID *id = new ID(i);
+		if (!id) {
+			break;
+		}
+
+		double const min_k = 0;
+		double const max_k = 2;
+		double const k = min_k + (max_k - min_k) * (rand() / ((double) RAND_MAX));
+		Kind *kind = new Kind((kind_t) k);
+		if (!kind) {
+			break;
+		}
+
+		double const x = rand();
+		double const y = rand();
+		double const z = rand();
+		Vector *r = new Vector(x, y, z);
+		if (!r) {
+			break;
+		}
+
+		Vector *u = new Vector();
+		if (!u) {
+			break;
+		}
+
+		Vector *E = new Vector();
+		if (!E) {
+			break;
+		}
+
+		Vector *d = new Vector(0, 0, 1);
+		if (!d) {
+			break;
+		}
+
+		Vector *F = new Vector();
+		if (!F) {
+			break;
+		}
+
+		double const frand_max = RAND_MAX;
+		double const a = rand() / frand_max;
+
+		Vector *T = NULL;
+		Particle *particle = NULL;
+		switch (kind->k())
+		{
+			case SPHERE:
+			particle = new Sphere(r, u, E, d, F, id, kind, a);
+			if (!particle) {
+				Util_Clear();
+				return;
+			}
+
+			break;
+
+			case JANUS:
+			T = new Vector();
+			if (!T) {
+				Util_Clear();
+				return;
+			}
+
+			particle = new Janus(r, u, E, d, F, T, id, kind, a);
+			if (!particle) {
+				Util_Clear();
+				return;
+			}
+
+			break;
+
+			// shut up compiler
+			case SPHEROID:
+			particle = new Sphere(r, u, E, d, F, id, kind, a);
+			if (!particle) {
+				Util_Clear();
+				return;
+			}
+
+			break;
+
+			default:
+			particle = new Sphere(r, u, E, d, F, id, kind, a);
+			if (!particle) {
+				break;
+			}
+		}
+
+		particles[i] = particle;
 	}
 
 	Util_Clear();
