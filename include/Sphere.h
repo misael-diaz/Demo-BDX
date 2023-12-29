@@ -12,7 +12,7 @@ class Sphere : Particle
 	private:
 	double a = 1.0;
 	public:
-	Sphere(Vector *r, Vector *u, ID *id, Kind *kind, double const a);
+	Sphere(Vector *r, Vector *u, Vector *E, ID *id, Kind *kind, double const a);
 	double radius() const;
 	void ia(const Particle *particle);
 	void *operator new(size_t size);
