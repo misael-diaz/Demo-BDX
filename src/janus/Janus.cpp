@@ -38,8 +38,11 @@ void Janus::ia (const Particle *particle)
 		case SPHEROID:
 		printf("janus-spheroid interaction\n");
 		break;
+		case CHIRAL:
+		printf("janus-chiral interaction\n");
+		break;
 		default:
-		printf("defaults to janus-sphere interaction\n");
+		printf("no interaction\n");
 	}
 }
 
