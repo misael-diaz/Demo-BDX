@@ -42,8 +42,11 @@ void Sphere::ia (const Particle *particle)
 		case SPHEROID:
 		printf("sphere-spheroid interaction\n");
 		break;
+		case CHIRAL:
+		printf("sphere-chiral interaction\n");
+		break;
 		default:
-		printf("defaults to sphere-sphere interaction\n");
+		printf("no interaction\n");
 	}
 }
 

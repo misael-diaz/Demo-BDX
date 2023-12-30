@@ -4,7 +4,8 @@
 typedef enum {
 	SPHERE,
 	JANUS,
-	SPHEROID
+	SPHEROID,
+	CHIRAL
 } kind_t;
 
 struct Kind

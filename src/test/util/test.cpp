@@ -11,6 +11,7 @@
 #include "Sphere.h"
 #include "Janus.h"
 #include "Spheroid.h"
+#include "Chiral.h"
 #include "BoundingBox.h"
 
 #define COMPILE 0
@@ -37,7 +38,9 @@ Particle *_Particle(Vector *r,
 		    Vector *F,
 		    ID *id,
 		    Kind *kind,
-		    double const a)
+		    double const a,
+		    double const b,
+		    double const c)
 __attribute__ ((nonnull (1, 2, 3, 4, 5, 6, 7)));
 #else
 Particle *_Particle(Vector *r,
@@ -47,7 +50,9 @@ Particle *_Particle(Vector *r,
 		    Vector *F,
 		    ID *id,
 		    Kind *kind,
-		    double const a);
+		    double const a,
+		    double const b,
+		    double const c);
 #endif
 
 int main ()
@@ -75,7 +80,8 @@ Particle *_Particle (Vector *r,
 		     ID *id,
 		     Kind *kind,
 		     double const a,
-		     double const b)
+		     double const b,
+		     double const c)
 {
 	Vector *T = NULL;
 	Particle *particle = NULL;
@@ -110,6 +116,19 @@ Particle *_Particle (Vector *r,
 		}
 
 		particle = new Spheroid(r, u, E, d, F, T, id, kind, a, b);
+		if (!particle) {
+			return NULL;
+		}
+
+		break;
+
+		case CHIRAL:
+		T = new Vector();
+		if (!T) {
+			return NULL;
+		}
+
+		particle = new Chiral(r, u, E, d, F, T, id, kind, a, b, c);
 		if (!particle) {
 			return NULL;
 		}
@@ -431,7 +450,7 @@ void tutil11 (void)
 		}
 
 		double const min_k = 0;
-		double const max_k = 3;
+		double const max_k = 4;
 		double const k = min_k + (max_k - min_k) * (rand() / ((double) RAND_MAX));
 		Kind *kind = new Kind((kind_t) k);
 		if (!kind) {
@@ -475,8 +494,9 @@ void tutil11 (void)
 		double const frand_max = RAND_MAX;
 		double const a = rand() / frand_max;
 		double const b = ASPECT_RATIO * a;
+		double const c = rand() / frand_max;
 
-		Particle *particle = _Particle(r, u, E, d, F, id, kind, a, b);
+		Particle *particle = _Particle(r, u, E, d, F, id, kind, a, b, c);
 		if (!particle) {
 			Util_Clear();
 			return;
@@ -510,7 +530,7 @@ void tutil11 (void)
 		}
 
 		double const min_k = 0;
-		double const max_k = 3;
+		double const max_k = 4;
 		double const k = min_k + (max_k - min_k) * (rand() / ((double) RAND_MAX));
 		Kind *kind = new Kind((kind_t) k);
 		if (!kind) {
@@ -548,8 +568,9 @@ void tutil11 (void)
 		double const frand_max = RAND_MAX;
 		double const a = rand() / frand_max;
 		double const b = ASPECT_RATIO * a;
+		double const c = rand() / frand_max;
 
-		Particle *particle = _Particle(r, u, E, d, F, id, kind, a, b);
+		Particle *particle = _Particle(r, u, E, d, F, id, kind, a, b, c);
 		if (!particle) {
 			break;
 		}

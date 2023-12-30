@@ -34,9 +34,11 @@ janus: utils ids kinds vectors objects particles spheres
 	@$(MAKE) -C janus
 spheroids: utils ids kinds vectors objects particles
 	@$(MAKE) -C spheroid
-systems: utils ids kinds vectors objects particles spheres janus spheroids
+chirals: utils ids kinds vectors objects particles spheroids
+	@$(MAKE) -C chiral
+systems: utils ids kinds vectors objects particles spheres janus spheroids chirals
 	@$(MAKE) -C box
-tests: utils ids kinds vectors objects particles spheres janus spheroids systems
+tests: utils ids kinds vectors objects particles spheres janus spheroids chirals systems
 	@$(MAKE) -C test
 
 clean:
@@ -49,5 +51,6 @@ clean:
 	@$(MAKE) -C sphere clean
 	@$(MAKE) -C janus clean
 	@$(MAKE) -C spheroid clean
+	@$(MAKE) -C chiral clean
 	@$(MAKE) -C box clean
 	@$(MAKE) -C test clean

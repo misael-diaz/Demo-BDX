@@ -51,6 +51,9 @@ void Spheroid::ia (const Particle *particle)
 		case SPHEROID:
 		printf("spheroid-spheroid interaction\n");
 		break;
+		case CHIRAL:
+		printf("spheroid-chiral interaction\n");
+		break;
 		default:
 		printf("no interaction\n");
 	}
