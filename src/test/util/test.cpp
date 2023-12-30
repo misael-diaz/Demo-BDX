@@ -10,10 +10,12 @@
 #include "Particle.h"
 #include "Sphere.h"
 #include "Janus.h"
+#include "Spheroid.h"
 #include "BoundingBox.h"
 
 #define COMPILE 0
 #define VERBOSE 0
+#define ASPECT_RATIO 3.0
 
 void tutil1(void);
 void tutil2(void);
@@ -72,7 +74,8 @@ Particle *_Particle (Vector *r,
 		     Vector *F,
 		     ID *id,
 		     Kind *kind,
-		     double const a)
+		     double const a,
+		     double const b)
 {
 	Vector *T = NULL;
 	Particle *particle = NULL;
@@ -100,9 +103,13 @@ Particle *_Particle (Vector *r,
 
 		break;
 
-		// shut up compiler
 		case SPHEROID:
-		particle = new Sphere(r, u, E, d, F, id, kind, a);
+		T = new Vector();
+		if (!T) {
+			return NULL;
+		}
+
+		particle = new Spheroid(r, u, E, d, F, T, id, kind, a, b);
 		if (!particle) {
 			return NULL;
 		}
@@ -424,7 +431,7 @@ void tutil11 (void)
 		}
 
 		double const min_k = 0;
-		double const max_k = 2;
+		double const max_k = 3;
 		double const k = min_k + (max_k - min_k) * (rand() / ((double) RAND_MAX));
 		Kind *kind = new Kind((kind_t) k);
 		if (!kind) {
@@ -467,8 +474,9 @@ void tutil11 (void)
 
 		double const frand_max = RAND_MAX;
 		double const a = rand() / frand_max;
+		double const b = ASPECT_RATIO * a;
 
-		Particle *particle = _Particle(r, u, E, d, F, id, kind, a);
+		Particle *particle = _Particle(r, u, E, d, F, id, kind, a, b);
 		if (!particle) {
 			Util_Clear();
 			return;
@@ -502,7 +510,7 @@ void tutil11 (void)
 		}
 
 		double const min_k = 0;
-		double const max_k = 2;
+		double const max_k = 3;
 		double const k = min_k + (max_k - min_k) * (rand() / ((double) RAND_MAX));
 		Kind *kind = new Kind((kind_t) k);
 		if (!kind) {
@@ -539,8 +547,9 @@ void tutil11 (void)
 
 		double const frand_max = RAND_MAX;
 		double const a = rand() / frand_max;
+		double const b = ASPECT_RATIO * a;
 
-		Particle *particle = _Particle(r, u, E, d, F, id, kind, a);
+		Particle *particle = _Particle(r, u, E, d, F, id, kind, a, b);
 		if (!particle) {
 			break;
 		}

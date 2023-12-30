@@ -32,9 +32,11 @@ spheres: utils ids kinds vectors objects particles
 	@$(MAKE) -C sphere
 janus: utils ids kinds vectors objects particles spheres
 	@$(MAKE) -C janus
-systems: utils ids kinds vectors objects particles spheres janus
+spheroids: utils ids kinds vectors objects particles
+	@$(MAKE) -C spheroid
+systems: utils ids kinds vectors objects particles spheres janus spheroids
 	@$(MAKE) -C box
-tests: utils ids kinds vectors objects particles spheres janus systems
+tests: utils ids kinds vectors objects particles spheres janus spheroids systems
 	@$(MAKE) -C test
 
 clean:
@@ -46,5 +48,6 @@ clean:
 	@$(MAKE) -C particle clean
 	@$(MAKE) -C sphere clean
 	@$(MAKE) -C janus clean
+	@$(MAKE) -C spheroid clean
 	@$(MAKE) -C box clean
 	@$(MAKE) -C test clean
