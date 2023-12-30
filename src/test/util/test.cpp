@@ -27,6 +27,27 @@ void tutil9(void);
 void tutil10(void);
 void tutil11(void);
 
+#ifdef GXX
+Particle *_Particle(Vector *r,
+		    Vector *u,
+		    Vector *E,
+		    Vector *d,
+		    Vector *F,
+		    ID *id,
+		    Kind *kind,
+		    double const a)
+__attribute__ ((nonnull (1, 2, 3, 4, 5, 6, 7)));
+#else
+Particle *_Particle(Vector *r,
+		    Vector *u,
+		    Vector *E,
+		    Vector *d,
+		    Vector *F,
+		    ID *id,
+		    Kind *kind,
+		    double const a);
+#endif
+
 int main ()
 {
 	tutil1();
@@ -42,6 +63,60 @@ int main ()
 	tutil11();
 	Util_Clear();
 	return 0;
+}
+
+Particle *_Particle (Vector *r,
+		     Vector *u,
+		     Vector *E,
+		     Vector *d,
+		     Vector *F,
+		     ID *id,
+		     Kind *kind,
+		     double const a)
+{
+	Vector *T = NULL;
+	Particle *particle = NULL;
+	kind_t const k = kind->k();
+	switch(k)
+	{
+		case SPHERE:
+		particle = new Sphere(r, u, E, d, F, id, kind, a);
+		if (!particle) {
+			return NULL;
+		}
+
+		break;
+
+		case JANUS:
+		T = new Vector();
+		if (!T) {
+			return NULL;
+		}
+
+		particle = new Janus(r, u, E, d, F, T, id, kind, a);
+		if (!particle) {
+			return NULL;
+		}
+
+		break;
+
+		// shut up compiler
+		case SPHEROID:
+		particle = new Sphere(r, u, E, d, F, id, kind, a);
+		if (!particle) {
+			return NULL;
+		}
+
+		break;
+
+		default:
+		particle = new Sphere(r, u, E, d, F, id, kind, a);
+		if (!particle) {
+			return NULL;
+		}
+	}
+
+	return particle;
 }
 
 void tutil1 (void)
@@ -344,7 +419,8 @@ void tutil11 (void)
 
 		ID *id = new ID(i);
 		if (!id) {
-			break;
+			Util_Clear();
+			return;
 		}
 
 		double const min_k = 0;
@@ -352,7 +428,8 @@ void tutil11 (void)
 		double const k = min_k + (max_k - min_k) * (rand() / ((double) RAND_MAX));
 		Kind *kind = new Kind((kind_t) k);
 		if (!kind) {
-			break;
+			Util_Clear();
+			return;
 		}
 
 		double const x = rand();
@@ -360,75 +437,41 @@ void tutil11 (void)
 		double const z = rand();
 		Vector *r = new Vector(x, y, z);
 		if (!r) {
-			break;
+			Util_Clear();
+			return;
 		}
 
 		Vector *u = new Vector();
 		if (!u) {
-			break;
+			Util_Clear();
+			return;
 		}
 
 		Vector *E = new Vector();
 		if (!E) {
-			break;
+			Util_Clear();
+			return;
 		}
 
 		Vector *d = new Vector(0, 0, 1);
 		if (!d) {
-			break;
+			Util_Clear();
+			return;
 		}
 
 		Vector *F = new Vector();
 		if (!F) {
-			break;
+			Util_Clear();
+			return;
 		}
 
 		double const frand_max = RAND_MAX;
 		double const a = rand() / frand_max;
 
-		Vector *T = NULL;
-		Particle *particle = NULL;
-		switch (kind->k())
-		{
-			case SPHERE:
-			particle = new Sphere(r, u, E, d, F, id, kind, a);
-			if (!particle) {
-				Util_Clear();
-				return;
-			}
-
-			break;
-
-			case JANUS:
-			T = new Vector();
-			if (!T) {
-				Util_Clear();
-				return;
-			}
-
-			particle = new Janus(r, u, E, d, F, T, id, kind, a);
-			if (!particle) {
-				Util_Clear();
-				return;
-			}
-
-			break;
-
-			// shut up compiler
-			case SPHEROID:
-			particle = new Sphere(r, u, E, d, F, id, kind, a);
-			if (!particle) {
-				Util_Clear();
-				return;
-			}
-
-			break;
-
-			default:
-			particle = new Sphere(r, u, E, d, F, id, kind, a);
-			if (!particle) {
-				break;
-			}
+		Particle *particle = _Particle(r, u, E, d, F, id, kind, a);
+		if (!particle) {
+			Util_Clear();
+			return;
 		}
 
 		particles[i] = particle;
@@ -497,49 +540,9 @@ void tutil11 (void)
 		double const frand_max = RAND_MAX;
 		double const a = rand() / frand_max;
 
-		Vector *T = NULL;
-		Particle *particle = NULL;
-		switch (kind->k())
-		{
-			case SPHERE:
-			particle = new Sphere(r, u, E, d, F, id, kind, a);
-			if (!particle) {
-				Util_Clear();
-				return;
-			}
-
+		Particle *particle = _Particle(r, u, E, d, F, id, kind, a);
+		if (!particle) {
 			break;
-
-			case JANUS:
-			T = new Vector();
-			if (!T) {
-				Util_Clear();
-				return;
-			}
-
-			particle = new Janus(r, u, E, d, F, T, id, kind, a);
-			if (!particle) {
-				Util_Clear();
-				return;
-			}
-
-			break;
-
-			// shut up compiler
-			case SPHEROID:
-			particle = new Sphere(r, u, E, d, F, id, kind, a);
-			if (!particle) {
-				Util_Clear();
-				return;
-			}
-
-			break;
-
-			default:
-			particle = new Sphere(r, u, E, d, F, id, kind, a);
-			if (!particle) {
-				break;
-			}
 		}
 
 		particles[i] = particle;
