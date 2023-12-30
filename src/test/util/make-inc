@@ -23,6 +23,7 @@ OBJECT_H   = ../../../include/BDXObject.h
 PARTICLE_H = ../../../include/Particle.h
 SPHERE_H   = ../../../include/Sphere.h
 JANUS_H    = ../../../include/Janus.h
+SPHEROID_H = ../../../include/Spheroid.h
 BOX_H      = ../../../include/BoundingBox.h
 HEADERS = $(UTIL_H)\
 	  $(ID_H)\
@@ -32,6 +33,7 @@ HEADERS = $(UTIL_H)\
 	  $(PARTICLE_H)\
 	  $(SPHERE_H)\
 	  $(JANUS_H)\
+	  $(SPHEROID_H)\
 	  $(BOX_H)
 
 TEST_CXX = test.cpp
@@ -46,6 +48,7 @@ OBJECT_OBJ   = ../../../src/object/BDXObject.obj
 PARTICLE_OBJ = ../../../src/particle/Particle.obj
 SPHERE_OBJ   = ../../../src/sphere/Sphere.obj
 JANUS_OBJ    = ../../../src/janus/Janus.obj
+SPHEROID_OBJ = ../../../src/spheroid/Spheroid.obj
 BOX_OBJ      = ../../../src/box/BoundingBox.obj
 OBJS = $(UTIL_OBJ)\
        $(ID_OBJ)\
@@ -55,5 +58,6 @@ OBJS = $(UTIL_OBJ)\
        $(PARTICLE_OBJ)\
        $(SPHERE_OBJ)\
        $(JANUS_OBJ)\
+       $(SPHEROID_OBJ)\
        $(BOX_OBJ)\
        $(TEST_OBJ)
