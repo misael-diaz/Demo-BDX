@@ -14,6 +14,8 @@ struct Kind
 	Kind();
 	Kind(kind_t const kind);
 	kind_t k(void) const;
+	static const char *stringify(const Kind *kind);
+	static kind_t enumerator(const char *kind);
 	void *operator new(size_t size);
 	void operator delete(void *p);
 };

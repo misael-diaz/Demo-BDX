@@ -1,3 +1,5 @@
+#include <cstring>
+
 #include "util.h"
 #include "Kind.h"
 
@@ -14,6 +16,45 @@ Kind::Kind (kind_t const kind) : kind(kind)
 kind_t Kind::k() const
 {
 	return this->kind;
+}
+
+const char *Kind::stringify (const Kind *kind)
+{
+	kind_t const k = kind->k();
+	switch(k) {
+		case SPHERE:
+			return "Sphere";
+		case JANUS:
+			return "Janus";
+		case SPHEROID:
+			return "Spheroid";
+		case CHIRAL:
+			return "Chiral";
+		default:
+			return "";
+	}
+}
+
+kind_t Kind::enumerator (const char *kind)
+{
+	if (!strcmp(kind, "Sphere")) {
+		return SPHERE;
+	}
+
+	if (!strcmp(kind, "Janus")) {
+		return JANUS;
+	}
+
+	if (!strcmp(kind, "Spheroid")) {
+		return SPHEROID;
+	}
+
+	if (!strcmp(kind, "Chiral")) {
+		return CHIRAL;
+	}
+
+	kind_t unknown = ((kind_t) -1);
+	return unknown;
 }
 
 void *Kind::operator new (size_t size)
