@@ -505,6 +505,16 @@ void tutil11 (void)
 		particles[i] = particle;
 	}
 
+	const Particle **it = ((const Particle**) particles);
+	for (size_t i = 1; i != numel; ++i) {
+		const Particle *p = *it;
+		const char *fmt = "%s %d\n";
+		printf(fmt,
+		       Kind::stringify(p->kind),
+		       Kind::enumerator(Kind::stringify(p->kind)));
+		++it;
+	}
+
 	Particle *particle = particles[0];
 	for (size_t i = 1; i != numel; ++i) {
 		particle->ia(particles[i]);
