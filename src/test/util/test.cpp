@@ -598,6 +598,7 @@ void tutil11 (void)
 #if VERBOSE
 void tutil12 (void)
 {
+	int rc = 0;
 	Stack *stack = new Stack();
 	if (!stack) {
 		Util_Clear();
@@ -658,12 +659,22 @@ void tutil12 (void)
 			break;
 		}
 
-		stack->add((void*) particle);
+		rc = stack->add((void*) particle);
+		if (rc != 0) {
+			Util_Clear();
+			return;
+		}
 	}
 
 	for (const void **iter = (const void**) stack->data(); *iter; ++iter) {
 		const Particle *particle = (const Particle*) *iter;
 		printf("%s\n", Kind::stringify(particle->kind));
+	}
+
+	if (stack->numel() != numel) {
+		printf("FAIL\n");
+	} else {
+		printf("PASS\n");
 	}
 
 	if (stack->numel() != stack->cap()) {
@@ -680,6 +691,7 @@ void tutil12 (void)
 #else
 void tutil12 (void)
 {
+	int rc = 0;
 	Stack *stack = new Stack();
 	if (!stack) {
 		Util_Clear();
@@ -740,7 +752,11 @@ void tutil12 (void)
 			break;
 		}
 
-		stack->add((void*) particle);
+		rc = stack->add((void*) particle);
+		if (rc != 0) {
+			Util_Clear();
+			return;
+		}
 	}
 
 	Util_Clear();
