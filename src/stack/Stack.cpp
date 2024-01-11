@@ -48,9 +48,28 @@ Stack::Stack (void)
 	return;
 }
 
+size_t Stack::cap () const
+{
+	return (this->limit - this->begin);
+}
+
 size_t Stack::numel () const
 {
 	return (this->avail - this->begin);
+}
+
+size_t Stack::bytes () const
+{
+	return this->size;
+}
+
+void Stack::clear ()
+{
+	void *vstack = (void*) this->stack;
+	size_t const bytes = this->bytes();
+	memset(vstack, 0, bytes);
+	this->avail = this->begin;
+	this->size = 0;
 }
 
 void **Stack::data ()
@@ -84,8 +103,8 @@ int Stack::grow ()
 	}
 
 	size_t const numel = this->numel();
-	size_t const limit = 2 * numel;
-	void **stack = create(limit);
+	size_t const allot = 2 * numel;
+	void **stack = create(allot);
 	if (!stack) {
 		rc = -1;
 		err_grow();
@@ -100,7 +119,8 @@ int Stack::grow ()
 	this->stack = stack;
 	this->begin = stack;
 	this->avail = stack + numel;
-	this->limit = stack + limit;
+	this->limit = stack + allot;
+	this->allot = allot;
 	return rc;
 }
 
@@ -141,6 +161,7 @@ int Stack::add (void *elem)
 
 	*this->avail = elem;
 	++this->avail;
+	this->size += sizeof(void*);
 	return rc;
 }
 
