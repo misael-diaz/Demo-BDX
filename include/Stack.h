@@ -14,6 +14,7 @@ struct Stack
 	int grow();
 	public:
 	Stack(void);
+	size_t cap() const;
 	size_t numel() const;
 	int add(void *elem);
 	void **data();

@@ -666,6 +666,15 @@ void tutil12 (void)
 		printf("%s\n", Kind::stringify(particle->kind));
 	}
 
+	if (stack->numel() != stack->cap()) {
+		printf("FAIL\n");
+	} else {
+		printf("PASS\n");
+	}
+
+	printf("numel: %lu\n", stack->numel());
+	printf("capacity: %lu\n", stack->cap());
+
 	Util_Clear();
 }
 #else

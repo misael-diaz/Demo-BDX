@@ -48,6 +48,11 @@ Stack::Stack (void)
 	return;
 }
 
+size_t Stack::cap () const
+{
+	return (this->limit - this->begin);
+}
+
 size_t Stack::numel () const
 {
 	return (this->avail - this->begin);
@@ -84,8 +89,8 @@ int Stack::grow ()
 	}
 
 	size_t const numel = this->numel();
-	size_t const limit = 2 * numel;
-	void **stack = create(limit);
+	size_t const allot = 2 * numel;
+	void **stack = create(allot);
 	if (!stack) {
 		rc = -1;
 		err_grow();
@@ -100,7 +105,8 @@ int Stack::grow ()
 	this->stack = stack;
 	this->begin = stack;
 	this->avail = stack + numel;
-	this->limit = stack + limit;
+	this->limit = stack + allot;
+	this->allot = allot;
 	return rc;
 }
 
