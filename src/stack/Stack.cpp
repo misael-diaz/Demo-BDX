@@ -65,6 +65,10 @@ size_t Stack::bytes () const
 
 void Stack::clear ()
 {
+	if (!this->stack) {
+		return;
+	}
+
 	void *vstack = (void*) this->stack;
 	size_t const bytes = this->bytes();
 	memset(vstack, 0, bytes);
