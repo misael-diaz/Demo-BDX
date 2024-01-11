@@ -9,14 +9,17 @@ struct Stack
 	void **avail = NULL;
 	void **limit = NULL;
 	size_t allot = 8;
+	size_t size = 0;
 	int init();
 	void *copy() const;
+	size_t bytes () const;
 	int grow();
 	public:
 	Stack(void);
 	size_t cap() const;
 	size_t numel() const;
 	int add(void *elem);
+	void clear();
 	void **data();
 	void *operator new(size_t size);
 	void operator delete(void *p);

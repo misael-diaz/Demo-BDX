@@ -58,6 +58,20 @@ size_t Stack::numel () const
 	return (this->avail - this->begin);
 }
 
+size_t Stack::bytes () const
+{
+	return this->size;
+}
+
+void Stack::clear ()
+{
+	void *vstack = (void*) this->stack;
+	size_t const bytes = this->bytes();
+	memset(vstack, 0, bytes);
+	this->avail = this->begin;
+	this->size = 0;
+}
+
 void **Stack::data ()
 {
 	return this->stack;
@@ -147,6 +161,7 @@ int Stack::add (void *elem)
 
 	*this->avail = elem;
 	++this->avail;
+	this->size += sizeof(void*);
 	return rc;
 }
 
