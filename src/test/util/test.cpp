@@ -14,6 +14,7 @@
 #include "Spheroid.h"
 #include "Chiral.h"
 #include "BoundingBox.h"
+#include "Handler.h"
 
 #define COMPILE 0
 #define VERBOSE 0
@@ -31,6 +32,7 @@ void tutil9(void);
 void tutil10(void);
 void tutil11(void);
 void tutil12(void);
+void tutil13(void);
 
 #ifdef GXX
 Particle *_Particle(Vector *r,
@@ -71,6 +73,7 @@ int main ()
 	tutil10();
 	tutil11();
 	tutil12();
+	tutil13();
 	Util_Clear();
 	return 0;
 }
@@ -753,6 +756,171 @@ void tutil12 (void)
 		}
 
 		rc = stack->add((void*) particle);
+		if (rc != 0) {
+			Util_Clear();
+			return;
+		}
+	}
+
+	Util_Clear();
+}
+#endif
+
+#if VERBOSE
+void tutil13 (void)
+{
+	int rc = 0;
+	Stack *stack = new Stack();
+	if (!stack) {
+		Util_Clear();
+		return;
+	}
+
+	Handler *handler = new Handler(stack);
+	if (!handler) {
+		Util_Clear();
+		return;
+	}
+
+	size_t const numel = 1024;
+	for (size_t i = 0; i != numel; ++i) {
+
+		ID *id = new ID(i);
+		if (!id) {
+			break;
+		}
+
+		double const min_k = 0;
+		double const max_k = 4;
+		double const k = min_k + (max_k - min_k) * (rand() / ((double) RAND_MAX));
+		Kind *kind = new Kind((kind_t) k);
+		if (!kind) {
+			break;
+		}
+
+		double const x = rand();
+		double const y = rand();
+		double const z = rand();
+		Vector *r = new Vector(x, y, z);
+		if (!r) {
+			break;
+		}
+
+		Vector *u = new Vector();
+		if (!u) {
+			break;
+		}
+
+		Vector *E = new Vector();
+		if (!E) {
+			break;
+		}
+
+		Vector *d = new Vector(0, 0, 1);
+		if (!d) {
+			break;
+		}
+
+		Vector *F = new Vector();
+		if (!F) {
+			break;
+		}
+
+		double const frand_max = RAND_MAX;
+		double const a = rand() / frand_max;
+		double const b = ASPECT_RATIO * a;
+		double const c = rand() / frand_max;
+
+		Particle *particle = _Particle(r, u, E, d, F, id, kind, a, b, c);
+		if (!particle) {
+			break;
+		}
+
+		rc = handler->add(particle);
+		if (rc != 0) {
+			Util_Clear();
+			return;
+		}
+	}
+
+	for (const Particle **iter = (const Particle**) handler->iter(); *iter; ++iter) {
+		const Particle *particle = (const Particle*) *iter;
+		printf("%s\n", Kind::stringify(particle->kind));
+	}
+
+	Util_Clear();
+}
+#else
+void tutil13 (void)
+{
+	int rc = 0;
+	Stack *stack = new Stack();
+	if (!stack) {
+		Util_Clear();
+		return;
+	}
+
+	Handler *handler = new Handler(stack);
+	if (!handler) {
+		Util_Clear();
+		return;
+	}
+
+	size_t const numel = 1024;
+	for (size_t i = 0; i != numel; ++i) {
+
+		ID *id = new ID(i);
+		if (!id) {
+			break;
+		}
+
+		double const min_k = 0;
+		double const max_k = 4;
+		double const k = min_k + (max_k - min_k) * (rand() / ((double) RAND_MAX));
+		Kind *kind = new Kind((kind_t) k);
+		if (!kind) {
+			break;
+		}
+
+		double const x = rand();
+		double const y = rand();
+		double const z = rand();
+		Vector *r = new Vector(x, y, z);
+		if (!r) {
+			break;
+		}
+
+		Vector *u = new Vector();
+		if (!u) {
+			break;
+		}
+
+		Vector *E = new Vector();
+		if (!E) {
+			break;
+		}
+
+		Vector *d = new Vector(0, 0, 1);
+		if (!d) {
+			break;
+		}
+
+		Vector *F = new Vector();
+		if (!F) {
+			break;
+		}
+
+		double const frand_max = RAND_MAX;
+		double const a = rand() / frand_max;
+		double const b = ASPECT_RATIO * a;
+		double const c = rand() / frand_max;
+
+		Particle *particle = _Particle(r, u, E, d, F, id, kind, a, b, c);
+		if (!particle) {
+			break;
+		}
+
+		rc = handler->add(particle);
 		if (rc != 0) {
 			Util_Clear();
 			return;
