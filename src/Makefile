@@ -42,7 +42,7 @@ chirals: utils ids kinds vectors objects particles spheroids
 	@$(MAKE) -C chiral
 systems: utils ids kinds vectors objects particles spheres janus spheroids chirals
 	@$(MAKE) -C box
-tests: utils ids kinds vectors objects particles handlers spheres janus spheroids chirals systems
+tests: systems handlers
 	@$(MAKE) -C test
 
 clean:
