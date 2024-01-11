@@ -16,6 +16,8 @@
 
 all: tests
 
+stacks:
+	@$(MAKE) -C stack
 utils:
 	@$(MAKE) -C util
 ids: utils
@@ -26,7 +28,7 @@ vectors: utils
 	@$(MAKE) -C vector
 objects: utils vectors
 	@$(MAKE) -C object
-particles: utils ids kinds vectors objects
+particles: stacks utils ids kinds vectors objects
 	@$(MAKE) -C particle
 spheres: utils ids kinds vectors objects particles
 	@$(MAKE) -C sphere
@@ -43,6 +45,7 @@ tests: utils ids kinds vectors objects particles spheres janus spheroids chirals
 
 clean:
 	@$(MAKE) -C util clean
+	@$(MAKE) -C stack clean
 	@$(MAKE) -C id clean
 	@$(MAKE) -C kind clean
 	@$(MAKE) -C vector clean

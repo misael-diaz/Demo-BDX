@@ -16,6 +16,7 @@
 INC = -I../../../include
 
 UTIL_H     = ../../../include/util.h
+STACK_H    = ../../../include/Stack.h
 ID_H       = ../../../include/ID.h
 KIND_H     = ../../../include/Kind.h
 VECTOR_H   = ../../../include/Vector.h
@@ -27,6 +28,7 @@ SPHEROID_H = ../../../include/Spheroid.h
 CHIRAL_H   = ../../../include/Chiral.h
 BOX_H      = ../../../include/BoundingBox.h
 HEADERS = $(UTIL_H)\
+	  $(STACK_H)\
 	  $(ID_H)\
 	  $(KIND_H)\
 	  $(VECTOR_H)\
@@ -43,6 +45,7 @@ TEST_OBJ = test.obj
 TEST_BIN = test.bin
 
 UTIL_OBJ     = ../../../src/util/util.obj
+STACK_OBJ    = ../../../src/stack/Stack.obj
 ID_OBJ       = ../../../src/id/ID.obj
 KIND_OBJ     = ../../../src/kind/Kind.obj
 VECTOR_OBJ   = ../../../src/vector/Vector.obj
@@ -54,6 +57,7 @@ SPHEROID_OBJ = ../../../src/spheroid/Spheroid.obj
 CHIRAL_OBJ   = ../../../src/chiral/Chiral.obj
 BOX_OBJ      = ../../../src/box/BoundingBox.obj
 OBJS = $(UTIL_OBJ)\
+       $(STACK_OBJ)\
        $(ID_OBJ)\
        $(KIND_OBJ)\
        $(VECTOR_OBJ)\
