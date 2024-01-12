@@ -6,6 +6,7 @@
 #include "Vector.h"
 #include "BDXObject.h"
 #include "Particle.h"
+#include "List.h"
 #include "Sphere.h"
 #include "Janus.h"
 
@@ -15,10 +16,11 @@ Janus::Janus (Vector *r,
 	      Vector *d,
 	      Vector *F,
 	      Vector *T,
+	      List *list,
 	      ID *id,
 	      Kind *kind,
 	      double const a):
-	      Sphere(r, u, E, d, F, id, kind, a)
+	      Sphere(r, u, E, d, F, list, id, kind, a)
 {
 	this->T = T;
 }

@@ -6,6 +6,7 @@ struct Kind;
 struct Vector;
 struct BDXObject;
 struct Particle;
+struct List;
 
 struct Sphere : Particle
 {
@@ -18,6 +19,7 @@ struct Sphere : Particle
 	       Vector *E,
 	       Vector *d,
 	       Vector *F,
+	       List *list,
 	       ID *id,
 	       Kind *kind,
 	       double const a);

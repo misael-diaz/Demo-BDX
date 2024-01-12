@@ -4,11 +4,13 @@
 #include "Vector.h"
 #include "BDXObject.h"
 #include "Particle.h"
+#include "List.h"
 
 Particle::Particle (Vector *r,
 		    Vector *u,
 		    Vector *E,
 		    Vector *d,
+		    List *list,
 		    ID *id,
 		    Kind *kind):
 		    BDXObject(r)
@@ -16,6 +18,7 @@ Particle::Particle (Vector *r,
 	this->u = u;
 	this->E = E;
 	this->d = d;
+	this->list = list;
 	this->id = id;
 	this->kind = kind;
 }

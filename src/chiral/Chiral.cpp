@@ -6,6 +6,7 @@
 #include "Vector.h"
 #include "BDXObject.h"
 #include "Particle.h"
+#include "List.h"
 #include "Spheroid.h"
 #include "Chiral.h"
 
@@ -15,12 +16,13 @@ Chiral::Chiral (Vector *r,
 		Vector *d,
 		Vector *F,
 		Vector *T,
+		List *list,
 		ID *id,
 		Kind *kind,
 		double const a,
 		double const b,
 		double const c):
-		Spheroid(r, u, E, d, F, T, id, kind, a, b),
+		Spheroid(r, u, E, d, F, T, list, id, kind, a, b),
 		c(c)
 {
 	return;

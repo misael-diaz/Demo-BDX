@@ -3,6 +3,7 @@
 
 struct ID;
 struct Kind;
+struct List;
 struct Vector;
 struct BDXObject;
 struct Particle;
@@ -18,6 +19,7 @@ struct Janus : Sphere
 	      Vector *d,
 	      Vector *F,
 	      Vector *T,
+	      List *list,
 	      ID *id,
 	      Kind *kind,
 	      double const a);

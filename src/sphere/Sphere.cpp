@@ -6,6 +6,7 @@
 #include "Vector.h"
 #include "BDXObject.h"
 #include "Particle.h"
+#include "List.h"
 #include "Sphere.h"
 
 Sphere::Sphere (Vector *r,
@@ -13,10 +14,11 @@ Sphere::Sphere (Vector *r,
 		Vector *E,
 		Vector *d,
 		Vector *F,
+		List *list,
 		ID *id,
 		Kind *kind,
 		double const a):
-		Particle(r, u, E, d, id, kind),
+		Particle(r, u, E, d, list, id, kind),
 		a(a)
 {
 	this->F = F;
