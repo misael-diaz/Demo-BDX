@@ -20,6 +20,8 @@ stacks:
 	@$(MAKE) -C stack
 handlers: particles
 	@$(MAKE) -C handler
+lists: particles
+	@$(MAKE) -C list
 utils:
 	@$(MAKE) -C util
 ids: utils
@@ -42,13 +44,14 @@ chirals: utils ids kinds vectors objects particles spheroids
 	@$(MAKE) -C chiral
 systems: utils ids kinds vectors objects particles spheres janus spheroids chirals
 	@$(MAKE) -C box
-tests: systems handlers
+tests: systems handlers lists
 	@$(MAKE) -C test
 
 clean:
 	@$(MAKE) -C util clean
 	@$(MAKE) -C stack clean
 	@$(MAKE) -C handler clean
+	@$(MAKE) -C list clean
 	@$(MAKE) -C id clean
 	@$(MAKE) -C kind clean
 	@$(MAKE) -C vector clean

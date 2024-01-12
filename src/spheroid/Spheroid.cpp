@@ -6,6 +6,7 @@
 #include "Vector.h"
 #include "BDXObject.h"
 #include "Particle.h"
+#include "List.h"
 #include "Spheroid.h"
 
 Spheroid::Spheroid (Vector *r,
@@ -14,11 +15,12 @@ Spheroid::Spheroid (Vector *r,
 		    Vector *d,
 		    Vector *F,
 		    Vector *T,
+		    List *list,
 		    ID *id,
 		    Kind *kind,
 		    double const a,
 		    double const b):
-		    Particle(r, u, E, d, id, kind),
+		    Particle(r, u, E, d, list, id, kind),
 		    a(a),
 		    b(b)
 {

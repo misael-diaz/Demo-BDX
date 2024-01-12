@@ -1,30 +1,17 @@
-#ifndef GUARD_BDX_SPHERE_H
-#define GUARD_BDX_SPHERE_H
+#ifndef GUARD_BDX_LIST_H
+#define GUARD_BDX_LIST_H
 
-struct ID;
-struct Kind;
-struct Vector;
-struct BDXObject;
+struct Stack;
 struct Particle;
-struct List;
 
-struct Sphere : Particle
+struct List
 {
-	protected:
-	double a = 1.0;
-	public:
-	Vector *F = NULL;
-	Sphere(Vector *r,
-	       Vector *u,
-	       Vector *E,
-	       Vector *d,
-	       Vector *F,
-	       List *list,
-	       ID *id,
-	       Kind *kind,
-	       double const a);
-	double radius() const;
-	void ia(const Particle *particle);
+	Stack *stack = NULL;
+	List(Stack *stack);
+	size_t cap() const;
+	size_t numel() const;
+	int add(Particle *particle);
+	const Particle **iter() const;
 	void *operator new(size_t size);
 	void operator delete(void *p);
 };
@@ -50,7 +37,7 @@ You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 author: @misael-diaz
-source: include/Sphere.h
+source: include/List.h
 
 References:
 [0] A Koenig and B Moo, Accelerated C++ Practical Programming by Example.

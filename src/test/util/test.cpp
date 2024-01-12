@@ -15,6 +15,7 @@
 #include "Chiral.h"
 #include "BoundingBox.h"
 #include "Handler.h"
+#include "List.h"
 
 #define COMPILE 0
 #define VERBOSE 0
@@ -40,18 +41,20 @@ Particle *_Particle(Vector *r,
 		    Vector *E,
 		    Vector *d,
 		    Vector *F,
+		    List *list,
 		    ID *id,
 		    Kind *kind,
 		    double const a,
 		    double const b,
 		    double const c)
-__attribute__ ((nonnull (1, 2, 3, 4, 5, 6, 7)));
+__attribute__ ((nonnull (1, 2, 3, 4, 5, 6, 7, 8)));
 #else
 Particle *_Particle(Vector *r,
 		    Vector *u,
 		    Vector *E,
 		    Vector *d,
 		    Vector *F,
+		    List *list,
 		    ID *id,
 		    Kind *kind,
 		    double const a,
@@ -83,6 +86,7 @@ Particle *_Particle (Vector *r,
 		     Vector *E,
 		     Vector *d,
 		     Vector *F,
+		     List *list,
 		     ID *id,
 		     Kind *kind,
 		     double const a,
@@ -95,7 +99,7 @@ Particle *_Particle (Vector *r,
 	switch(k)
 	{
 		case SPHERE:
-		particle = new Sphere(r, u, E, d, F, id, kind, a);
+		particle = new Sphere(r, u, E, d, F, list, id, kind, a);
 		if (!particle) {
 			return NULL;
 		}
@@ -108,7 +112,7 @@ Particle *_Particle (Vector *r,
 			return NULL;
 		}
 
-		particle = new Janus(r, u, E, d, F, T, id, kind, a);
+		particle = new Janus(r, u, E, d, F, T, list, id, kind, a);
 		if (!particle) {
 			return NULL;
 		}
@@ -121,7 +125,7 @@ Particle *_Particle (Vector *r,
 			return NULL;
 		}
 
-		particle = new Spheroid(r, u, E, d, F, T, id, kind, a, b);
+		particle = new Spheroid(r, u, E, d, F, T, list, id, kind, a, b);
 		if (!particle) {
 			return NULL;
 		}
@@ -134,7 +138,7 @@ Particle *_Particle (Vector *r,
 			return NULL;
 		}
 
-		particle = new Chiral(r, u, E, d, F, T, id, kind, a, b, c);
+		particle = new Chiral(r, u, E, d, F, T, list, id, kind, a, b, c);
 		if (!particle) {
 			return NULL;
 		}
@@ -142,7 +146,7 @@ Particle *_Particle (Vector *r,
 		break;
 
 		default:
-		particle = new Sphere(r, u, E, d, F, id, kind, a);
+		particle = new Sphere(r, u, E, d, F, list, id, kind, a);
 		if (!particle) {
 			return NULL;
 		}
@@ -360,9 +364,19 @@ void tutil10 (void)
 			break;
 		}
 
+		Stack *stack = new Stack();
+		if (!stack) {
+			break;
+		}
+
+		List *list = new List(stack);
+		if (!list) {
+			break;
+		}
+
 		double const frand_max = RAND_MAX;
 		double const a = rand() / frand_max;
-		Sphere *sphere = new Sphere(r, u, E, d, F, id, kind, a);
+		Sphere *sphere = new Sphere(r, u, E, d, F, list, id, kind, a);
 		if (!sphere) {
 			break;
 		}
@@ -423,9 +437,19 @@ void tutil10 (void)
 			break;
 		}
 
+		Stack *stack = new Stack();
+		if (!stack) {
+			break;
+		}
+
+		List *list = new List(stack);
+		if (!list) {
+			break;
+		}
+
 		double const frand_max = RAND_MAX;
 		double const a = rand() / frand_max;
-		Sphere *sphere = new Sphere(r, u, E, d, F, id, kind, a);
+		Sphere *sphere = new Sphere(r, u, E, d, F, list, id, kind, a);
 		if (!sphere) {
 			break;
 		}
@@ -497,12 +521,22 @@ void tutil11 (void)
 			return;
 		}
 
+		Stack *stack = new Stack();
+		if (!stack) {
+			break;
+		}
+
+		List *list = new List(stack);
+		if (!list) {
+			break;
+		}
+
 		double const frand_max = RAND_MAX;
 		double const a = rand() / frand_max;
 		double const b = ASPECT_RATIO * a;
 		double const c = rand() / frand_max;
 
-		Particle *particle = _Particle(r, u, E, d, F, id, kind, a, b, c);
+		Particle *particle = _Particle(r, u, E, d, F, list, id, kind, a, b, c);
 		if (!particle) {
 			Util_Clear();
 			return;
@@ -581,12 +615,22 @@ void tutil11 (void)
 			break;
 		}
 
+		Stack *stack = new Stack();
+		if (!stack) {
+			break;
+		}
+
+		List *list = new List(stack);
+		if (!list) {
+			break;
+		}
+
 		double const frand_max = RAND_MAX;
 		double const a = rand() / frand_max;
 		double const b = ASPECT_RATIO * a;
 		double const c = rand() / frand_max;
 
-		Particle *particle = _Particle(r, u, E, d, F, id, kind, a, b, c);
+		Particle *particle = _Particle(r, u, E, d, F, list, id, kind, a, b, c);
 		if (!particle) {
 			break;
 		}
@@ -652,12 +696,22 @@ void tutil12 (void)
 			break;
 		}
 
+		Stack *stack = new Stack();
+		if (!stack) {
+			break;
+		}
+
+		List *list = new List(stack);
+		if (!list) {
+			break;
+		}
+
 		double const frand_max = RAND_MAX;
 		double const a = rand() / frand_max;
 		double const b = ASPECT_RATIO * a;
 		double const c = rand() / frand_max;
 
-		Particle *particle = _Particle(r, u, E, d, F, id, kind, a, b, c);
+		Particle *particle = _Particle(r, u, E, d, F, list, id, kind, a, b, c);
 		if (!particle) {
 			break;
 		}
@@ -745,12 +799,22 @@ void tutil12 (void)
 			break;
 		}
 
+		Stack *stack = new Stack();
+		if (!stack) {
+			break;
+		}
+
+		List *list = new List(stack);
+		if (!list) {
+			break;
+		}
+
 		double const frand_max = RAND_MAX;
 		double const a = rand() / frand_max;
 		double const b = ASPECT_RATIO * a;
 		double const c = rand() / frand_max;
 
-		Particle *particle = _Particle(r, u, E, d, F, id, kind, a, b, c);
+		Particle *particle = _Particle(r, u, E, d, F, list, id, kind, a, b, c);
 		if (!particle) {
 			break;
 		}
@@ -826,12 +890,22 @@ void tutil13 (void)
 			break;
 		}
 
+		Stack *stack = new Stack();
+		if (!stack) {
+			break;
+		}
+
+		List *list = new List(stack);
+		if (!list) {
+			break;
+		}
+
 		double const frand_max = RAND_MAX;
 		double const a = rand() / frand_max;
 		double const b = ASPECT_RATIO * a;
 		double const c = rand() / frand_max;
 
-		Particle *particle = _Particle(r, u, E, d, F, id, kind, a, b, c);
+		Particle *particle = _Particle(r, u, E, d, F, list, id, kind, a, b, c);
 		if (!particle) {
 			break;
 		}
@@ -910,12 +984,22 @@ void tutil13 (void)
 			break;
 		}
 
+		Stack *stack = new Stack();
+		if (!stack) {
+			break;
+		}
+
+		List *list = new List(stack);
+		if (!list) {
+			break;
+		}
+
 		double const frand_max = RAND_MAX;
 		double const a = rand() / frand_max;
 		double const b = ASPECT_RATIO * a;
 		double const c = rand() / frand_max;
 
-		Particle *particle = _Particle(r, u, E, d, F, id, kind, a, b, c);
+		Particle *particle = _Particle(r, u, E, d, F, list, id, kind, a, b, c);
 		if (!particle) {
 			break;
 		}
