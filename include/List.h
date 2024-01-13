@@ -11,6 +11,7 @@ struct List
 	size_t cap() const;
 	size_t numel() const;
 	int add(Particle *particle);
+	void clear();
 	const Particle **iter() const;
 	void *operator new(size_t size);
 	void operator delete(void *p);

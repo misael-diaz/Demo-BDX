@@ -30,6 +30,11 @@ int List::add (Particle *particle)
 	return this->stack->add(elem);
 }
 
+void List::clear ()
+{
+	this->stack->clear();
+}
+
 void *List::operator new (size_t size)
 {
 	return Util_Malloc(size);
