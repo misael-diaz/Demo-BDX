@@ -723,8 +723,8 @@ void tutil12 (void)
 		}
 	}
 
-	for (const void **iter = (const void**) stack->data(); *iter; ++iter) {
-		const Particle *particle = (const Particle*) *iter;
+	for (const void **it = (const void**) stack->begin(); it != stack->end(); ++it) {
+		const Particle *particle = (const Particle*) *it;
 		printf("%s\n", Kind::stringify(particle->kind));
 	}
 
@@ -917,7 +917,9 @@ void tutil13 (void)
 		}
 	}
 
-	for (const Particle **iter = (const Particle**) handler->iter(); *iter; ++iter) {
+	const Particle **begin = handler->begin();
+	const Particle **end = handler->end();
+	for (const Particle **iter = begin; iter != end; ++iter) {
 		const Particle *particle = (const Particle*) *iter;
 		printf("%s\n", Kind::stringify(particle->kind));
 	}

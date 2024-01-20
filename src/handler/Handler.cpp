@@ -19,9 +19,14 @@ size_t Handler::numel () const
 	return this->stack->numel();
 }
 
-Particle **Handler::iter ()
+Particle **Handler::begin ()
 {
-	return ((Particle**) this->stack->data());
+	return ((Particle**) this->stack->begin());
+}
+
+Particle **Handler::end ()
+{
+	return ((Particle**) this->stack->end());
 }
 
 int Handler::add (Particle *particle)
