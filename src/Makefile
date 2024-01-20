@@ -16,6 +16,8 @@
 
 all: tests
 
+oss:
+	@$(MAKE) -C os
 stacks:
 	@$(MAKE) -C stack
 handlers: particles
@@ -44,12 +46,13 @@ chirals: utils ids kinds vectors objects particles spheroids
 	@$(MAKE) -C chiral
 systems: utils ids kinds vectors objects particles spheres janus spheroids chirals
 	@$(MAKE) -C box
-virtuals: utils vectors particles
+virtuals: oss utils vectors particles
 	@$(MAKE) -C virtual
 tests: systems handlers lists virtuals
 	@$(MAKE) -C test
 
 clean:
+	@$(MAKE) -C os clean
 	@$(MAKE) -C util clean
 	@$(MAKE) -C stack clean
 	@$(MAKE) -C handler clean
