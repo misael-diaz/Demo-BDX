@@ -4,12 +4,12 @@
 struct Stack
 {
 	private:
-	void **stack = NULL;
-	void **begin = NULL;
-	void **avail = NULL;
-	void **limit = NULL;
-	size_t allot = 8;
-	size_t size = 0;
+	void **_stack_ = NULL;
+	void **_begin_ = NULL;
+	void **_avail_ = NULL;
+	void **_limit_ = NULL;
+	size_t _allot_ = 8;
+	size_t _size_ = 0;
 	int init();
 	void *copy() const;
 	size_t bytes () const;
@@ -20,7 +20,8 @@ struct Stack
 	size_t numel() const;
 	int add(void *elem);
 	void clear();
-	void **data();
+	void **begin();
+	void **end();
 	void *operator new(size_t size);
 	void operator delete(void *p);
 };
