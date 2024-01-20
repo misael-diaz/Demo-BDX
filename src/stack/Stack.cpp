@@ -1,32 +1,32 @@
-#include <cstdio>
 #include <cstring>
 
+#include "os.h"
 #include "util.h"
 #include "Stack.h"
 
 static void err_create ()
 {
-	fprintf(stderr, "Stack::create: error\n");
+	os::error("Stack::create: error\n");
 }
 
 static void err_init ()
 {
-	fprintf(stderr, "Stack::init: error\n");
+	os::error("Stack::init: error\n");
 }
 
 static void err_add ()
 {
-	fprintf(stderr, "Stack::add: error\n");
+	os::error("Stack::add: error\n");
 }
 
 static void err_copy ()
 {
-	fprintf(stderr, "Stack::copy: error\n");
+	os::error("Stack::copy: error\n");
 }
 
 static void err_grow ()
 {
-	fprintf(stderr, "Stack::grow: error\n");
+	os::error("Stack::grow: error\n");
 }
 
 static void **create (size_t const allot)

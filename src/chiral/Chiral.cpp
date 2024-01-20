@@ -1,5 +1,4 @@
-#include <cstdio>
-
+#include "os.h"
 #include "util.h"
 #include "ID.h"
 #include "Kind.h"
@@ -40,19 +39,19 @@ void Chiral::ia (const Particle *particle)
 	kind_t const k = kind->k();
 	switch(k){
 		case SPHERE:
-		printf("chiral-sphere interaction\n");
+		os::print("chiral-sphere interaction\n");
 		break;
 		case JANUS:
-		printf("chiral-janus interaction\n");
+		os::print("chiral-janus interaction\n");
 		break;
 		case SPHEROID:
-		printf("chiral-spheroid interaction\n");
+		os::print("chiral-spheroid interaction\n");
 		break;
 		case CHIRAL:
-		printf("chiral-chiral interaction\n");
+		os::print("chiral-chiral interaction\n");
 		break;
 		default:
-		printf("no interaction\n");
+		os::print("no interaction\n");
 	}
 }
 
