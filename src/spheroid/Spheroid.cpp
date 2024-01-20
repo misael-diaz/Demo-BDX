@@ -1,5 +1,4 @@
-#include <cstdio>
-
+#include "os.h"
 #include "util.h"
 #include "ID.h"
 #include "Kind.h"
@@ -45,19 +44,19 @@ void Spheroid::ia (const Particle *particle)
 	kind_t const k = kind->k();
 	switch(k){
 		case SPHERE:
-		printf("spheroid-sphere interaction\n");
+		os::print("spheroid-sphere interaction\n");
 		break;
 		case JANUS:
-		printf("spheroid-janus interaction\n");
+		os::print("spheroid-janus interaction\n");
 		break;
 		case SPHEROID:
-		printf("spheroid-spheroid interaction\n");
+		os::print("spheroid-spheroid interaction\n");
 		break;
 		case CHIRAL:
-		printf("spheroid-chiral interaction\n");
+		os::print("spheroid-chiral interaction\n");
 		break;
 		default:
-		printf("no interaction\n");
+		os::print("no interaction\n");
 	}
 }
 
