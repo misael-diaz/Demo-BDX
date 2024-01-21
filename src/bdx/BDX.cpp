@@ -1,19 +1,23 @@
 #include "util.h"
+#include "Looper.h"
 #include "Integrator.h"
 #include "Driver.h"
 #include "BDX.h"
 
 BDX::BDX (Prompt *prompt,
 	  Random *random,
+	  Looper *looper,
 	  Driver *driver,
 	  Integrator *integrator,
 	  System *system)
 {
 	this->prompt = prompt;
 	this->random = random;
+	this->looper = looper;
 	this->driver = driver;
 	this->integrator = integrator;
 	this->system = system;
+	this->looper->bind(this);
 	this->driver->bind(this);
 	this->integrator->bind(this);
 }
