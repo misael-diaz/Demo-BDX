@@ -54,7 +54,9 @@ systems: utils boxes particles
 	@$(MAKE) -C system
 virtuals: systems oss utils prompts vectors particles
 	@$(MAKE) -C virtual
-BDX: boxes handlers PRNGs lists virtuals prompts systems oss
+integrators: utils
+	@$(MAKE) -C integrator
+BDX: boxes handlers PRNGs lists virtuals integrators prompts systems oss
 	@$(MAKE) -C bdx
 tests: boxes handlers lists virtuals BDX
 	@$(MAKE) -C test
@@ -79,5 +81,6 @@ clean:
 	@$(MAKE) -C box clean
 	@$(MAKE) -C system clean
 	@$(MAKE) -C virtual clean
+	@$(MAKE) -C integrator clean
 	@$(MAKE) -C bdx clean
 	@$(MAKE) -C test clean
