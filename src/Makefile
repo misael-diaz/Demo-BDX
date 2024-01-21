@@ -46,13 +46,13 @@ spheroids: utils ids kinds vectors objects particles
 	@$(MAKE) -C spheroid
 chirals: utils ids kinds vectors objects particles spheroids
 	@$(MAKE) -C chiral
-systems: utils ids kinds vectors objects particles spheres janus spheroids chirals
+boxes: utils ids kinds vectors objects particles spheres janus spheroids chirals
 	@$(MAKE) -C box
-sys: utils systems particles
+systems: utils boxes particles
 	@$(MAKE) -C system
-virtuals: sys oss utils prompts vectors particles
+virtuals: systems oss utils prompts vectors particles
 	@$(MAKE) -C virtual
-tests: systems handlers lists virtuals
+tests: boxes handlers lists virtuals
 	@$(MAKE) -C test
 
 clean:
