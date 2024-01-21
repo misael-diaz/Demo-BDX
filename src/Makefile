@@ -26,6 +26,8 @@ lists: particles
 	@$(MAKE) -C list
 utils:
 	@$(MAKE) -C util
+prompts: utils
+	@$(MAKE) -C prompt
 ids: utils
 	@$(MAKE) -C id
 kinds: utils
@@ -46,7 +48,7 @@ chirals: utils ids kinds vectors objects particles spheroids
 	@$(MAKE) -C chiral
 systems: utils ids kinds vectors objects particles spheres janus spheroids chirals
 	@$(MAKE) -C box
-virtuals: oss utils vectors particles
+virtuals: oss utils prompts vectors particles
 	@$(MAKE) -C virtual
 tests: systems handlers lists virtuals
 	@$(MAKE) -C test
@@ -54,6 +56,7 @@ tests: systems handlers lists virtuals
 clean:
 	@$(MAKE) -C os clean
 	@$(MAKE) -C util clean
+	@$(MAKE) -C prompt clean
 	@$(MAKE) -C stack clean
 	@$(MAKE) -C handler clean
 	@$(MAKE) -C list clean
