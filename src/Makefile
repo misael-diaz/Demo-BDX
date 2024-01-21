@@ -52,7 +52,9 @@ systems: utils boxes particles
 	@$(MAKE) -C system
 virtuals: systems oss utils prompts vectors particles
 	@$(MAKE) -C virtual
-tests: boxes handlers lists virtuals
+BDX: boxes handlers lists virtuals prompts systems oss
+	@$(MAKE) -C bdx
+tests: boxes handlers lists virtuals BDX
 	@$(MAKE) -C test
 
 clean:
@@ -74,4 +76,5 @@ clean:
 	@$(MAKE) -C box clean
 	@$(MAKE) -C system clean
 	@$(MAKE) -C virtual clean
+	@$(MAKE) -C bdx clean
 	@$(MAKE) -C test clean
