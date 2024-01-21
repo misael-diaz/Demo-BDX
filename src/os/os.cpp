@@ -24,6 +24,14 @@ void os::error (const char *fmt, ...)
 	va_end(args);
 }
 
+void os::prompt (const char *fmt, ...)
+{
+	va_list args;
+	va_start(args, fmt);
+	os_print(stderr, fmt, args);
+	va_end(args);
+}
+
 /*
 
 BDX                                             December 31, 2023
