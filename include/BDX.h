@@ -2,13 +2,15 @@
 #define GUARD_BDX_BDX_H
 
 struct Prompt;
+struct Random;
 struct System;
 
 struct BDX
 {
 	Prompt *prompt;
+	Random *random;
 	System *system;
-	BDX(Prompt *prompt, System *system);
+	BDX(Prompt *prompt, Random *random, System *system);
 	void *operator new(size_t size);
 	void operator delete(void *p);
 };

@@ -1,19 +1,17 @@
 #include "util.h"
-#include "BDX.h"
+#include "Random.h"
 
-BDX::BDX (Prompt *prompt, Random *random, System *system)
+Random::Random ()
 {
-	this->prompt = prompt;
-	this->random = random;
-	this->system = system;
+	return;
 }
 
-void *BDX::operator new (size_t size)
+void *Random::operator new (size_t size)
 {
 	return Util_Malloc(size);
 }
 
-void BDX::operator delete (void *p)
+void Random::operator delete (void *p)
 {
 	p = Util_Free(p);
 }
@@ -37,7 +35,7 @@ You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 author: @misael-diaz
-source: src/bdx/BDX.cpp
+source: src/random/Random.cpp
 
 References:
 [0] A Koenig and B Moo, Accelerated C++ Practical Programming by Example.

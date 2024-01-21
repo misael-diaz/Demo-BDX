@@ -1,28 +1,21 @@
-#include "util.h"
-#include "BDX.h"
+#ifndef GUARD_BDX_RANDOM_H
+#define GUARD_BDX_RANDOM_H
 
-BDX::BDX (Prompt *prompt, Random *random, System *system)
+struct Random
 {
-	this->prompt = prompt;
-	this->random = random;
-	this->system = system;
-}
+	Random();
+	void *operator new(size_t size);
+	void operator delete(void *p);
+};
 
-void *BDX::operator new (size_t size)
-{
-	return Util_Malloc(size);
-}
-
-void BDX::operator delete (void *p)
-{
-	p = Util_Free(p);
-}
+#endif
 
 /*
 
 BDX                                             December 31, 2023
 
 Copyright (C) 2023 Misael Díaz-Maldonado
+Copyright (C) 2024 UCF-Research Group
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -37,7 +30,7 @@ You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 author: @misael-diaz
-source: src/bdx/BDX.cpp
+source: include/Random.h
 
 References:
 [0] A Koenig and B Moo, Accelerated C++ Practical Programming by Example.
