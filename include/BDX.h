@@ -3,6 +3,7 @@
 
 struct Prompt;
 struct Random;
+struct Driver;
 struct Integrator;
 struct System;
 
@@ -10,9 +11,10 @@ struct BDX
 {
 	Prompt *prompt;
 	Random *random;
+	Driver *driver;
 	Integrator *integrator;
 	System *system;
-	BDX(Prompt *prompt, Random *random, Integrator *integrator, System *system);
+	BDX(Prompt *prompt, Random *random, Driver *driver, Integrator *integrator, System *system);
 	void *operator new(size_t size);
 	void operator delete(void *p);
 };
