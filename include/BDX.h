@@ -3,6 +3,7 @@
 
 struct Prompt;
 struct Random;
+struct Looper;
 struct Driver;
 struct Integrator;
 struct System;
@@ -11,11 +12,13 @@ struct BDX
 {
 	Prompt *prompt;
 	Random *random;
+	Looper *looper;
 	Driver *driver;
 	Integrator *integrator;
 	System *system;
 	BDX(Prompt *prompt,
 	    Random *random,
+	    Looper *looper,
 	    Driver *driver,
 	    Integrator *integrator,
 	    System *system);
