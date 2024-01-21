@@ -1,18 +1,15 @@
-#ifndef GUARD_BDX_BDX_H
-#define GUARD_BDX_BDX_H
+#ifndef GUARD_BDX_INTEGRATOR_H
+#define GUARD_BDX_INTEGRATOR_H
 
-struct Prompt;
-struct Random;
-struct Integrator;
-struct System;
+struct BDX;
 
-struct BDX
+struct Integrator
 {
-	Prompt *prompt;
-	Random *random;
-	Integrator *integrator;
-	System *system;
-	BDX(Prompt *prompt, Random *random, Integrator *integrator, System *system);
+	private:
+	BDX *app = NULL;
+	public:
+	Integrator();
+	void bind(BDX *app);
 	void *operator new(size_t size);
 	void operator delete(void *p);
 };
@@ -39,7 +36,7 @@ You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 author: @misael-diaz
-source: include/BDX.h
+source: include/Integrator.h
 
 References:
 [0] A Koenig and B Moo, Accelerated C++ Practical Programming by Example.

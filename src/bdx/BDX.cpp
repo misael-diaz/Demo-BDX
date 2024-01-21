@@ -1,11 +1,14 @@
 #include "util.h"
+#include "Integrator.h"
 #include "BDX.h"
 
-BDX::BDX (Prompt *prompt, Random *random, System *system)
+BDX::BDX (Prompt *prompt, Random *random, Integrator *integrator, System *system)
 {
 	this->prompt = prompt;
 	this->random = random;
+	this->integrator = integrator;
 	this->system = system;
+	this->integrator->bind(this);
 }
 
 void *BDX::operator new (size_t size)

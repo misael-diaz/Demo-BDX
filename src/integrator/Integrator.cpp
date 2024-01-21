@@ -1,30 +1,31 @@
-#ifndef GUARD_BDX_BDX_H
-#define GUARD_BDX_BDX_H
+#include "util.h"
+#include "Integrator.h"
 
-struct Prompt;
-struct Random;
-struct Integrator;
-struct System;
-
-struct BDX
+Integrator::Integrator ()
 {
-	Prompt *prompt;
-	Random *random;
-	Integrator *integrator;
-	System *system;
-	BDX(Prompt *prompt, Random *random, Integrator *integrator, System *system);
-	void *operator new(size_t size);
-	void operator delete(void *p);
-};
+	return;
+}
 
-#endif
+void Integrator::bind (BDX *app)
+{
+	this->app = app;
+}
+
+void *Integrator::operator new (size_t size)
+{
+	return Util_Malloc(size);
+}
+
+void Integrator::operator delete (void *p)
+{
+	p = Util_Free(p);
+}
 
 /*
 
 BDX                                             December 31, 2023
 
 Copyright (C) 2023 Misael Díaz-Maldonado
-Copyright (C) 2024 UCF-Research Group
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -39,7 +40,7 @@ You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 author: @misael-diaz
-source: include/BDX.h
+source: src/integrator/Integrator.cpp
 
 References:
 [0] A Koenig and B Moo, Accelerated C++ Practical Programming by Example.
