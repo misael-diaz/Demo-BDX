@@ -56,7 +56,9 @@ virtuals: systems oss utils prompts vectors particles
 	@$(MAKE) -C virtual
 integrators: utils
 	@$(MAKE) -C integrator
-BDX: boxes handlers PRNGs lists virtuals integrators prompts systems oss
+drivers: utils
+	@$(MAKE) -C driver
+BDX: boxes handlers PRNGs lists virtuals drivers integrators prompts systems oss
 	@$(MAKE) -C bdx
 tests: boxes handlers lists virtuals BDX
 	@$(MAKE) -C test
@@ -82,5 +84,6 @@ clean:
 	@$(MAKE) -C system clean
 	@$(MAKE) -C virtual clean
 	@$(MAKE) -C integrator clean
+	@$(MAKE) -C driver clean
 	@$(MAKE) -C bdx clean
 	@$(MAKE) -C test clean
