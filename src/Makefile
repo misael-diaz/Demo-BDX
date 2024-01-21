@@ -26,6 +26,8 @@ lists: particles
 	@$(MAKE) -C list
 utils:
 	@$(MAKE) -C util
+PRNGs: utils
+	@$(MAKE) -C random
 prompts: utils
 	@$(MAKE) -C prompt
 ids: utils
@@ -52,7 +54,7 @@ systems: utils boxes particles
 	@$(MAKE) -C system
 virtuals: systems oss utils prompts vectors particles
 	@$(MAKE) -C virtual
-BDX: boxes handlers lists virtuals prompts systems oss
+BDX: boxes handlers PRNGs lists virtuals prompts systems oss
 	@$(MAKE) -C bdx
 tests: boxes handlers lists virtuals BDX
 	@$(MAKE) -C test
@@ -60,6 +62,7 @@ tests: boxes handlers lists virtuals BDX
 clean:
 	@$(MAKE) -C os clean
 	@$(MAKE) -C util clean
+	@$(MAKE) -C random clean
 	@$(MAKE) -C prompt clean
 	@$(MAKE) -C stack clean
 	@$(MAKE) -C handler clean
