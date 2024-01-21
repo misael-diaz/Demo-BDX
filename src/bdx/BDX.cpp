@@ -1,9 +1,10 @@
 #include "util.h"
 #include "BDX.h"
 
-BDX::BDX (Prompt *prompt, System *system)
+BDX::BDX (Prompt *prompt, Random *random, System *system)
 {
 	this->prompt = prompt;
+	this->random = random;
 	this->system = system;
 }
 
