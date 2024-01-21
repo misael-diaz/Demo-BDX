@@ -1,29 +1,22 @@
 #include "util.h"
-#include "Integrator.h"
 #include "Driver.h"
-#include "BDX.h"
 
-BDX::BDX (Prompt *prompt,
-	  Random *random,
-	  Driver *driver,
-	  Integrator *integrator,
-	  System *system)
+Driver::Driver ()
 {
-	this->prompt = prompt;
-	this->random = random;
-	this->driver = driver;
-	this->integrator = integrator;
-	this->system = system;
-	this->driver->bind(this);
-	this->integrator->bind(this);
+	return;
 }
 
-void *BDX::operator new (size_t size)
+void Driver::bind (BDX *app)
+{
+	this->app = app;
+}
+
+void *Driver::operator new (size_t size)
 {
 	return Util_Malloc(size);
 }
 
-void BDX::operator delete (void *p)
+void Driver::operator delete (void *p)
 {
 	p = Util_Free(p);
 }
@@ -33,6 +26,7 @@ void BDX::operator delete (void *p)
 BDX                                             December 31, 2023
 
 Copyright (C) 2023 Misael Díaz-Maldonado
+Copyright (C) 2024 UCF-Research Group
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -47,7 +41,7 @@ You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 author: @misael-diaz
-source: src/bdx/BDX.cpp
+source: src/driver/Driver.cpp
 
 References:
 [0] A Koenig and B Moo, Accelerated C++ Practical Programming by Example.
