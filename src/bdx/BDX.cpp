@@ -3,7 +3,11 @@
 #include "Driver.h"
 #include "BDX.h"
 
-BDX::BDX (Prompt *prompt, Random *random, Driver *driver, Integrator *integrator, System *system)
+BDX::BDX (Prompt *prompt,
+	  Random *random,
+	  Driver *driver,
+	  Integrator *integrator,
+	  System *system)
 {
 	this->prompt = prompt;
 	this->random = random;
