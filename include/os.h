@@ -3,14 +3,14 @@
 
 #ifdef GXX
 namespace os {
-	void print(const char *fmt, ...) __attribute__ ((format (printf, 1, 2)));
-	void error(const char *fmt, ...) __attribute__ ((format (printf, 1, 2)));
+	void print (const char *fmt, ...) __attribute__ ((format (printf, 1, 2)));
+	void error (const char *fmt, ...) __attribute__ ((format (printf, 1, 2)));
 	void prompt(const char *fmt, ...) __attribute__ ((format (printf, 1, 2)));
 };
 #else
 namespace os {
-	void print(const char *fmt, ...);
-	void error(const char *fmt, ...);
+	void print (const char *fmt, ...);
+	void error (const char *fmt, ...);
 	void prompt(const char *fmt, ...);
 }
 #endif
