@@ -30,6 +30,8 @@ JANUS_H    = ../../../include/Janus.h
 SPHEROID_H = ../../../include/Spheroid.h
 CHIRAL_H   = ../../../include/Chiral.h
 BOX_H      = ../../../include/BoundingBox.h
+BROWNIAN_H = ../../../include/Brownian.h
+SYSTEM_H   = ../../../include/System.h
 HEADERS = $(OS_H)\
 	  $(UTIL_H)\
 	  $(STACK_H)\
@@ -44,7 +46,9 @@ HEADERS = $(OS_H)\
 	  $(JANUS_H)\
 	  $(SPHEROID_H)\
 	  $(CHIRAL_H)\
-	  $(BOX_H)
+	  $(BOX_H)\
+	  $(BROWNIAN_H)\
+	  $(SYSTEM_H)
 
 TEST_CXX = test.cpp
 TEST_OBJ = test.obj
@@ -65,6 +69,8 @@ JANUS_OBJ    = ../../../src/janus/Janus.obj
 SPHEROID_OBJ = ../../../src/spheroid/Spheroid.obj
 CHIRAL_OBJ   = ../../../src/chiral/Chiral.obj
 BOX_OBJ      = ../../../src/box/BoundingBox.obj
+BROWNIAN_OBJ = ../../../src/Brownian/Brownian.obj
+SYSTEM_OBJ   = ../../../src/system/System.obj
 OBJS = $(OS_OBJ)\
        $(UTIL_OBJ)\
        $(STACK_OBJ)\
@@ -80,4 +86,6 @@ OBJS = $(OS_OBJ)\
        $(SPHEROID_OBJ)\
        $(CHIRAL_OBJ)\
        $(BOX_OBJ)\
+       $(BROWNIAN_OBJ)\
+       $(SYSTEM_OBJ)\
        $(TEST_OBJ)
