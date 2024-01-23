@@ -1,16 +1,13 @@
-#ifndef GUARD_BDX_SYSTEM_H
-#define GUARD_BDX_SYSTEM_H
+#ifndef GUARD_BDX_BROWNIAN_H
+#define GUARD_BDX_BROWNIAN_H
 
-struct BoundingBox;
-struct Brownian;
-struct Handler;
+struct System;
 
-struct System
+struct Brownian
 {
-	BoundingBox *bb = NULL;
-	struct Brownian *Brownian = NULL;
-	Handler *handler = NULL;
-	System(BoundingBox *bb, struct Brownian *Brownian, Handler *handler);
+	System *system = NULL;
+	Brownian();
+	void bind(System *system);
 	void *operator new(size_t size);
 	void operator delete(void *p);
 };
@@ -37,7 +34,7 @@ You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 author: @misael-diaz
-source: include/System.h
+source: include/Brownian.h
 
 References:
 [0] A Koenig and B Moo, Accelerated C++ Practical Programming by Example.

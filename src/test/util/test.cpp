@@ -14,7 +14,9 @@
 #include "Spheroid.h"
 #include "Chiral.h"
 #include "BoundingBox.h"
+#include "Brownian.h"
 #include "Handler.h"
+#include "System.h"
 #include "List.h"
 
 #define COMPILE 0
@@ -34,6 +36,7 @@ void tutil10(void);
 void tutil11(void);
 void tutil12(void);
 void tutil13(void);
+void tutil14(void);
 
 #ifdef GXX
 Particle *_Particle(Vector *r,
@@ -77,6 +80,7 @@ int main ()
 	tutil11();
 	tutil12();
 	tutil13();
+	tutil14();
 	Util_Clear();
 	return 0;
 }
@@ -1017,11 +1021,56 @@ void tutil13 (void)
 }
 #endif
 
+void tutil14(void)
+{
+	Vector *r = new Vector();
+	if (!r) {
+		Util_Clear();
+		return;
+	}
+
+	double const length = 16;
+	double const width = 16;
+	double const height = 32;
+	BoundingBox *bb = new BoundingBox(r, length, width, height);
+	if (!bb) {
+		Util_Clear();
+		return;
+	}
+
+	struct Brownian *Brownian = new struct Brownian();
+	if (!Brownian) {
+		Util_Clear();
+		return;
+	}
+
+	Stack *stack = new Stack();
+	if (!stack) {
+		Util_Clear();
+		return;
+	}
+
+	Handler *handler = new Handler(stack);
+	if (!handler) {
+		Util_Clear();
+		return;
+	}
+
+	System *system = new System(bb, Brownian, handler);
+	if (!system) {
+		Util_Clear();
+		return;
+	}
+
+	Util_Clear();
+}
+
 /*
 
 BDX                                             December 31, 2023
 
 Copyright (C) 2023 Misael Díaz-Maldonado
+Copyright (C) 2024 UCF-Research Group
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by

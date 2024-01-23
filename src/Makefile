@@ -50,7 +50,9 @@ chirals: utils ids kinds vectors objects particles spheroids
 	@$(MAKE) -C chiral
 boxes: utils ids kinds vectors objects particles spheres janus spheroids chirals
 	@$(MAKE) -C box
-systems: utils boxes particles
+BD: utils
+	@$(MAKE) -C Brownian
+systems: utils boxes particles BD
 	@$(MAKE) -C system
 virtuals: systems oss utils prompts vectors particles
 	@$(MAKE) -C virtual
@@ -83,6 +85,7 @@ clean:
 	@$(MAKE) -C spheroid clean
 	@$(MAKE) -C chiral clean
 	@$(MAKE) -C box clean
+	@$(MAKE) -C Brownian clean
 	@$(MAKE) -C system clean
 	@$(MAKE) -C virtual clean
 	@$(MAKE) -C integrator clean
