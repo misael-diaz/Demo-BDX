@@ -4,13 +4,16 @@
 struct BoundingBox;
 struct Brownian;
 struct Handler;
+struct BDX;
 
 struct System
 {
+	BDX *app = NULL;
 	BoundingBox *bb = NULL;
 	struct Brownian *Brownian = NULL;
 	Handler *handler = NULL;
 	System(BoundingBox *bb, struct Brownian *Brownian, Handler *handler);
+	void bind(BDX *app);
 	void *operator new(size_t size);
 	void operator delete(void *p);
 };

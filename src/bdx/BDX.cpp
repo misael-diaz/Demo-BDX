@@ -2,6 +2,7 @@
 #include "Looper.h"
 #include "Integrator.h"
 #include "Driver.h"
+#include "System.h"
 #include "BDX.h"
 
 BDX::BDX (Prompt *prompt,
@@ -20,6 +21,7 @@ BDX::BDX (Prompt *prompt,
 	this->looper->bind(this);
 	this->driver->bind(this);
 	this->integrator->bind(this);
+	this->system->bind(this);
 }
 
 void *BDX::operator new (size_t size)
