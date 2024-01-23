@@ -10,6 +10,11 @@ System::System (BoundingBox *bb, struct Brownian *Brownian, Handler *handler)
 	this->Brownian->bind(this);
 }
 
+void System::bind (BDX *app)
+{
+	this->app = app;
+}
+
 void *System::operator new (size_t size)
 {
 	return Util_Malloc(size);
