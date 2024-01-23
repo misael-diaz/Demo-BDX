@@ -2,13 +2,15 @@
 #define GUARD_BDX_SYSTEM_H
 
 struct BoundingBox;
+struct Brownian;
 struct Handler;
 
 struct System
 {
 	BoundingBox *bb = NULL;
+	struct Brownian *Brownian = NULL;
 	Handler *handler = NULL;
-	System(BoundingBox *bb, Handler *handler);
+	System(BoundingBox *bb, struct Brownian *Brownian, Handler *handler);
 	void *operator new(size_t size);
 	void operator delete(void *p);
 };

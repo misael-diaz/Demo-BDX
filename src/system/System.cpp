@@ -1,10 +1,13 @@
 #include "util.h"
+#include "Brownian.h"
 #include "System.h"
 
-System::System (BoundingBox *bb, Handler *handler)
+System::System (BoundingBox *bb, struct Brownian *Brownian, Handler *handler)
 {
 	this->bb = bb;
+	this->Brownian = Brownian;
 	this->handler = handler;
+	this->Brownian->bind(this);
 }
 
 void *System::operator new (size_t size)
