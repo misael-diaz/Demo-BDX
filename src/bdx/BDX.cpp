@@ -1,4 +1,5 @@
 #include "util.h"
+#include "Timer.h"
 #include "Looper.h"
 #include "Integrator.h"
 #include "Driver.h"
@@ -6,6 +7,7 @@
 #include "BDX.h"
 
 BDX::BDX (Prompt *prompt,
+	  Timer  *timer,
 	  Random *random,
 	  Looper *looper,
 	  Driver *driver,
@@ -13,11 +15,13 @@ BDX::BDX (Prompt *prompt,
 	  System *system)
 {
 	this->prompt = prompt;
+	this->timer  = timer;
 	this->random = random;
 	this->looper = looper;
 	this->driver = driver;
 	this->integrator = integrator;
 	this->system = system;
+	this->timer->bind(this);
 	this->looper->bind(this);
 	this->driver->bind(this);
 	this->integrator->bind(this);
