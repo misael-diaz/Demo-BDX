@@ -1,9 +1,13 @@
 #ifndef GUARD_BDX_PROMPT_H
 #define GUARD_BDX_PROMPT_H
 
+struct BDX;
+
 struct Prompt
 {
+	BDX *app;
 	Prompt();
+	void bind(BDX *app);
 	void *operator new(size_t size);
 	void operator delete(void *p);
 };
