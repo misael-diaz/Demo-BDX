@@ -64,6 +64,8 @@ loopers: utils
 	@$(MAKE) -C looper
 timers: utils
 	@$(MAKE) -C timer
+loggers: utils
+	@$(MAKE) -C logger
 BDX: boxes\
      handlers\
      PRNGs\
@@ -74,6 +76,7 @@ BDX: boxes\
      integrators\
      prompts\
      systems\
+     loggers\
      timers\
      oss
 	@$(MAKE) -C bdx
@@ -105,5 +108,6 @@ clean:
 	@$(MAKE) -C driver clean
 	@$(MAKE) -C looper clean
 	@$(MAKE) -C timer clean
+	@$(MAKE) -C logger clean
 	@$(MAKE) -C bdx clean
 	@$(MAKE) -C test clean
