@@ -7,6 +7,7 @@ struct Random;
 struct Looper;
 struct Driver;
 struct Integrator;
+struct Logger;
 struct System;
 
 struct BDX
@@ -17,6 +18,7 @@ struct BDX
 	Looper *looper;
 	Driver *driver;
 	Integrator *integrator;
+	Logger *logger;
 	System *system;
 	BDX(Prompt *prompt,
 	    Timer  *timer,
@@ -24,6 +26,7 @@ struct BDX
 	    Looper *looper,
 	    Driver *driver,
 	    Integrator *integrator,
+	    Logger *logger,
 	    System *system);
 	void *operator new(size_t size);
 	void operator delete(void *p);

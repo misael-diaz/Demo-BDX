@@ -4,6 +4,7 @@
 #include "Looper.h"
 #include "Integrator.h"
 #include "Driver.h"
+#include "Logger.h"
 #include "System.h"
 #include "BDX.h"
 
@@ -13,6 +14,7 @@ BDX::BDX (Prompt *prompt,
 	  Looper *looper,
 	  Driver *driver,
 	  Integrator *integrator,
+	  Logger *logger,
 	  System *system)
 {
 	this->prompt = prompt;
@@ -27,6 +29,7 @@ BDX::BDX (Prompt *prompt,
 	this->looper->bind(this);
 	this->driver->bind(this);
 	this->integrator->bind(this);
+	this->logger->bind(this);
 	this->system->bind(this);
 }
 
