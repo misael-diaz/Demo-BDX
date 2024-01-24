@@ -1,7 +1,7 @@
 #
 # BDX						December 05, 2023
 #
-# source: src/bdx/make-inc
+# source: src/config/make-inc
 # author: @misael-diaz
 #
 # Synopsis:
@@ -17,11 +17,9 @@
 INC = -I../../include
 
 UTIL_H   = ../../include/util.h
-PROMPT_H = ../../include/Prompt.h
-CONFIG_H = ../../include/Config.h
-SYSTEM_H = ../../include/System.h
 BDX_H    = ../../include/BDX.h
-HEADERS = $(UTIL_H) $(PROMPT_H) $(CONFIG_H) $(SYSTEM_H) $(BDX_H)
+CONFIG_H = ../../include/Config.h
+HEADERS = $(UTIL_H) $(BDX_H) $(CONFIG_H)
 
-BDX_CXX = BDX.cpp
-BDX_OBJ = BDX.obj
+CONFIG_CXX = Config.cpp
+CONFIG_OBJ = Config.obj

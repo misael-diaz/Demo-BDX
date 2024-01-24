@@ -1,36 +1,13 @@
-#ifndef GUARD_BDX_BDX_H
-#define GUARD_BDX_BDX_H
+#ifndef GUARD_BDX_CONFIG_H
+#define GUARD_BDX_CONFIG_H
 
-struct Prompt;
-struct Config;
-struct Timer;
-struct Random;
-struct Looper;
-struct Driver;
-struct Integrator;
-struct Logger;
-struct System;
+struct BDX;
 
-struct BDX
+struct Config
 {
-	Prompt *prompt;
-	Config *config;
-	Timer  *timer;
-	Random *random;
-	Looper *looper;
-	Driver *driver;
-	Integrator *integrator;
-	Logger *logger;
-	System *system;
-	BDX(Prompt *prompt,
-	    Config *config,
-	    Timer  *timer,
-	    Random *random,
-	    Looper *looper,
-	    Driver *driver,
-	    Integrator *integrator,
-	    Logger *logger,
-	    System *system);
+	BDX *app = NULL;
+	Config();
+	void bind(BDX *app);
 	void *operator new(size_t size);
 	void operator delete(void *p);
 };
@@ -57,7 +34,7 @@ You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 author: @misael-diaz
-source: include/BDX.h
+source: include/Config.h
 
 References:
 [0] A Koenig and B Moo, Accelerated C++ Practical Programming by Example.
