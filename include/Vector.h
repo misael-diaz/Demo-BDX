@@ -7,6 +7,7 @@ struct Vector {
 	double z;
 	Vector();
 	Vector(double const x, double const y, double const z);
+	void copy(const Vector *vector);
 	void *operator new(size_t size);
 	void operator delete(void *p);
 };
@@ -18,6 +19,7 @@ struct Vector {
 BDX                                             December 31, 2023
 
 Copyright (C) 2023 Misael Díaz-Maldonado
+Copyright (C) 2024 UCF-Research Group
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
