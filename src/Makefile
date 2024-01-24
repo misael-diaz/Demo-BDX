@@ -56,6 +56,8 @@ systems: utils boxes particles BD
 	@$(MAKE) -C system
 virtuals: systems oss utils prompts vectors particles
 	@$(MAKE) -C virtual
+configs: utils
+	@$(MAKE) -C config
 integrators: utils
 	@$(MAKE) -C integrator
 drivers: utils
@@ -71,6 +73,7 @@ BDX: boxes\
      PRNGs\
      lists\
      virtuals\
+     configs\
      loopers\
      drivers\
      integrators\
@@ -104,6 +107,7 @@ clean:
 	@$(MAKE) -C Brownian clean
 	@$(MAKE) -C system clean
 	@$(MAKE) -C virtual clean
+	@$(MAKE) -C config clean
 	@$(MAKE) -C integrator clean
 	@$(MAKE) -C driver clean
 	@$(MAKE) -C looper clean
