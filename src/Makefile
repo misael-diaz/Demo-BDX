@@ -64,7 +64,18 @@ loopers: utils
 	@$(MAKE) -C looper
 timers: utils
 	@$(MAKE) -C timer
-BDX: boxes handlers PRNGs lists virtuals loopers drivers integrators prompts systems timers oss
+BDX: boxes\
+     handlers\
+     PRNGs\
+     lists\
+     virtuals\
+     loopers\
+     drivers\
+     integrators\
+     prompts\
+     systems\
+     timers\
+     oss
 	@$(MAKE) -C bdx
 tests: boxes handlers lists virtuals BDX
 	@$(MAKE) -C test
