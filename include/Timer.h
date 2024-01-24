@@ -1,48 +1,25 @@
-#include "util.h"
-#include "Timer.h"
-#include "Looper.h"
-#include "Integrator.h"
-#include "Driver.h"
-#include "System.h"
-#include "BDX.h"
+#ifndef GUARD_BDX_TIMER_H
+#define GUARD_BDX_TIMER_H
 
-BDX::BDX (Prompt *prompt,
-	  Timer  *timer,
-	  Random *random,
-	  Looper *looper,
-	  Driver *driver,
-	  Integrator *integrator,
-	  System *system)
-{
-	this->prompt = prompt;
-	this->timer  = timer;
-	this->random = random;
-	this->looper = looper;
-	this->driver = driver;
-	this->integrator = integrator;
-	this->system = system;
-	this->timer->bind(this);
-	this->looper->bind(this);
-	this->driver->bind(this);
-	this->integrator->bind(this);
-	this->system->bind(this);
-}
+struct BDX;
 
-void *BDX::operator new (size_t size)
+struct Timer
 {
-	return Util_Malloc(size);
-}
+	BDX *app = NULL;
+	Timer();
+	void bind(BDX *app);
+	void *operator new(size_t size);
+	void operator delete(void *p);
+};
 
-void BDX::operator delete (void *p)
-{
-	p = Util_Free(p);
-}
+#endif
 
 /*
 
 BDX                                             December 31, 2023
 
 Copyright (C) 2023 Misael Díaz-Maldonado
+Copyright (C) 2024 UCF-Research Group
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -57,7 +34,7 @@ You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 author: @misael-diaz
-source: src/bdx/BDX.cpp
+source: include/Timer.h
 
 References:
 [0] A Koenig and B Moo, Accelerated C++ Practical Programming by Example.
