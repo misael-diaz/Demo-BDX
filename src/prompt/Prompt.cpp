@@ -9,6 +9,11 @@ Prompt::Prompt ()
 	fcntl(0, F_SETFD, fcntl(0, F_GETFD) | O_NONBLOCK);
 }
 
+void Prompt::bind (BDX *app)
+{
+	this->app = app;
+}
+
 void *Prompt::operator new (size_t size)
 {
 	return Util_Malloc(size);

@@ -1,4 +1,5 @@
 #include "util.h"
+#include "Prompt.h"
 #include "Timer.h"
 #include "Looper.h"
 #include "Integrator.h"
@@ -21,6 +22,7 @@ BDX::BDX (Prompt *prompt,
 	this->driver = driver;
 	this->integrator = integrator;
 	this->system = system;
+	this->prompt->bind(this);
 	this->timer->bind(this);
 	this->looper->bind(this);
 	this->driver->bind(this);
