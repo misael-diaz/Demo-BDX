@@ -2,6 +2,7 @@
 #define GUARD_BDX_BDX_H
 
 struct Prompt;
+struct Config;
 struct Timer;
 struct Random;
 struct Looper;
@@ -13,6 +14,7 @@ struct System;
 struct BDX
 {
 	Prompt *prompt;
+	Config *config;
 	Timer  *timer;
 	Random *random;
 	Looper *looper;
@@ -21,6 +23,7 @@ struct BDX
 	Logger *logger;
 	System *system;
 	BDX(Prompt *prompt,
+	    Config *config,
 	    Timer  *timer,
 	    Random *random,
 	    Looper *looper,

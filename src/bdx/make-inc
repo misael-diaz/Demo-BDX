@@ -18,9 +18,10 @@ INC = -I../../include
 
 UTIL_H   = ../../include/util.h
 PROMPT_H = ../../include/Prompt.h
+CONFIG_H = ../../include/Config.h
 SYSTEM_H = ../../include/System.h
 BDX_H    = ../../include/BDX.h
-HEADERS = $(UTIL_H) $(PROMPT_H) $(SYSTEM_H) $(BDX_H)
+HEADERS = $(UTIL_H) $(PROMPT_H) $(CONFIG_H) $(SYSTEM_H) $(BDX_H)
 
 BDX_CXX = BDX.cpp
 BDX_OBJ = BDX.obj
