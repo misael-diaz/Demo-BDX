@@ -11,6 +11,13 @@ Vector::Vector(double const x0, double const y0, double const z0) : x(x0), y(y0)
 	return;
 }
 
+void Vector::copy (const Vector *vector)
+{
+	this->x = vector->x;
+	this->y = vector->y;
+	this->z = vector->z;
+}
+
 void *Vector::operator new (size_t size)
 {
 	return Util_Malloc(size);
@@ -26,6 +33,7 @@ void Vector::operator delete (void *p)
 BDX                                             December 31, 2023
 
 Copyright (C) 2023 Misael Díaz-Maldonado
+Copyright (C) 2024 UCF-Research Group
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
