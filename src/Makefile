@@ -62,7 +62,9 @@ drivers: utils
 	@$(MAKE) -C driver
 loopers: utils
 	@$(MAKE) -C looper
-BDX: boxes handlers PRNGs lists virtuals loopers drivers integrators prompts systems oss
+timers: utils
+	@$(MAKE) -C timer
+BDX: boxes handlers PRNGs lists virtuals loopers drivers integrators prompts systems timers oss
 	@$(MAKE) -C bdx
 tests: boxes handlers lists virtuals BDX
 	@$(MAKE) -C test
@@ -91,5 +93,6 @@ clean:
 	@$(MAKE) -C integrator clean
 	@$(MAKE) -C driver clean
 	@$(MAKE) -C looper clean
+	@$(MAKE) -C timer clean
 	@$(MAKE) -C bdx clean
 	@$(MAKE) -C test clean
