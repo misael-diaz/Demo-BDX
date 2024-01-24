@@ -26,6 +26,7 @@ BDX::BDX (Prompt *prompt,
 	this->looper = looper;
 	this->driver = driver;
 	this->integrator = integrator;
+	this->logger = logger;
 	this->system = system;
 	this->prompt->bind(this);
 	this->config->bind(this);
