@@ -2,6 +2,7 @@
 #include <cstring>
 #include <cstdlib>
 
+#include "os.h"
 #include "util.h"
 #include "Stack.h"
 #include "ID.h"
@@ -37,6 +38,7 @@ void tutil11(void);
 void tutil12(void);
 void tutil13(void);
 void tutil14(void);
+void tutil15(void);
 
 #ifdef GXX
 Particle *_Particle(Vector *r,
@@ -81,6 +83,7 @@ int main ()
 	tutil12();
 	tutil13();
 	tutil14();
+	tutil15();
 	Util_Clear();
 	return 0;
 }
@@ -1063,6 +1066,144 @@ void tutil14(void)
 	}
 
 	Util_Clear();
+}
+
+static const char *Cfg_Data (void)
+{
+        const char *txt = "\"box\": {\n"
+                          "     \"length\": \"12.0\",\n"
+                          "     \"width\": \"12.0\",\n"
+                          "     \"height\": \"16.0\"\n"
+                          "}\n";
+        return txt;
+}
+
+static size_t Cfg_Count (const char **json, char const c)
+{
+	size_t count = 0;
+        const char *iter = *json;
+        while (*iter) {
+                if (c == *iter) {
+                        ++count;
+                }
+                ++iter;
+        }
+
+	return count;
+}
+
+static bool Cfg_SyntaxQuote (const char **json)
+{
+        size_t const count = Cfg_Count(json, '\"');
+	return !(count % 2);
+}
+
+static bool Cfg_SyntaxBrace (const char **json)
+{
+        size_t const left = Cfg_Count(json, '{');
+        size_t const right = Cfg_Count(json, '}');
+//	os::print("cnt: %lu %lu\n", left, right);
+	return (left == right);
+}
+
+/*
+static ssize_t Cfg_FieldLen (const char *field)
+{
+	if (*field != '\"') {
+		os::error("Cfg_KeyLen: not a field\n");
+		return -1;
+	}
+
+	ssize_t len = 0;
+	const char *iter = &field[1];
+	while (*iter && *iter != '\"') {
+		++len;
+	}
+
+	return len;
+}
+*/
+
+static void Cfg_FindQuote (const char **json)
+{
+	const char *iter = *json;
+	while (*iter && *iter != '\"') {
+		++iter;
+	}
+
+	*json = iter;
+}
+
+static void Cfg_FindField (const char **json, const char **beg, const char **end)
+{
+	Cfg_FindQuote(json);
+	if (!**json) {
+		return;
+	}
+
+	*beg = ++*json;
+	Cfg_FindQuote(json);
+	*end = *json;
+	if (**json) {
+		++*json;
+	}
+}
+
+static void Cfg_GetFieldName (char *name,
+			      const char *beg,
+			      const char *end,
+			      size_t const sz)
+{
+	memset(name, 0, sz);
+	strncpy(name, beg, end - beg);
+
+	os::print("fieldname: %s\n", name);
+	os::print("len: %lu\n", end - beg);
+}
+
+#define MAX_FIELD_NAME_SIZE 80
+static void Cfg_FindAllFields (const char **json)
+{
+	const char *beg[] = {NULL};
+	const char *end[] = {NULL};
+	char fieldname[MAX_FIELD_NAME_SIZE];
+	while (**json) {
+		Cfg_FindField(json, beg, end);
+		Cfg_GetFieldName(fieldname, *beg, *end, MAX_FIELD_NAME_SIZE);
+	}
+}
+
+static bool Cfg_Parse (const char **json)
+{
+	bool rc = true;
+	rc = Cfg_SyntaxQuote(json);
+	if (!rc) {
+		return rc;
+	}
+
+	rc = Cfg_SyntaxBrace(json);
+	if (!rc) {
+		return rc;
+	}
+
+	return rc;
+}
+
+void tutil15 (void)
+{
+	const char *txt = Cfg_Data();
+	const char **json = &txt;
+	os::print("len: %lu\n", strlen(txt));
+
+	bool rc = Cfg_Parse(json);
+	if (!rc) {
+		os::print("FAIL\n");
+		return;
+	} else {
+		os::print("PASS\n");
+	}
+
+	Cfg_FindAllFields(json);
 }
 
 /*
