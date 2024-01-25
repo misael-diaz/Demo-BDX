@@ -5,4 +5,5 @@
 *.txt
 *.log
 *.err
+*.json
 *TODO*
