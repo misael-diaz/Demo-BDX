@@ -8,6 +8,7 @@ struct Config
 	BDX *app = NULL;
 	Config();
 	void bind(BDX *app);
+	void config();
 	void *operator new(size_t size);
 	void operator delete(void *p);
 };
