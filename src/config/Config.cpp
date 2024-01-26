@@ -240,11 +240,18 @@ static const char *JSON (void)
                           "     \"length\": \"12.0\",\n"
                           "     \"width\": \"12.0\",\n"
                           "     \"height\": \"16.0\"\n"
-                          "}\n"
-			  "\n"
+                          "},\n"
 			  "\"System\": {\n"
-                          "     \"size\": \"256\",\n"
+                          "     \"size\": \"512\",\n"
                           "     \"periodic\": \"true\"\n"
+                          "},\n"
+			  "\"Sphere\": {\n"
+                          "     \"size\": \"256\",\n"
+                          "     \"radius\": \"1.0\"\n"
+                          "},\n"
+			  "\"Janus\": {\n"
+                          "     \"size\": \"256\",\n"
+                          "     \"radius\": \"1.0\"\n"
                           "}\n";
         return txt;
 }
