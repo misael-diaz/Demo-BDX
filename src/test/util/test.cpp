@@ -18,6 +18,7 @@
 #include "Brownian.h"
 #include "Handler.h"
 #include "System.h"
+#include "Config.h"
 #include "List.h"
 
 #define COMPILE 0
@@ -1070,7 +1071,14 @@ void tutil14(void)
 
 void tutil15 (void)
 {
-	return;
+	Config *config = new Config();
+	if (!config) {
+		Util_Clear();
+		return;
+	}
+
+	config->config();
+	Util_Clear();
 }
 
 /*
