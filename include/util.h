@@ -6,6 +6,7 @@
 void *Util_Free(void *p);
 void *Util_Clear(void);
 void *Util_Malloc(size_t const sz);
+char *Util_CopyString(const char *string);
 
 #endif
 
@@ -14,6 +15,7 @@ void *Util_Malloc(size_t const sz);
 BDX                                             December 31, 2023
 
 Copyright (C) 2023 Misael Díaz-Maldonado
+Copyright (C) 2024 UCF-ResearchGroup
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
