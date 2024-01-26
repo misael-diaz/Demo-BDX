@@ -149,11 +149,17 @@ static bool Cfg_SyntaxBrace (const char **json)
 	return (left == right);
 }
 
-static void Cfg_FindQuote (const char **json)
+static bool Cfg_FindQuote (const char **json)
 {
+	bool newobj = false;
 	while (**json && **json != '\"') {
+		if (**json == '}') {
+			newobj = true;
+		}
 		++*json;
 	}
+
+	return newobj;
 }
 
 static void Cfg_GetFieldName (char *name,
@@ -168,16 +174,20 @@ static void Cfg_GetFieldName (char *name,
 	os::print("len: %lu\n", end - beg);
 }
 
-static void Cfg_FindField (const char **json,
+static bool Cfg_FindField (const char **json,
 			   const char **beg,
 			   const char **end,
 			   char *fieldname)
 {
-	Cfg_FindQuote(json);
+	bool const newobj = Cfg_FindQuote(json);
+	if (newobj) {
+		return newobj;
+	}
+
 	if (!**json) {
 		*beg = NULL;
 		*end = NULL;
-		return;
+		return false;
 	}
 
 	*beg = ++*json;
@@ -185,13 +195,14 @@ static void Cfg_FindField (const char **json,
 	if (!**json) {
 		*beg = NULL;
 		*end = NULL;
-		return;
+		return false;
 	}
 
 	*end = *json;
 	++*json;
 
 	Cfg_GetFieldName(fieldname, *beg, *end, MAX_FIELD_NAME_SIZE);
+	return false;
 }
 
 static void Cfg_FindAllFields (const char **json)
@@ -229,84 +240,26 @@ static const char *JSON (void)
                           "     \"length\": \"12.0\",\n"
                           "     \"width\": \"12.0\",\n"
                           "     \"height\": \"16.0\"\n"
+                          "}\n"
+			  "\n"
+			  "\"System\": {\n"
+                          "     \"size\": \"256\",\n"
+                          "     \"periodic\": \"true\"\n"
                           "}\n";
         return txt;
 }
 
-void Config::config ()
+static bool Cfg_AddPairs (Object *object, const char **json)
 {
-	const char *json[] = {JSON()};
-	bool rc = Cfg_Parse(json);
-	if (!rc) {
-		os::print("FAIL\n");
-		return;
-	} else {
-		os::print("PASS\n");
-	}
-
-	Cfg_FindAllFields(json);
-
 	const char *beg[] = {NULL};
 	const char *end[] = {NULL};
 	char fieldname[MAX_FIELD_NAME_SIZE];
-	Cfg_FindField(json, beg, end, fieldname);
-
-	Stack *stack = new Stack();
-	if (!stack) {
-		Util_Clear();
-		os::error("Config::config: memory error\n");
-		exit(EXIT_FAILURE);
-	}
-
-	ObjectStack *objects = new ObjectStack(stack);
-	if (!objects) {
-		Util_Clear();
-		os::error("Config::config: memory error\n");
-		exit(EXIT_FAILURE);
-	}
-
-	Object *object = new Object();
-	if (!object) {
-		Util_Clear();
-		os::error("Config::config: memory error\n");
-		exit(EXIT_FAILURE);
-	}
-
-	object->type = Util_CopyString("object");
-	if (!object->type) {
-		Util_Clear();
-		os::error("Config::config: memory error\n");
-		exit(EXIT_FAILURE);
-	}
-
-	object->key = Util_CopyString(fieldname);
-	if (!object->key) {
-		Util_Clear();
-		os::error("Config::config: memory error\n");
-		exit(EXIT_FAILURE);
-	}
-
-	stack = new Stack();
-	if (!stack) {
-		Util_Clear();
-		os::error("Config::config: memory error\n");
-		exit(EXIT_FAILURE);
-	}
-
-	object->ostack = new ObjectStack(stack);
-	if (!object->ostack)  {
-		Util_Clear();
-		os::error("Config::config: memory error\n");
-		exit(EXIT_FAILURE);
-	}
-
-	os::print("type: %s\n", object->type);
-	os::print("key:  %s\n", object->key);
-	objects->add(object);
-
 	while (**json) {
 
-		Cfg_FindField(json, beg, end, fieldname);
+		bool const newobj = Cfg_FindField(json, beg, end, fieldname);
+		if (newobj) {
+			return newobj;
+		}
 
 		if (!**json) {
 			break;
@@ -343,6 +296,84 @@ void Config::config ()
 
 		object->ostack->add(next);
 	}
+
+	return false;
+}
+
+void Config::config ()
+{
+	const char *json[] = {JSON()};
+	bool rc = Cfg_Parse(json);
+	if (!rc) {
+		os::print("FAIL\n");
+		return;
+	} else {
+		os::print("PASS\n");
+	}
+
+//	Cfg_FindAllFields(json);
+	Stack *stack = new Stack();
+	if (!stack) {
+		Util_Clear();
+		os::error("Config::config: memory error\n");
+		exit(EXIT_FAILURE);
+	}
+
+	ObjectStack *objects = new ObjectStack(stack);
+	if (!objects) {
+		Util_Clear();
+		os::error("Config::config: memory error\n");
+		exit(EXIT_FAILURE);
+	}
+
+	do {
+		const char *beg[] = {NULL};
+		const char *end[] = {NULL};
+		char fieldname[MAX_FIELD_NAME_SIZE];
+		Cfg_FindField(json, beg, end, fieldname);
+
+		Object *object = new Object();
+		if (!object) {
+			Util_Clear();
+			os::error("Config::config: memory error\n");
+			exit(EXIT_FAILURE);
+		}
+
+		object->type = Util_CopyString("object");
+		if (!object->type) {
+			Util_Clear();
+			os::error("Config::config: memory error\n");
+			exit(EXIT_FAILURE);
+		}
+
+		object->key = Util_CopyString(fieldname);
+		if (!object->key) {
+			Util_Clear();
+			os::error("Config::config: memory error\n");
+			exit(EXIT_FAILURE);
+		}
+
+		stack = new Stack();
+		if (!stack) {
+			Util_Clear();
+			os::error("Config::config: memory error\n");
+			exit(EXIT_FAILURE);
+		}
+
+		object->ostack = new ObjectStack(stack);
+		if (!object->ostack)  {
+			Util_Clear();
+			os::error("Config::config: memory error\n");
+			exit(EXIT_FAILURE);
+		}
+
+		os::print("type: %s\n", object->type);
+		os::print("key:  %s\n", object->key);
+		objects->add(object);
+
+		Cfg_AddPairs(object, json);
+
+	} while (**json);
 }
 
 /*
