@@ -1068,6 +1068,7 @@ void tutil14(void)
 	Util_Clear();
 }
 
+/*
 static const char *Cfg_Data (void)
 {
         const char *txt = "\"box\": {\n"
@@ -1106,7 +1107,6 @@ static bool Cfg_SyntaxBrace (const char **json)
 	return (left == right);
 }
 
-/*
 static ssize_t Cfg_FieldLen (const char *field)
 {
 	if (*field != '\"') {
@@ -1122,7 +1122,6 @@ static ssize_t Cfg_FieldLen (const char *field)
 
 	return len;
 }
-*/
 
 static void Cfg_FindQuote (const char **json)
 {
@@ -1188,7 +1187,9 @@ static bool Cfg_Parse (const char **json)
 
 	return rc;
 }
+*/
 
+#if COMPILE
 void tutil15 (void)
 {
 	const char *txt = Cfg_Data();
@@ -1205,6 +1206,12 @@ void tutil15 (void)
 
 	Cfg_FindAllFields(json);
 }
+#else
+void tutil15 (void)
+{
+	return;
+}
+#endif
 
 /*
 

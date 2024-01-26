@@ -71,6 +71,7 @@ CHIRAL_OBJ   = ../../../src/chiral/Chiral.obj
 BOX_OBJ      = ../../../src/box/BoundingBox.obj
 BROWNIAN_OBJ = ../../../src/Brownian/Brownian.obj
 SYSTEM_OBJ   = ../../../src/system/System.obj
+CONFIG_OBJ   = ../../../src/config/Config.obj
 OBJS = $(OS_OBJ)\
        $(UTIL_OBJ)\
        $(STACK_OBJ)\
@@ -88,4 +89,5 @@ OBJS = $(OS_OBJ)\
        $(BOX_OBJ)\
        $(BROWNIAN_OBJ)\
        $(SYSTEM_OBJ)\
+       $(CONFIG_OBJ)\
        $(TEST_OBJ)
