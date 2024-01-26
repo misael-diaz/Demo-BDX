@@ -1068,29 +1068,10 @@ void tutil14(void)
 	Util_Clear();
 }
 
-#if COMPILE
-void tutil15 (void)
-{
-	const char *txt = Cfg_Data();
-	const char **json = &txt;
-	os::print("len: %lu\n", strlen(txt));
-
-	bool rc = Cfg_Parse(json);
-	if (!rc) {
-		os::print("FAIL\n");
-		return;
-	} else {
-		os::print("PASS\n");
-	}
-
-	Cfg_FindAllFields(json);
-}
-#else
 void tutil15 (void)
 {
 	return;
 }
-#endif
 
 /*
 
