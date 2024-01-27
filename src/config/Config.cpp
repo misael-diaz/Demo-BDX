@@ -19,7 +19,6 @@ struct ObjectStack
 	size_t cap() const;
 	size_t numel() const;
 	int add(Object *object);
-	Object *last();
 	const Object **begin() const;
 	const Object **end() const;
 	void *operator new(size_t size);
@@ -71,17 +70,6 @@ int ObjectStack::add (Object *object)
 {
         void *elem = (void*) object;
         return this->stack->add(elem);
-}
-
-Object *ObjectStack::last ()
-{
-	if (!this->numel()) {
-		return NULL;
-	}
-
-	Object **iter = ((Object **) (this->stack->end()));
-	Object *lastObj = *(--iter);
-	return lastObj;
 }
 
 const Object **ObjectStack::begin () const
