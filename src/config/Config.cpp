@@ -307,32 +307,8 @@ static bool Cfg_AddPairs (Object *object, const char **json)
 	return false;
 }
 
-void Config::config ()
+static void Cfg_AddObjects (ObjectStack *objects, const char **json)
 {
-	const char *json[] = {JSON()};
-	bool rc = Cfg_Parse(json);
-	if (!rc) {
-		os::print("FAIL\n");
-		return;
-	} else {
-		os::print("PASS\n");
-	}
-
-//	Cfg_FindAllFields(json);
-	Stack *stack = new Stack();
-	if (!stack) {
-		Util_Clear();
-		os::error("Config::config: memory error\n");
-		exit(EXIT_FAILURE);
-	}
-
-	ObjectStack *objects = new ObjectStack(stack);
-	if (!objects) {
-		Util_Clear();
-		os::error("Config::config: memory error\n");
-		exit(EXIT_FAILURE);
-	}
-
 	do {
 		const char *beg[] = {NULL};
 		const char *end[] = {NULL};
@@ -360,7 +336,7 @@ void Config::config ()
 			exit(EXIT_FAILURE);
 		}
 
-		stack = new Stack();
+		Stack *stack = new Stack();
 		if (!stack) {
 			Util_Clear();
 			os::error("Config::config: memory error\n");
@@ -376,11 +352,40 @@ void Config::config ()
 
 		os::print("type: %s\n", object->type);
 		os::print("key:  %s\n", object->key);
-		objects->add(object);
 
 		Cfg_AddPairs(object, json);
+		objects->add(object);
 
 	} while (**json);
+}
+
+void Config::config ()
+{
+	const char *json[] = {JSON()};
+	bool rc = Cfg_Parse(json);
+	if (!rc) {
+		os::print("FAIL\n");
+		return;
+	} else {
+		os::print("PASS\n");
+	}
+
+//	Cfg_FindAllFields(json);
+	Stack *stack = new Stack();
+	if (!stack) {
+		Util_Clear();
+		os::error("Config::config: memory error\n");
+		exit(EXIT_FAILURE);
+	}
+
+	ObjectStack *objects = new ObjectStack(stack);
+	if (!objects) {
+		Util_Clear();
+		os::error("Config::config: memory error\n");
+		exit(EXIT_FAILURE);
+	}
+
+	Cfg_AddObjects(objects, json);
 }
 
 /*
