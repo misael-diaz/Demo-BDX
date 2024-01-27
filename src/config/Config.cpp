@@ -346,7 +346,7 @@ static void Cfg_AddObjects (ObjectStack *objects, const char **json)
 	} while (**json);
 }
 
-void Config::config ()
+void Config::parse ()
 {
 	const char *json[] = {JSON()};
 	if (!Cfg_Parse(json)) {
@@ -371,6 +371,11 @@ void Config::config ()
 
 	Cfg_AddObjects(objects, json);
 	this->_objects_ = (void*) objects;
+}
+
+void Config::config ()
+{
+	return;
 }
 
 /*
