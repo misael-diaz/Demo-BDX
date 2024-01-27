@@ -1,5 +1,7 @@
 #include <cstring>
 #include <cstdlib>
+#include <cstdio>
+#include <cerrno>
 
 #include "os.h"
 #include "util.h"
@@ -205,19 +207,6 @@ static bool Cfg_FindField (const char **json,
 	return false;
 }
 
-static void Cfg_FindAllFields (const char **json)
-{
-	const char *beg[] = {NULL};
-	const char *end[] = {NULL};
-	char fieldname[MAX_FIELD_NAME_SIZE];
-	const char *start = *json;
-	while (**json) {
-		Cfg_FindField(json, beg, end, fieldname);
-	}
-
-	*json = start;
-}
-
 static bool Cfg_Parse (const char **json)
 {
 	bool rc = true;
@@ -232,28 +221,6 @@ static bool Cfg_Parse (const char **json)
 	}
 
 	return rc;
-}
-
-static const char *JSON (void)
-{
-        const char *txt = "\"Box\": {\n"
-                          "     \"length\": \"12.0\",\n"
-                          "     \"width\": \"12.0\",\n"
-                          "     \"height\": \"16.0\"\n"
-                          "},\n"
-			  "\"System\": {\n"
-                          "     \"size\": \"512\",\n"
-                          "     \"periodic\": \"true\"\n"
-                          "},\n"
-			  "\"Sphere\": {\n"
-                          "     \"size\": \"256\",\n"
-                          "     \"radius\": \"1.0\"\n"
-                          "},\n"
-			  "\"Janus\": {\n"
-                          "     \"size\": \"256\",\n"
-                          "     \"radius\": \"1.0\"\n"
-                          "}\n";
-        return txt;
 }
 
 static bool Cfg_AddPairs (Object *object, const char **json)
@@ -307,32 +274,8 @@ static bool Cfg_AddPairs (Object *object, const char **json)
 	return false;
 }
 
-void Config::config ()
+static void Cfg_AddObjects (ObjectStack *objects, const char **json)
 {
-	const char *json[] = {JSON()};
-	bool rc = Cfg_Parse(json);
-	if (!rc) {
-		os::print("FAIL\n");
-		return;
-	} else {
-		os::print("PASS\n");
-	}
-
-//	Cfg_FindAllFields(json);
-	Stack *stack = new Stack();
-	if (!stack) {
-		Util_Clear();
-		os::error("Config::config: memory error\n");
-		exit(EXIT_FAILURE);
-	}
-
-	ObjectStack *objects = new ObjectStack(stack);
-	if (!objects) {
-		Util_Clear();
-		os::error("Config::config: memory error\n");
-		exit(EXIT_FAILURE);
-	}
-
 	do {
 		const char *beg[] = {NULL};
 		const char *end[] = {NULL};
@@ -360,7 +303,7 @@ void Config::config ()
 			exit(EXIT_FAILURE);
 		}
 
-		stack = new Stack();
+		Stack *stack = new Stack();
 		if (!stack) {
 			Util_Clear();
 			os::error("Config::config: memory error\n");
@@ -376,11 +319,97 @@ void Config::config ()
 
 		os::print("type: %s\n", object->type);
 		os::print("key:  %s\n", object->key);
-		objects->add(object);
 
 		Cfg_AddPairs(object, json);
+		objects->add(object);
 
 	} while (**json);
+}
+
+static void Cfg_OpenJSON (FILE **f)
+{
+	*f = fopen("conf.json", "r");
+	if (!*f) {
+		Util_Clear();
+		os::error("Config::load: %s\n", strerror(errno));
+		exit(EXIT_FAILURE);
+	}
+}
+
+static void Cfg_CloseJSON (FILE **f)
+{
+	fclose(*f);
+}
+
+static size_t Cfg_SizeJSON (FILE **f)
+{
+	fseek(*f, 0L, SEEK_SET);
+	size_t const beg = ftell(*f);
+	fseek(*f, 0L, SEEK_END);
+	size_t const end = ftell(*f);
+	size_t const size = (end - beg);
+	fseek(*f, 0L, SEEK_SET);
+	return size;
+}
+
+static void *Cfg_ReadJSON (FILE **f)
+{
+	size_t const bytes = Cfg_SizeJSON(f);
+	size_t const sz = (bytes + 1);
+	void *json = Util_Malloc(sz);
+	memset(json, 0, sz);
+	size_t const size = fread(json, 1, bytes, *f);
+	if (size != bytes) {
+		Cfg_CloseJSON(f);
+		Util_Clear();
+		os::error("Config::load: error\n");
+		exit(EXIT_FAILURE);
+	}
+
+	return json;
+}
+
+void Config::load ()
+{
+	FILE *f[] = {NULL};
+	Cfg_OpenJSON(f);
+	Cfg_SizeJSON(f);
+	void *json = Cfg_ReadJSON(f);
+	Cfg_CloseJSON(f);
+	this->_json_= json;
+}
+
+void Config::parse ()
+{
+	const char *JSON = (const char*) this->_json_;
+	const char *json[] = {JSON};
+	if (!Cfg_Parse(json)) {
+		Util_Clear();
+		os::error("Config::config: syntax error in conf.json\n");
+		exit(EXIT_FAILURE);
+	}
+
+	Stack *stack = new Stack();
+	if (!stack) {
+		Util_Clear();
+		os::error("Config::config: memory error\n");
+		exit(EXIT_FAILURE);
+	}
+
+	ObjectStack *objects = new ObjectStack(stack);
+	if (!objects) {
+		Util_Clear();
+		os::error("Config::config: memory error\n");
+		exit(EXIT_FAILURE);
+	}
+
+	Cfg_AddObjects(objects, json);
+	this->_objects_ = (void*) objects;
+}
+
+void Config::config ()
+{
+	return;
 }
 
 /*

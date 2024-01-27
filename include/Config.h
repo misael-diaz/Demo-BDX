@@ -5,9 +5,15 @@ struct BDX;
 
 struct Config
 {
+	private:
+	void *_json_ = NULL;
+	void *_objects_ = NULL;
+	public:
 	BDX *app = NULL;
 	Config();
 	void bind(BDX *app);
+	void load();
+	void parse();
 	void config();
 	void *operator new(size_t size);
 	void operator delete(void *p);

@@ -1077,7 +1077,8 @@ void tutil15 (void)
 		return;
 	}
 
-	config->config();
+	config->load();
+	config->parse();
 	Util_Clear();
 }
 
