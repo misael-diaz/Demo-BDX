@@ -349,12 +349,10 @@ static void Cfg_AddObjects (ObjectStack *objects, const char **json)
 void Config::config ()
 {
 	const char *json[] = {JSON()};
-	bool rc = Cfg_Parse(json);
-	if (!rc) {
-		os::print("FAIL\n");
-		return;
-	} else {
-		os::print("PASS\n");
+	if (!Cfg_Parse(json)) {
+		Util_Clear();
+		os::error("Config::config: syntax error in conf.json\n");
+		exit(EXIT_FAILURE);
 	}
 
 	Stack *stack = new Stack();
