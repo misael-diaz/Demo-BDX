@@ -223,30 +223,6 @@ static bool Cfg_Parse (const char **json)
 	return rc;
 }
 
-/*
-static const char *JSON (void)
-{
-        const char *txt = "\"Box\": {\n"
-                          "     \"length\": \"12.0\",\n"
-                          "     \"width\": \"12.0\",\n"
-                          "     \"height\": \"16.0\"\n"
-                          "},\n"
-			  "\"System\": {\n"
-                          "     \"size\": \"512\",\n"
-                          "     \"periodic\": \"true\"\n"
-                          "},\n"
-			  "\"Sphere\": {\n"
-                          "     \"size\": \"256\",\n"
-                          "     \"radius\": \"1.0\"\n"
-                          "},\n"
-			  "\"Janus\": {\n"
-                          "     \"size\": \"256\",\n"
-                          "     \"radius\": \"1.0\"\n"
-                          "}\n";
-        return txt;
-}
-*/
-
 static bool Cfg_AddPairs (Object *object, const char **json)
 {
 	const char *beg[] = {NULL};
