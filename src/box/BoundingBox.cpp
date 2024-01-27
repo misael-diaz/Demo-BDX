@@ -6,28 +6,28 @@
 BoundingBox::BoundingBox (Vector *r,
 			  double const l,
 			  double const w,
-			  double const h) :
+			  double const h):
 			  BDXObject(r),
-			  l(l),
-			  w(w),
-			  h(h)
+			  _length_(l),
+			  _width_(w),
+			  _height_(h)
 {
 	return;
 }
 
 double BoundingBox::length() const
 {
-	return this->l;
+	return this->_length_;
 }
 
 double BoundingBox::width() const
 {
-	return this->w;
+	return this->_width_;
 }
 
 double BoundingBox::height() const
 {
-	return this->h;
+	return this->_height_;
 }
 
 void *BoundingBox::operator new (size_t size)
@@ -45,6 +45,7 @@ void BoundingBox::operator delete (void *p)
 BDX                                             December 31, 2023
 
 Copyright (C) 2023 Misael Díaz-Maldonado
+Copyright (C) 2024 UCF-Research Group
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by

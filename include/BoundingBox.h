@@ -4,14 +4,12 @@
 struct Vector;
 struct BDXObject;
 
-class BoundingBox : BDXObject
+struct BoundingBox : BDXObject
 {
-	private:
 	Vector *r = NULL;
-	double l = 0;
-	double w = 0;
-	double h = 0;
-	public:
+	double _length_ = 0;
+	double _width_ = 0;
+	double _height_ = 0;
 	BoundingBox(Vector *r, double const l, double const w, double const h);
 	double length() const;
 	double width() const;
@@ -27,6 +25,7 @@ class BoundingBox : BDXObject
 BDX                                             December 31, 2023
 
 Copyright (C) 2023 Misael Díaz-Maldonado
+Copyright (C) 2024 UCF-Research Group
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by

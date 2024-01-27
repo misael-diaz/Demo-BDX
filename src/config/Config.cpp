@@ -6,7 +6,11 @@
 #include "os.h"
 #include "util.h"
 #include "Stack.h"
+#include "BDXObject.h"
+#include "BoundingBox.h"
 #include "Config.h"
+#include "System.h"
+#include "BDX.h"
 
 #define MAX_FIELD_NAME_SIZE 80
 
@@ -389,9 +393,46 @@ void Config::parse ()
 	this->_objects_ = (void*) objects;
 }
 
+void Config::Box (void *vobject)
+{
+	Object *object = (Object*) vobject;
+	ObjectStack *ostack = object->ostack;
+	for (const Object **iter = ostack->begin(); iter != ostack->end(); ++iter) {
+
+		const Object *object = *iter;
+		if (!strcmp(object->key, "length")) {
+			const char *length = object->value;
+			this->app->system->bb->_length_ = atof(length);
+			os::print("length: %f\n", this->app->system->bb->length());
+			continue;
+		}
+
+		if (!strcmp(object->key, "width")) {
+			const char *width = object->value;
+			this->app->system->bb->_width_ = atof(width);
+			os::print("width: %f\n", this->app->system->bb->width());
+			continue;
+		}
+
+		if (!strcmp(object->key, "height")) {
+			const char *height = object->value;
+			this->app->system->bb->_height_ = atof(height);
+			os::print("height: %f\n", this->app->system->bb->height());
+		}
+	}
+}
+
 void Config::config ()
 {
-	return;
+	ObjectStack *ostack = (ObjectStack*) this->_objects_;
+	for (const Object **iter = ostack->begin(); iter != ostack->end(); ++iter) {
+		const Object *object = *iter;
+		if (!strcmp(object->key, "Box")) {
+			void *vobject = (void*) object;
+			this->Box(vobject);
+			continue;
+		}
+	}
 }
 
 /*
