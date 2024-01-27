@@ -205,19 +205,6 @@ static bool Cfg_FindField (const char **json,
 	return false;
 }
 
-static void Cfg_FindAllFields (const char **json)
-{
-	const char *beg[] = {NULL};
-	const char *end[] = {NULL};
-	char fieldname[MAX_FIELD_NAME_SIZE];
-	const char *start = *json;
-	while (**json) {
-		Cfg_FindField(json, beg, end, fieldname);
-	}
-
-	*json = start;
-}
-
 static bool Cfg_Parse (const char **json)
 {
 	bool rc = true;
@@ -370,7 +357,6 @@ void Config::config ()
 		os::print("PASS\n");
 	}
 
-//	Cfg_FindAllFields(json);
 	Stack *stack = new Stack();
 	if (!stack) {
 		Util_Clear();
