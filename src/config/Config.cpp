@@ -6,7 +6,11 @@
 #include "os.h"
 #include "util.h"
 #include "Stack.h"
+#include "BDXObject.h"
+#include "BoundingBox.h"
 #include "Config.h"
+#include "System.h"
+#include "BDX.h"
 
 #define MAX_FIELD_NAME_SIZE 80
 
@@ -19,7 +23,6 @@ struct ObjectStack
 	size_t cap() const;
 	size_t numel() const;
 	int add(Object *object);
-	Object *last();
 	const Object **begin() const;
 	const Object **end() const;
 	void *operator new(size_t size);
@@ -71,17 +74,6 @@ int ObjectStack::add (Object *object)
 {
         void *elem = (void*) object;
         return this->stack->add(elem);
-}
-
-Object *ObjectStack::last ()
-{
-	if (!this->numel()) {
-		return NULL;
-	}
-
-	Object **iter = ((Object **) (this->stack->end()));
-	Object *lastObj = *(--iter);
-	return lastObj;
 }
 
 const Object **ObjectStack::begin () const
@@ -171,9 +163,6 @@ static void Cfg_GetFieldName (char *name,
 {
 	memset(name, 0, sz);
 	strncpy(name, beg, end - beg);
-
-	os::print("fieldname: %s\n", name);
-	os::print("len: %lu\n", end - beg);
 }
 
 static bool Cfg_FindField (const char **json,
@@ -317,9 +306,6 @@ static void Cfg_AddObjects (ObjectStack *objects, const char **json)
 			exit(EXIT_FAILURE);
 		}
 
-		os::print("type: %s\n", object->type);
-		os::print("key:  %s\n", object->key);
-
 		Cfg_AddPairs(object, json);
 		objects->add(object);
 
@@ -407,9 +393,46 @@ void Config::parse ()
 	this->_objects_ = (void*) objects;
 }
 
+void Config::Box (void *vobject)
+{
+	Object *object = (Object*) vobject;
+	ObjectStack *ostack = object->ostack;
+	for (const Object **iter = ostack->begin(); iter != ostack->end(); ++iter) {
+
+		const Object *object = *iter;
+		if (!strcmp(object->key, "length")) {
+			const char *length = object->value;
+			this->app->system->bb->_length_ = atof(length);
+			os::print("length: %f\n", this->app->system->bb->length());
+			continue;
+		}
+
+		if (!strcmp(object->key, "width")) {
+			const char *width = object->value;
+			this->app->system->bb->_width_ = atof(width);
+			os::print("width: %f\n", this->app->system->bb->width());
+			continue;
+		}
+
+		if (!strcmp(object->key, "height")) {
+			const char *height = object->value;
+			this->app->system->bb->_height_ = atof(height);
+			os::print("height: %f\n", this->app->system->bb->height());
+		}
+	}
+}
+
 void Config::config ()
 {
-	return;
+	ObjectStack *ostack = (ObjectStack*) this->_objects_;
+	for (const Object **iter = ostack->begin(); iter != ostack->end(); ++iter) {
+		const Object *object = *iter;
+		if (!strcmp(object->key, "Box")) {
+			void *vobject = (void*) object;
+			this->Box(vobject);
+			continue;
+		}
+	}
 }
 
 /*

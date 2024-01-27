@@ -8,6 +8,7 @@ struct Config
 	private:
 	void *_json_ = NULL;
 	void *_objects_ = NULL;
+	void Box(void *vobject);
 	public:
 	BDX *app = NULL;
 	Config();
