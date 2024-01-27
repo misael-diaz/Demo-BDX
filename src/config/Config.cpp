@@ -159,9 +159,6 @@ static void Cfg_GetFieldName (char *name,
 {
 	memset(name, 0, sz);
 	strncpy(name, beg, end - beg);
-
-	os::print("fieldname: %s\n", name);
-	os::print("len: %lu\n", end - beg);
 }
 
 static bool Cfg_FindField (const char **json,
@@ -304,9 +301,6 @@ static void Cfg_AddObjects (ObjectStack *objects, const char **json)
 			os::error("Config::config: memory error\n");
 			exit(EXIT_FAILURE);
 		}
-
-		os::print("type: %s\n", object->type);
-		os::print("key:  %s\n", object->key);
 
 		Cfg_AddPairs(object, json);
 		objects->add(object);
