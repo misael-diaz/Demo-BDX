@@ -1,5 +1,7 @@
 #include <cstring>
 #include <cstdlib>
+#include <cstdio>
+#include <cerrno>
 
 #include "os.h"
 #include "util.h"
@@ -344,6 +346,59 @@ static void Cfg_AddObjects (ObjectStack *objects, const char **json)
 		objects->add(object);
 
 	} while (**json);
+}
+
+static void Cfg_OpenJSON (FILE **f)
+{
+	*f = fopen("conf.json", "r");
+	if (!*f) {
+		Util_Clear();
+		os::error("Config::load: %s\n", strerror(errno));
+		exit(EXIT_FAILURE);
+	}
+}
+
+static void Cfg_CloseJSON (FILE **f)
+{
+	fclose(*f);
+}
+
+static size_t Cfg_SizeJSON (FILE **f)
+{
+	fseek(*f, 0L, SEEK_SET);
+	size_t const beg = ftell(*f);
+	fseek(*f, 0L, SEEK_END);
+	size_t const end = ftell(*f);
+	size_t const size = (end - beg);
+	fseek(*f, 0L, SEEK_SET);
+	return size;
+}
+
+static void *Cfg_ReadJSON (FILE **f)
+{
+	size_t const bytes = Cfg_SizeJSON(f);
+	size_t const sz = (bytes + 1);
+	void *json = Util_Malloc(sz);
+	memset(json, 0, sz);
+	size_t const size = fread(json, 1, bytes, *f);
+	if (size != bytes) {
+		Cfg_CloseJSON(f);
+		Util_Clear();
+		os::error("Config::load: error\n");
+		exit(EXIT_FAILURE);
+	}
+
+	return json;
+}
+
+void Config::load ()
+{
+	FILE *f[] = {NULL};
+	Cfg_OpenJSON(f);
+	Cfg_SizeJSON(f);
+	void *json = Cfg_ReadJSON(f);
+	Cfg_CloseJSON(f);
+	this->_json_= json;
 }
 
 void Config::parse ()
