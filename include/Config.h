@@ -5,6 +5,9 @@ struct BDX;
 
 struct Config
 {
+	private:
+	void *_objects_ = NULL;
+	public:
 	BDX *app = NULL;
 	Config();
 	void bind(BDX *app);

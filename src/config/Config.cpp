@@ -370,6 +370,7 @@ void Config::config ()
 	}
 
 	Cfg_AddObjects(objects, json);
+	this->_objects_ = (void*) objects;
 }
 
 /*
