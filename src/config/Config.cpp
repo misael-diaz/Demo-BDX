@@ -223,6 +223,7 @@ static bool Cfg_Parse (const char **json)
 	return rc;
 }
 
+/*
 static const char *JSON (void)
 {
         const char *txt = "\"Box\": {\n"
@@ -244,6 +245,7 @@ static const char *JSON (void)
                           "}\n";
         return txt;
 }
+*/
 
 static bool Cfg_AddPairs (Object *object, const char **json)
 {
@@ -403,7 +405,8 @@ void Config::load ()
 
 void Config::parse ()
 {
-	const char *json[] = {JSON()};
+	const char *JSON = (const char*) this->_json_;
+	const char *json[] = {JSON};
 	if (!Cfg_Parse(json)) {
 		Util_Clear();
 		os::error("Config::config: syntax error in conf.json\n");

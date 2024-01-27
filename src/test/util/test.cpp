@@ -1078,6 +1078,7 @@ void tutil15 (void)
 	}
 
 	config->load();
+	config->parse();
 	Util_Clear();
 }
 
