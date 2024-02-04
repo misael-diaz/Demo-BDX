@@ -8,6 +8,7 @@ struct Looper
 	BDX *app = NULL;
 	Looper();
 	void bind(BDX *app);
+	void loop();
 	void *operator new(size_t size);
 	void operator delete(void *p);
 };

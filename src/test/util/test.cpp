@@ -48,6 +48,7 @@ void tutil12(void);
 void tutil13(void);
 void tutil14(void);
 void tutil15(void);
+void tutil16(void);
 
 #ifdef GXX
 Particle *_Particle(Vector *r,
@@ -93,6 +94,7 @@ int main ()
 	tutil13();
 	tutil14();
 	tutil15();
+	tutil16();
 	Util_Clear();
 	return 0;
 }
@@ -1183,6 +1185,118 @@ void tutil15 (void)
 	config->load();
 	config->parse();
 	config->config();
+	Util_Clear();
+}
+
+
+void tutil16 (void)
+{
+	Vector *r = new Vector();
+	if (!r) {
+		Util_Clear();
+		return;
+	}
+
+	double const length = 16;
+	double const width = 16;
+	double const height = 32;
+	BoundingBox *bb = new BoundingBox(r, length, width, height);
+	if (!bb) {
+		Util_Clear();
+		return;
+	}
+
+	struct Brownian *Brownian = new struct Brownian();
+	if (!Brownian) {
+		Util_Clear();
+		return;
+	}
+
+	Stack *stack = new Stack();
+	if (!stack) {
+		Util_Clear();
+		return;
+	}
+
+	Handler *handler = new Handler(stack);
+	if (!handler) {
+		Util_Clear();
+		return;
+	}
+
+	System *system = new System(bb, Brownian, handler);
+	if (!system) {
+		Util_Clear();
+		return;
+	}
+
+	Prompt *prompt = new Prompt();
+	if (!prompt) {
+		Util_Clear();
+		return;
+	}
+
+	Config *config = new Config();
+	if (!config) {
+		Util_Clear();
+		return;
+	}
+
+	Timer *timer = new Timer();
+	if (!timer) {
+		Util_Clear();
+		return;
+	}
+
+	Random *random = new Random();
+	if (!random) {
+		Util_Clear();
+		return;
+	}
+
+	Looper *looper = new Looper();
+	if (!looper) {
+		Util_Clear();
+		return;
+	}
+
+	Driver *driver = new Driver();
+	if (!driver) {
+		Util_Clear();
+		return;
+	}
+
+	Integrator *integrator = new Integrator();
+	if (!integrator) {
+		Util_Clear();
+		return;
+	}
+
+	Logger *logger = new Logger();
+	if (!logger) {
+		Util_Clear();
+		return;
+	}
+
+	BDX *App = new BDX(prompt,
+			   config,
+			   timer,
+			   random,
+			   looper,
+			   driver,
+			   integrator,
+			   logger,
+			   system);
+	if (!App) {
+		Util_Clear();
+		return;
+	}
+
+	config->load();
+	config->parse();
+	config->config();
+	App->_exec_ = true;
+	App->looper->loop();
 	Util_Clear();
 }
 

@@ -13,6 +13,7 @@ struct System;
 
 struct BDX
 {
+	bool _exec_ = false;
 	Prompt *prompt;
 	Config *config;
 	Timer  *timer;
@@ -31,6 +32,7 @@ struct BDX
 	    Integrator *integrator,
 	    Logger *logger,
 	    System *system);
+	bool exec() const;
 	void *operator new(size_t size);
 	void operator delete(void *p);
 };

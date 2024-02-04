@@ -1,5 +1,6 @@
 #include "util.h"
 #include "Timer.h"
+#include "BDX.h"
 
 Timer::Timer ()
 {
@@ -19,6 +20,11 @@ void *Timer::operator new (size_t size)
 void Timer::operator delete (void *p)
 {
 	p = Util_Free(p);
+}
+
+void Timer::time ()
+{
+	this->app->_exec_ = false;
 }
 
 /*
