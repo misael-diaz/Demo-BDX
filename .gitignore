@@ -2,6 +2,7 @@
 *.obj
 *.bin
 *.swp
+*.swo
 *.txt
 *.log
 *.err
