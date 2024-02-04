@@ -48,6 +48,11 @@ void BDX::operator delete (void *p)
 	p = Util_Free(p);
 }
 
+bool BDX::exec () const
+{
+	return this->_exec_;
+}
+
 /*
 
 BDX                                             December 31, 2023

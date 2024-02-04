@@ -1,5 +1,7 @@
 #include "util.h"
+#include "Timer.h"
 #include "Looper.h"
+#include "BDX.h"
 
 Looper::Looper ()
 {
@@ -19,6 +21,13 @@ void *Looper::operator new (size_t size)
 void Looper::operator delete (void *p)
 {
 	p = Util_Free(p);
+}
+
+void Looper::loop ()
+{
+	while (this->app->exec()) {
+		this->app->timer->time();
+	}
 }
 
 /*

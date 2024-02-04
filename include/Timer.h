@@ -8,6 +8,7 @@ struct Timer
 	BDX *app = NULL;
 	Timer();
 	void bind(BDX *app);
+	void time();
 	void *operator new(size_t size);
 	void operator delete(void *p);
 };
