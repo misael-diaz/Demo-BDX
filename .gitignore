@@ -6,5 +6,6 @@
 *.txt
 *.log
 *.err
+*.lmp
 *.json
 *TODO*
