@@ -17,6 +17,7 @@ INC = -I../../../include
 
 OS_H       = ../../../include/os.h
 UTIL_H     = ../../../include/util.h
+LMP_H      = ../../../include/LMP.h
 STACK_H    = ../../../include/Stack.h
 HANDLER_H  = ../../../include/Handler.h
 LIST_H     = ../../../include/List.h
@@ -42,6 +43,7 @@ BROWNIAN_H = ../../../include/Brownian.h
 SYSTEM_H   = ../../../include/System.h
 HEADERS = $(OS_H)\
 	  $(UTIL_H)\
+	  $(LMP_H)\
 	  $(STACK_H)\
 	  $(HANDLER_H)\
 	  $(LIST_H)\
@@ -72,6 +74,7 @@ TEST_BIN = test.bin
 
 OS_OBJ       = ../../../src/os/os.obj
 UTIL_OBJ     = ../../../src/util/util.obj
+LMP_OBJ      = ../../../src/lmp/LMP.obj
 STACK_OBJ    = ../../../src/stack/Stack.obj
 HANDLER_OBJ  = ../../../src/handler/Handler.obj
 LIST_OBJ     = ../../../src/list/List.obj
@@ -99,6 +102,7 @@ SYSTEM_OBJ   = ../../../src/system/System.obj
 BDX_OBJ      = ../../../src/bdx/BDX.obj
 OBJS = $(OS_OBJ)\
        $(UTIL_OBJ)\
+       $(LMP_OBJ)\
        $(STACK_OBJ)\
        $(HANDLER_OBJ)\
        $(LIST_OBJ)\

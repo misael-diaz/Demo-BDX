@@ -26,6 +26,8 @@ lists: particles
 	@$(MAKE) -C list
 utils:
 	@$(MAKE) -C util
+lmps:
+	@$(MAKE) -C lmp
 PRNGs: utils
 	@$(MAKE) -C random
 prompts: utils
@@ -83,12 +85,13 @@ BDX: boxes\
      timers\
      oss
 	@$(MAKE) -C bdx
-tests: boxes handlers lists virtuals BDX
+tests: lmps boxes handlers lists virtuals BDX
 	@$(MAKE) -C test
 
 clean:
 	@$(MAKE) -C os clean
 	@$(MAKE) -C util clean
+	@$(MAKE) -C lmp clean
 	@$(MAKE) -C random clean
 	@$(MAKE) -C prompt clean
 	@$(MAKE) -C stack clean

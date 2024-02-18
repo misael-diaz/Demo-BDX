@@ -4,6 +4,7 @@
 
 #include "os.h"
 #include "util.h"
+#include "LMP.h"
 #include "Stack.h"
 #include "ID.h"
 #include "Kind.h"
@@ -49,6 +50,7 @@ void tutil13(void);
 void tutil14(void);
 void tutil15(void);
 void tutil16(void);
+void tutil17(void);
 
 #ifdef GXX
 Particle *_Particle(Vector *r,
@@ -95,6 +97,7 @@ int main ()
 	tutil14();
 	tutil15();
 	tutil16();
+	tutil17();
 	Util_Clear();
 	return 0;
 }
@@ -1297,6 +1300,29 @@ void tutil16 (void)
 	config->config();
 	App->_exec_ = true;
 	App->looper->loop();
+	Util_Clear();
+}
+
+void tutil17 (void)
+{
+	Stack *stk = new Stack();
+	if (!stk) {
+		Util_Clear();
+		return;
+	}
+
+	void *data = lmp::load();
+	if (!data) {
+		Util_Clear();
+		return;
+	}
+
+	size_t const num_particles = lmp::parse(data, stk);
+	for (double **it = (double**) stk->begin(); it != (double**) stk->end(); ++it) {
+		os::print("%f\n", **it);
+	}
+
+	os::print("particles: %zu\n", num_particles);
 	Util_Clear();
 }
 
