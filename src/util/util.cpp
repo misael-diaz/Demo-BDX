@@ -105,11 +105,27 @@ void *Util_Malloc (size_t const sz)
 	return data;
 }
 
+char *Util_CopyString (const char *string)
+{
+	size_t const len = strlen(string);
+	size_t const sz = (len + 1);
+	void *ptr = Util_Malloc(sz);
+	if (!ptr) {
+		fprintf(stderr, "Util_CopyString: error\n");
+		return NULL;
+	}
+
+	const char *src = string;
+	char *dst = (char*) ptr;
+	return strcpy(dst, src);
+}
+
 /*
 
 BDX                                             December 31, 2023
 
 Copyright (C) 2023 Misael Díaz-Maldonado
+Copyright (C) 2024 UCF-Research Group
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by

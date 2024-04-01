@@ -11,7 +11,8 @@ struct Handler
 	size_t cap() const;
 	size_t numel() const;
 	int add(Particle *particle);
-	Particle **iter();
+	Particle **begin();
+	Particle **end();
 	void *operator new(size_t size);
 	void operator delete(void *p);
 };

@@ -19,9 +19,14 @@ size_t List::numel () const
 	return this->stack->numel();
 }
 
-const Particle **List::iter () const
+const Particle **List::begin () const
 {
-	return ((const Particle**) this->stack->data());
+	return ((const Particle**) this->stack->begin());
+}
+
+const Particle **List::end () const
+{
+	return ((const Particle**) this->stack->end());
 }
 
 int List::add (Particle *particle)

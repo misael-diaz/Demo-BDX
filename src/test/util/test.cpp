@@ -2,7 +2,9 @@
 #include <cstring>
 #include <cstdlib>
 
+#include "os.h"
 #include "util.h"
+#include "LMP.h"
 #include "Stack.h"
 #include "ID.h"
 #include "Kind.h"
@@ -14,8 +16,19 @@
 #include "Spheroid.h"
 #include "Chiral.h"
 #include "BoundingBox.h"
+#include "Brownian.h"
 #include "Handler.h"
+#include "Prompt.h"
+#include "Config.h"
+#include "Timer.h"
+#include "Random.h"
+#include "Looper.h"
+#include "Driver.h"
+#include "Integrator.h"
+#include "Logger.h"
+#include "System.h"
 #include "List.h"
+#include "BDX.h"
 
 #define COMPILE 0
 #define VERBOSE 0
@@ -34,6 +47,10 @@ void tutil10(void);
 void tutil11(void);
 void tutil12(void);
 void tutil13(void);
+void tutil14(void);
+void tutil15(void);
+void tutil16(void);
+void tutil17(void);
 
 #ifdef GXX
 Particle *_Particle(Vector *r,
@@ -77,6 +94,10 @@ int main ()
 	tutil11();
 	tutil12();
 	tutil13();
+	tutil14();
+	tutil15();
+	tutil16();
+	tutil17();
 	Util_Clear();
 	return 0;
 }
@@ -723,8 +744,8 @@ void tutil12 (void)
 		}
 	}
 
-	for (const void **iter = (const void**) stack->data(); *iter; ++iter) {
-		const Particle *particle = (const Particle*) *iter;
+	for (const void **it = (const void**) stack->begin(); it != stack->end(); ++it) {
+		const Particle *particle = (const Particle*) *it;
 		printf("%s\n", Kind::stringify(particle->kind));
 	}
 
@@ -917,7 +938,9 @@ void tutil13 (void)
 		}
 	}
 
-	for (const Particle **iter = (const Particle**) handler->iter(); *iter; ++iter) {
+	const Particle **begin = handler->begin();
+	const Particle **end = handler->end();
+	for (const Particle **iter = begin; iter != end; ++iter) {
 		const Particle *particle = (const Particle*) *iter;
 		printf("%s\n", Kind::stringify(particle->kind));
 	}
@@ -1015,11 +1038,300 @@ void tutil13 (void)
 }
 #endif
 
+void tutil14(void)
+{
+	Vector *r = new Vector();
+	if (!r) {
+		Util_Clear();
+		return;
+	}
+
+	double const length = 16;
+	double const width = 16;
+	double const height = 32;
+	BoundingBox *bb = new BoundingBox(r, length, width, height);
+	if (!bb) {
+		Util_Clear();
+		return;
+	}
+
+	struct Brownian *Brownian = new struct Brownian();
+	if (!Brownian) {
+		Util_Clear();
+		return;
+	}
+
+	Stack *stack = new Stack();
+	if (!stack) {
+		Util_Clear();
+		return;
+	}
+
+	Handler *handler = new Handler(stack);
+	if (!handler) {
+		Util_Clear();
+		return;
+	}
+
+	System *system = new System(bb, Brownian, handler);
+	if (!system) {
+		Util_Clear();
+		return;
+	}
+
+	Util_Clear();
+}
+
+void tutil15 (void)
+{
+	Vector *r = new Vector();
+	if (!r) {
+		Util_Clear();
+		return;
+	}
+
+	double const length = 16;
+	double const width = 16;
+	double const height = 32;
+	BoundingBox *bb = new BoundingBox(r, length, width, height);
+	if (!bb) {
+		Util_Clear();
+		return;
+	}
+
+	struct Brownian *Brownian = new struct Brownian();
+	if (!Brownian) {
+		Util_Clear();
+		return;
+	}
+
+	Stack *stack = new Stack();
+	if (!stack) {
+		Util_Clear();
+		return;
+	}
+
+	Handler *handler = new Handler(stack);
+	if (!handler) {
+		Util_Clear();
+		return;
+	}
+
+	System *system = new System(bb, Brownian, handler);
+	if (!system) {
+		Util_Clear();
+		return;
+	}
+
+	Prompt *prompt = new Prompt();
+	if (!prompt) {
+		Util_Clear();
+		return;
+	}
+
+	Config *config = new Config();
+	if (!config) {
+		Util_Clear();
+		return;
+	}
+
+	Timer *timer = new Timer();
+	if (!timer) {
+		Util_Clear();
+		return;
+	}
+
+	Random *random = new Random();
+	if (!random) {
+		Util_Clear();
+		return;
+	}
+
+	Looper *looper = new Looper();
+	if (!looper) {
+		Util_Clear();
+		return;
+	}
+
+	Driver *driver = new Driver();
+	if (!driver) {
+		Util_Clear();
+		return;
+	}
+
+	Integrator *integrator = new Integrator();
+	if (!integrator) {
+		Util_Clear();
+		return;
+	}
+
+	Logger *logger = new Logger();
+	if (!logger) {
+		Util_Clear();
+		return;
+	}
+
+	BDX *App = new BDX(prompt,
+			   config,
+			   timer,
+			   random,
+			   looper,
+			   driver,
+			   integrator,
+			   logger,
+			   system);
+	if (!App) {
+		Util_Clear();
+		return;
+	}
+
+	config->load();
+	config->parse();
+	config->config();
+	Util_Clear();
+}
+
+
+void tutil16 (void)
+{
+	Vector *r = new Vector();
+	if (!r) {
+		Util_Clear();
+		return;
+	}
+
+	double const length = 16;
+	double const width = 16;
+	double const height = 32;
+	BoundingBox *bb = new BoundingBox(r, length, width, height);
+	if (!bb) {
+		Util_Clear();
+		return;
+	}
+
+	struct Brownian *Brownian = new struct Brownian();
+	if (!Brownian) {
+		Util_Clear();
+		return;
+	}
+
+	Stack *stack = new Stack();
+	if (!stack) {
+		Util_Clear();
+		return;
+	}
+
+	Handler *handler = new Handler(stack);
+	if (!handler) {
+		Util_Clear();
+		return;
+	}
+
+	System *system = new System(bb, Brownian, handler);
+	if (!system) {
+		Util_Clear();
+		return;
+	}
+
+	Prompt *prompt = new Prompt();
+	if (!prompt) {
+		Util_Clear();
+		return;
+	}
+
+	Config *config = new Config();
+	if (!config) {
+		Util_Clear();
+		return;
+	}
+
+	Timer *timer = new Timer();
+	if (!timer) {
+		Util_Clear();
+		return;
+	}
+
+	Random *random = new Random();
+	if (!random) {
+		Util_Clear();
+		return;
+	}
+
+	Looper *looper = new Looper();
+	if (!looper) {
+		Util_Clear();
+		return;
+	}
+
+	Driver *driver = new Driver();
+	if (!driver) {
+		Util_Clear();
+		return;
+	}
+
+	Integrator *integrator = new Integrator();
+	if (!integrator) {
+		Util_Clear();
+		return;
+	}
+
+	Logger *logger = new Logger();
+	if (!logger) {
+		Util_Clear();
+		return;
+	}
+
+	BDX *App = new BDX(prompt,
+			   config,
+			   timer,
+			   random,
+			   looper,
+			   driver,
+			   integrator,
+			   logger,
+			   system);
+	if (!App) {
+		Util_Clear();
+		return;
+	}
+
+	config->load();
+	config->parse();
+	config->config();
+	App->_exec_ = true;
+	App->looper->loop();
+	Util_Clear();
+}
+
+void tutil17 (void)
+{
+	Stack *stk = new Stack();
+	if (!stk) {
+		Util_Clear();
+		return;
+	}
+
+	void *data = lmp::load();
+	if (!data) {
+		Util_Clear();
+		return;
+	}
+
+	size_t const num_particles = lmp::parse(data, stk);
+	for (double **it = (double**) stk->begin(); it != (double**) stk->end(); ++it) {
+		os::print("%f\n", **it);
+	}
+
+	os::print("particles: %zu\n", num_particles);
+	Util_Clear();
+}
+
 /*
 
 BDX                                             December 31, 2023
 
 Copyright (C) 2023 Misael Díaz-Maldonado
+Copyright (C) 2024 UCF-Research Group
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by

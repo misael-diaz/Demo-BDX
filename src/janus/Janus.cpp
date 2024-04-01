@@ -1,5 +1,4 @@
-#include <cstdio>
-
+#include "os.h"
 #include "util.h"
 #include "ID.h"
 #include "Kind.h"
@@ -32,19 +31,19 @@ void Janus::ia (const Particle *particle)
 	kind_t const k = kind->k();
 	switch(k){
 		case SPHERE:
-		printf("janus-sphere interaction\n");
+		os::print("janus-sphere interaction\n");
 		break;
 		case JANUS:
-		printf("janus-janus interaction\n");
+		os::print("janus-janus interaction\n");
 		break;
 		case SPHEROID:
-		printf("janus-spheroid interaction\n");
+		os::print("janus-spheroid interaction\n");
 		break;
 		case CHIRAL:
-		printf("janus-chiral interaction\n");
+		os::print("janus-chiral interaction\n");
 		break;
 		default:
-		printf("no interaction\n");
+		os::print("no interaction\n");
 	}
 }
 

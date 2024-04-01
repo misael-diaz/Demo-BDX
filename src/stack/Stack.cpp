@@ -1,32 +1,32 @@
-#include <cstdio>
 #include <cstring>
 
+#include "os.h"
 #include "util.h"
 #include "Stack.h"
 
 static void err_create ()
 {
-	fprintf(stderr, "Stack::create: error\n");
+	os::error("Stack::create: error\n");
 }
 
 static void err_init ()
 {
-	fprintf(stderr, "Stack::init: error\n");
+	os::error("Stack::init: error\n");
 }
 
 static void err_add ()
 {
-	fprintf(stderr, "Stack::add: error\n");
+	os::error("Stack::add: error\n");
 }
 
 static void err_copy ()
 {
-	fprintf(stderr, "Stack::copy: error\n");
+	os::error("Stack::copy: error\n");
 }
 
 static void err_grow ()
 {
-	fprintf(stderr, "Stack::grow: error\n");
+	os::error("Stack::grow: error\n");
 }
 
 static void **create (size_t const allot)
@@ -50,35 +50,40 @@ Stack::Stack (void)
 
 size_t Stack::cap () const
 {
-	return (this->limit - this->begin);
+	return (this->_limit_ - this->_begin_);
 }
 
 size_t Stack::numel () const
 {
-	return (this->avail - this->begin);
+	return (this->_avail_ - this->_begin_);
 }
 
 size_t Stack::bytes () const
 {
-	return this->size;
+	return this->_size_;
 }
 
 void Stack::clear ()
 {
-	if (!this->stack) {
+	if (!this->_stack_) {
 		return;
 	}
 
-	void *vstack = (void*) this->stack;
+	void *vstack = (void*) this->_stack_;
 	size_t const bytes = this->bytes();
 	memset(vstack, 0, bytes);
-	this->avail = this->begin;
-	this->size = 0;
+	this->_avail_ = this->_begin_;
+	this->_size_ = 0;
 }
 
-void **Stack::data ()
+void **Stack::begin ()
 {
-	return this->stack;
+	return this->_begin_;
+}
+
+void **Stack::end ()
+{
+	return this->_avail_;
 }
 
 void *Stack::copy () const
@@ -91,7 +96,7 @@ void *Stack::copy () const
 		return NULL;
 	}
 
-	const void *src = ((const void*) this->stack);
+	const void *src = ((const void*) this->_stack_);
 	memcpy(dst, src, size);
 	return dst;
 }
@@ -120,34 +125,34 @@ int Stack::grow ()
 	memcpy(vstack, data, size);
 	data = Util_Free(data);
 
-	this->stack = stack;
-	this->begin = stack;
-	this->avail = stack + numel;
-	this->limit = stack + allot;
-	this->allot = allot;
+	this->_stack_ = stack;
+	this->_begin_ = stack;
+	this->_avail_ = stack + numel;
+	this->_limit_ = stack + allot;
+	this->_allot_ = allot;
 	return rc;
 }
 
 int Stack::init ()
 {
 	int rc = 0;
-	this->stack = create(this->allot);
-	if (!this->stack) {
+	this->_stack_ = create(this->_allot_);
+	if (!this->_stack_) {
 		rc = -1;
 		err_init();
 		return rc;
 	}
 
-	this->begin = this->stack;
-	this->avail = this->stack;
-	this->limit = this->stack + allot;
+	this->_begin_ = this->_stack_;
+	this->_avail_ = this->_stack_;
+	this->_limit_ = this->_stack_ + this->_allot_;
 	return rc;
 }
 
 int Stack::add (void *elem)
 {
 	int rc = 0;
-	if (!this->stack) {
+	if (!this->_stack_) {
 		rc = Stack::init();
 		if (rc != 0) {
 			err_add();
@@ -155,7 +160,7 @@ int Stack::add (void *elem)
 		}
 	}
 
-	if (this->avail == this->limit) {
+	if (this->_avail_ == this->_limit_) {
 		rc = grow();
 		if (rc != 0) {
 			err_add();
@@ -163,9 +168,9 @@ int Stack::add (void *elem)
 		}
 	}
 
-	*this->avail = elem;
-	++this->avail;
-	this->size += sizeof(void*);
+	*this->_avail_ = elem;
+	++this->_avail_;
+	this->_size_ += sizeof(void*);
 	return rc;
 }
 
