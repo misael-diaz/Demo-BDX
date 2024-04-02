@@ -1,8 +1,8 @@
 #ifndef GUARD_BDX_GFORTRAN_H
 #define GUARD_BDX_GFORTRAN_H
 
-#define frandom_number(x) _gfortran_random_r8
-#define fanint(x) _gfortran_specific__anint_r8
+#define frandom_number(x) _gfortran_random_r8(x)
+#define fanint(x) _gfortran_specific__anint_r8(x)
 
 extern "C" void _gfortran_random_r8(double*);
 extern "C" double _gfortran_specific__anint_r8(double*);

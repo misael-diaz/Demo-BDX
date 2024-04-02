@@ -18,6 +18,7 @@ include make-inc
 
 export CXX
 export CXXOPT
+export LIBS
 
 all: srcs
 

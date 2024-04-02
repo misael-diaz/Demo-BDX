@@ -1,6 +1,36 @@
+#include <cmath>
 #include "util.h"
 #include "Random.h"
 #include "GFORTRAN.h"
+
+static double uniform ()
+{
+	double u = 0;
+	frandom_number(&u);
+	return u;
+}
+
+static double normal ()
+{
+	double x1, x2, x3;
+	double r = x1 = x2 = x3 = 0;
+	while (r == 0 || r > 1.0) {
+
+		frandom_number(&x1);
+		frandom_number(&x2);
+
+		x1 = 2.0 * x1 - 1.0;
+		x2 = 2.0 * x2 - 1.0;
+
+		r = x1 * x1 + x2 * x2;
+	}
+
+	x2 = 1.0 / r;
+	x3 = -2.0 * log(r);
+	r = sqrt(x2 * x3);
+	double n = (x1 * r);
+	return n;
+}
 
 Random::Random ()
 {
@@ -14,13 +44,11 @@ Random::Random (enum random kind) : _kind_(kind)
 
 double Random::fetch () const
 {
-	double x = 0;
 	enum random kind = this->_kind_;
 	if (kind == random::UNIFORM) {
-		frandom_number(&x);
-		return x;
+		return uniform();
 	} else {
-		return x;	// TODO: implement Gaussian PRNG
+		return normal();
 	}
 }
 
