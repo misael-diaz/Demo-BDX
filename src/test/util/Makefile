@@ -19,7 +19,7 @@ include make-inc
 all: $(TEST_BIN)
 
 $(TEST_BIN): $(TEST_OBJ)
-	$(CXX) $(CXXOPT) $(OBJS) -o $(TEST_BIN)
+	$(CXX) $(CXXOPT) $(OBJS) -o $(TEST_BIN) $(LIBS)
 
 $(TEST_OBJ): $(HEADERS) $(TEST_CXX)
 	$(CXX) $(INC) $(CXXOPT) -c $(TEST_CXX) -o $(TEST_OBJ)
