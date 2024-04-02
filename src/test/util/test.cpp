@@ -1345,8 +1345,38 @@ void tutil18 (void)
 		return;
 	}
 
+	ssize_t *y = (ssize_t*) Util_Malloc(numel * sizeof(ssize_t));
+	if (!y) {
+		Util_Clear();
+		return;
+	}
+
+	size_t bins = 13;
+	ssize_t hist_size = bins * sizeof(ssize_t);
+	ssize_t *hist = (ssize_t*) Util_Malloc(hist_size);
+	if (!hist) {
+		Util_Clear();
+		return;
+	}
+	memset(hist, 0, hist_size);
+
 	for (size_t i = 0; i != numel; ++i) {
 		x[i] = r->fetch();
+	}
+
+	for (size_t i = 0; i != numel; ++i) {
+		if (x[i] < -6.0) {
+			y[i] = -6;
+		} else if (x[i] > 6) {
+			y[i] = 6;
+		} else {
+			y[i] = (ssize_t) floor(x[i]);
+		}
+	}
+
+	for (size_t i = 0; i != numel; ++i) {
+		ssize_t const bin = (6 + y[i]);
+		++hist[bin];
 	}
 
 	double avg = 0;
@@ -1362,8 +1392,20 @@ void tutil18 (void)
 	std /= (((double) numel) - 1.0);
 	std = sqrt(std);
 
+	FILE *f = fopen("hist.txt", "w");
+	if (!f) {
+		Util_Clear();
+		return;
+	}
+
+	for (size_t bin = 0; bin != bins; ++bin) {
+		fprintf(f, "%zd\n", hist[bin]);
+	}
+
 	printf("avg: %f\n", avg);
 	printf("std: %f\n", std);
+	printf("histogram of Gaussian random numbers has been exported to hist.txt\n");
+	fclose(f);
 	Util_Clear();
 }
 
