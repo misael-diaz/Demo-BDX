@@ -1,3 +1,4 @@
+#include <cmath>
 #include <cstdio>
 #include <cstring>
 #include <cstdlib>
@@ -51,6 +52,7 @@ void tutil14(void);
 void tutil15(void);
 void tutil16(void);
 void tutil17(void);
+void tutil18(void);
 
 #ifdef GXX
 Particle *_Particle(Vector *r,
@@ -98,6 +100,7 @@ int main ()
 	tutil15();
 	tutil16();
 	tutil17();
+	tutil18();
 	Util_Clear();
 	return 0;
 }
@@ -1325,6 +1328,45 @@ void tutil17 (void)
 	os::print("particles: %zu\n", num_particles);
 	Util_Clear();
 }
+
+void tutil18 (void)
+{
+	Random *r = new Random(random::NORMAL);
+	if (!r) {
+		Util_Clear();
+		return;
+	}
+
+	size_t const numel = 0x80000;
+	size_t const size = numel * sizeof(double);
+	double *x = (double*) Util_Malloc(size);
+	if (!x) {
+		Util_Clear();
+		return;
+	}
+
+	for (size_t i = 0; i != numel; ++i) {
+		x[i] = r->fetch();
+	}
+
+	double avg = 0;
+	for (size_t i = 0; i != numel; ++i) {
+		avg += x[i];
+	}
+	avg /= ((double) numel);
+
+	double std = 0;
+	for (size_t i = 0; i != numel; ++i) {
+		std += (avg - x[i]) * (avg - x[i]);
+	}
+	std /= (((double) numel) - 1.0);
+	std = sqrt(std);
+
+	printf("avg: %f\n", avg);
+	printf("std: %f\n", std);
+	Util_Clear();
+}
+
 
 /*
 
