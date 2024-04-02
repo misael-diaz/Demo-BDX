@@ -1,9 +1,17 @@
 #ifndef GUARD_BDX_RANDOM_H
 #define GUARD_BDX_RANDOM_H
 
+enum random {
+	UNIFORM,
+	NORMAL
+};
+
 struct Random
 {
+	enum random _kind_ = random::UNIFORM;
 	Random();
+	Random(enum random);
+	double fetch() const;
 	void *operator new(size_t size);
 	void operator delete(void *p);
 };
