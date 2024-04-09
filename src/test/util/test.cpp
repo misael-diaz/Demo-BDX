@@ -53,6 +53,7 @@ void tutil15(void);
 void tutil16(void);
 void tutil17(void);
 void tutil18(void);
+void tutil19(void);
 
 #ifdef GXX
 Particle *_Particle(Vector *r,
@@ -101,6 +102,7 @@ int main ()
 	tutil16();
 	tutil17();
 	tutil18();
+	tutil19();
 	Util_Clear();
 	return 0;
 }
@@ -1144,7 +1146,7 @@ void tutil15 (void)
 		return;
 	}
 
-	Random *random = new Random();
+	Random *random = new Random(random::NORMAL);
 	if (!random) {
 		Util_Clear();
 		return;
@@ -1254,7 +1256,7 @@ void tutil16 (void)
 		return;
 	}
 
-	Random *random = new Random();
+	Random *random = new Random(random::NORMAL);
 	if (!random) {
 		Util_Clear();
 		return;
@@ -1409,6 +1411,209 @@ void tutil18 (void)
 	Util_Clear();
 }
 
+void tutil19 (void)
+{
+	Vector *r = new Vector();
+	if (!r) {
+		Util_Clear();
+		return;
+	}
+
+	double const length = 0;
+	double const width = 0;
+	double const height = 0;
+	BoundingBox *bb = new BoundingBox(r, length, width, height);
+	if (!bb) {
+		Util_Clear();
+		return;
+	}
+
+	struct Brownian *Brownian = new struct Brownian();
+	if (!Brownian) {
+		Util_Clear();
+		return;
+	}
+
+	Stack *stack = new Stack();
+	if (!stack) {
+		Util_Clear();
+		return;
+	}
+
+	Handler *handler = new Handler(stack);
+	if (!handler) {
+		Util_Clear();
+		return;
+	}
+
+	System *system = new System(bb, Brownian, handler);
+	if (!system) {
+		Util_Clear();
+		return;
+	}
+
+	Prompt *prompt = new Prompt();
+	if (!prompt) {
+		Util_Clear();
+		return;
+	}
+
+	Config *config = new Config();
+	if (!config) {
+		Util_Clear();
+		return;
+	}
+
+	Timer *timer = new Timer();
+	if (!timer) {
+		Util_Clear();
+		return;
+	}
+
+	Random *random = new Random(random::NORMAL);
+	if (!random) {
+		Util_Clear();
+		return;
+	}
+
+	Looper *looper = new Looper();
+	if (!looper) {
+		Util_Clear();
+		return;
+	}
+
+	Driver *driver = new Driver();
+	if (!driver) {
+		Util_Clear();
+		return;
+	}
+
+	Integrator *integrator = new Integrator();
+	if (!integrator) {
+		Util_Clear();
+		return;
+	}
+
+	Logger *logger = new Logger();
+	if (!logger) {
+		Util_Clear();
+		return;
+	}
+
+	BDX *App = new BDX(prompt,
+			   config,
+			   timer,
+			   random,
+			   looper,
+			   driver,
+			   integrator,
+			   logger,
+			   system);
+	if (!App) {
+		Util_Clear();
+		return;
+	}
+
+	config->load();
+	config->parse();
+	config->config();
+
+	stack = new Stack();
+	if (!stack) {
+		Util_Clear();
+		return;
+	}
+
+	void *data = lmp::load();
+	if (!data) {
+		Util_Clear();
+		return;
+	}
+
+	size_t const num_particles = lmp::parse(data, stack);
+	const double **it = (const double**) stack->begin();
+	for (size_t i = 0; i != num_particles; ++i) {
+
+		double const a = 1.0;
+
+		ID *id = new ID(i);
+		if (!id) {
+			Util_Clear();
+			return;
+		}
+
+		Kind *kind = new Kind(SPHERE);
+		if (!kind) {
+			Util_Clear();
+			return;
+		}
+
+		it += 2; // skips LAMMPS ID and Group
+
+		const double **coords = it;
+		double const x = *coords[0];
+		double const y = *coords[1];
+		double const z = *coords[2];
+
+		it += 3;
+
+		Vector *r = new Vector(x, y, z);
+		if (!r) {
+			Util_Clear();
+			return;
+		}
+
+		Vector *u = new Vector();
+		if (!u) {
+			Util_Clear();
+			return;
+		}
+
+		Vector *E = new Vector();
+		if (!E) {
+			Util_Clear();
+			return;
+		}
+
+		Vector *d = new Vector(0, 0, 1);
+		if (!d) {
+			Util_Clear();
+			return;
+		}
+
+		Vector *F = new Vector();
+		if (!F) {
+			Util_Clear();
+			return;
+		}
+
+		Stack *stack = new Stack();
+		if (!stack) {
+			Util_Clear();
+			return;
+		}
+
+		List *list = new List(stack);
+		if (!list) {
+			Util_Clear();
+			return;
+		}
+
+		Particle *particle = _Particle(r, u, E, d, F, list, id, kind, a, 0, 0);
+
+		int const rc = handler->add(particle);
+		if (rc != 0) {
+			Util_Clear();
+			return;
+		}
+
+		it += 3; // skips optional director (of zeros)
+	}
+
+	App->_exec_ = true;
+	App->looper->loop();
+	Util_Clear();
+}
 
 /*
 
