@@ -54,6 +54,7 @@ void tutil16(void);
 void tutil17(void);
 void tutil18(void);
 void tutil19(void);
+void tutil20(void);
 
 #ifdef GXX
 Particle *_Particle(Vector *r,
@@ -103,6 +104,7 @@ int main ()
 	tutil17();
 	tutil18();
 	tutil19();
+	tutil20();
 	Util_Clear();
 	return 0;
 }
@@ -1394,20 +1396,20 @@ void tutil18 (void)
 	std /= (((double) numel) - 1.0);
 	std = sqrt(std);
 
-	FILE *f = fopen("hist.txt", "w");
+	FILE **f = (FILE**) Util_OpenFile("hist.txt", "w");
 	if (!f) {
 		Util_Clear();
 		return;
 	}
 
 	for (size_t bin = 0; bin != bins; ++bin) {
-		fprintf(f, "%zd\n", hist[bin]);
+		fprintf(*f, "%zd\n", hist[bin]);
 	}
 
 	printf("avg: %f\n", avg);
 	printf("std: %f\n", std);
 	printf("histogram of Gaussian random numbers has been exported to hist.txt\n");
-	fclose(f);
+	f = (FILE**) Util_CloseFile(f);
 	Util_Clear();
 }
 
@@ -1612,6 +1614,16 @@ void tutil19 (void)
 
 	App->_exec_ = true;
 	App->looper->loop();
+	Util_Clear();
+}
+
+void tutil20 (void)
+{
+	FILE **conf = (FILE**) Util_OpenFile("conf.json", "r");
+	FILE **lmp = (FILE**) Util_OpenFile("data.lmp", "r");
+	conf = (FILE**) Util_CloseFile(conf);
+	lmp = (FILE**) Util_CloseFile(lmp);
+	Util_CloseFiles();
 	Util_Clear();
 }
 

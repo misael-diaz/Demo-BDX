@@ -14,9 +14,18 @@ typedef struct m_chain_s {
 	size_t size;
 } m_chain_t;
 
+typedef struct f_chain_s {
+	struct f_chain_s *prev;
+	struct f_chain_s *next;
+	FILE **fhandle;
+} f_chain_t;
+
 static m_chain_t m_chain;
 static size_t m_size = 0;
 static size_t m_count = 0;
+
+static f_chain_t f_chain;
+static size_t f_count = 0;
 
 static m_chain_t *Util_Chain (m_chain_t *node)
 {
@@ -118,6 +127,94 @@ char *Util_CopyString (const char *string)
 	const char *src = string;
 	char *dst = (char*) ptr;
 	return strcpy(dst, src);
+}
+
+static f_chain_t *Util_ChainFile (f_chain_t *node)
+{
+	f_chain_t *next = (f_chain.next)? f_chain.next : NULL;
+	if (next) {
+		next->prev = node;
+	}
+
+	node->next = next;
+	node->prev = &f_chain;
+	f_chain.next = node;
+	return node;
+}
+
+void *Util_CloseFile (void *vfhandle)
+{
+	if (!vfhandle) {
+		return vfhandle;
+	}
+
+	f_chain_t *node = (((f_chain_t*) vfhandle) - 1);
+	FILE **fhandle = node->fhandle;
+	if (fhandle && *fhandle) {
+		int rc = fclose(*fhandle);
+		if (rc) {
+			fprintf(stderr, "Util_CloseFile: %s\n", strerror(errno));
+		}
+	}
+
+	f_chain_t* prev = node->prev;
+	f_chain_t* next = node->next;
+	if (next) {
+		next->prev = prev;
+	}
+
+	prev->next = next;
+	node->prev = NULL;
+	node->next = NULL;
+	node->fhandle = NULL;
+	void *vnode = (void *) node;
+	vnode = Util_Free(vnode);
+	node = NULL;
+
+	--f_count;
+
+	return NULL;
+}
+
+void Util_CloseFiles (void)
+{
+	f_chain_t *next = NULL;
+	for (f_chain_t *node = f_chain.next; node; node = next) {
+		next = node->next;
+		void *vfhandle = node->fhandle;
+		node = (f_chain_t*) Util_CloseFile(vfhandle);
+	}
+
+	f_count = 0;
+}
+
+void *Util_OpenFile (const char *filename, const char *mode)
+{
+	FILE *file = fopen(filename, mode);
+	if (!file) {
+		fprintf(stderr, "Util_OpenFile: %s\n", strerror(errno));
+		return NULL;
+	}
+
+	size_t const size = sizeof(f_chain_t) + sizeof(FILE**);
+	void* vnode = (f_chain_t*) Util_Malloc(size);
+	if (!vnode) {
+		fclose(file);
+		fprintf(stderr, "Util_OpenFile: malloc error\n");
+		return NULL;
+	}
+
+	memset(vnode, 0, size);
+	f_chain_t *node = (f_chain_t*) vnode;
+	node = Util_ChainFile(node);
+	void *vfhandle = (node + 1);
+	FILE **fhandle = (FILE**) vfhandle;
+	*fhandle = file;
+	node->fhandle = fhandle;
+
+	++f_count;
+
+	return node->fhandle;
 }
 
 /*
