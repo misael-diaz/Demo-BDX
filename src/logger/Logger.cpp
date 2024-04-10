@@ -13,12 +13,12 @@ void Logger::bind (BDX *app)
 
 void *Logger::operator new (size_t size)
 {
-	return Util_Malloc(size);
+	return util::malloc(size);
 }
 
 void Logger::operator delete (void *p)
 {
-	p = Util_Free(p);
+	p = util::free(p);
 }
 
 /*

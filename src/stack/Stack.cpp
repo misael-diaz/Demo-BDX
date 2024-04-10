@@ -33,7 +33,7 @@ static void **create (size_t const allot)
 {
 	size_t const limit = (allot + 1);
 	size_t const size = limit * sizeof(void*);
-	void *p = Util_Malloc(size);
+	void *p = util::malloc(size);
 	if (!p) {
 		err_create();
 		return NULL;
@@ -90,7 +90,7 @@ void *Stack::copy () const
 {
 	size_t const numel = this->numel();
 	size_t const size = numel * sizeof(void*);
-	void *dst = Util_Malloc(size);
+	void *dst = util::malloc(size);
 	if (!dst) {
 		err_copy();
 		return NULL;
@@ -123,7 +123,7 @@ int Stack::grow ()
 	void *vstack = (void*) stack;
 	size_t const size = numel * sizeof(void*);
 	memcpy(vstack, data, size);
-	data = Util_Free(data);
+	data = util::free(data);
 
 	this->_stack_ = stack;
 	this->_begin_ = stack;
@@ -176,12 +176,12 @@ int Stack::add (void *elem)
 
 void *Stack::operator new (size_t size)
 {
-	return Util_Malloc(size);
+	return util::malloc(size);
 }
 
 void Stack::operator delete (void *p)
 {
-	p = Util_Free(p);
+	p = util::free(p);
 }
 
 /*

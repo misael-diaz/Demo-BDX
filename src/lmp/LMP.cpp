@@ -20,7 +20,7 @@ static size_t lmp_SizeDataFile (FILE *f)
 
 void *lmp::load (void)
 {
-	FILE **lmp = (FILE**) Util_OpenFile("data.lmp", "r");
+	FILE **lmp = (FILE**) util::fopen("data.lmp", "r");
 	if (!lmp) {
 		os::error("lmp::load: IO ERROR\n");
 		return NULL;
@@ -28,18 +28,18 @@ void *lmp::load (void)
 
 	size_t const len = lmp_SizeDataFile(*lmp);
 	size_t const sz = (len + 1);
-	void *data = Util_Malloc(sz);
+	void *data = util::malloc(sz);
 	memset(data, 0, sz);
 
 	size_t const chunk = 1;
 	size_t const bytes = fread(data, chunk, len, *lmp);
 	if (len != bytes) {
 		os::error("lmp::load: IO READ ERROR\n");
-		Util_CloseFile(lmp);
+		util::fclose(lmp);
 		return NULL;
 	}
 
-	Util_CloseFile(lmp);
+	util::fclose(lmp);
 	return data;
 }
 
@@ -76,7 +76,7 @@ static void *lmp_TokenizeString (const char **txt)
 	const char *e = *txt;
 	size_t const len = (e - b);
 	size_t const sz = (len + 1);
-	void *token = Util_Malloc(sz);
+	void *token = util::malloc(sz);
 	if (!token) {
 		os::error("lmp_TokenizeString: error\n");
 		return NULL;
@@ -93,22 +93,22 @@ static void lmp_TokenizeLine (const char **txt, Stack *stack)
 
 		void *token = lmp_TokenizeString(txt);
 		if (!token) {
-			Util_Clear();
+			util::clearall();
 			os::error("lmp_TokenizeLine: error\n");
 			exit(EXIT_FAILURE);
 		}
 
 		os::print("token: %s\n", (const char*) token);
-		double *p = (double*) Util_Malloc(sizeof(double));
+		double *p = (double*) util::malloc(sizeof(double));
 		if (!p) {
-			Util_Clear();
+			util::clearall();
 			os::error("lmp_TokenizeLine: error\n");
 			exit(EXIT_FAILURE);
 		}
 
 		*p = atof((const char*) token);
 		stack->add((void*) p);
-		Util_Free(token);
+		util::free(token);
 	}
 
 	if (**txt) {

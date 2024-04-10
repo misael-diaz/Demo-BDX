@@ -15,12 +15,12 @@ void Looper::bind (BDX *app)
 
 void *Looper::operator new (size_t size)
 {
-	return Util_Malloc(size);
+	return util::malloc(size);
 }
 
 void Looper::operator delete (void *p)
 {
-	p = Util_Free(p);
+	p = util::free(p);
 }
 
 void Looper::loop ()

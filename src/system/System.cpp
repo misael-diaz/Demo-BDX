@@ -17,12 +17,12 @@ void System::bind (BDX *app)
 
 void *System::operator new (size_t size)
 {
-	return Util_Malloc(size);
+	return util::malloc(size);
 }
 
 void System::operator delete (void *p)
 {
-	p = Util_Free(p);
+	p = util::free(p);
 }
 
 /*

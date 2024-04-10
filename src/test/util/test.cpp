@@ -105,7 +105,7 @@ int main ()
 	tutil18();
 	tutil19();
 	tutil20();
-	Util_Clear();
+	util::clearall();
 	return 0;
 }
 
@@ -186,13 +186,13 @@ Particle *_Particle (Vector *r,
 void tutil1 (void)
 {
 	const char txt[] = "string-literal";
-	void *ptr = Util_Malloc(strlen(txt) + 1);
+	void *ptr = util::malloc(strlen(txt) + 1);
 
 	char *dst = (char*) ptr;
 	strcpy(dst, txt);
 	printf("%s\n", dst);
 
-	ptr = Util_Free(ptr);
+	ptr = util::free(ptr);
 }
 
 void tutil2 (void)
@@ -202,14 +202,14 @@ void tutil2 (void)
 	} data_t;
 
 	data_t data = { .x = 0 };
-	void *ptr = Util_Malloc(sizeof(data_t));
+	void *ptr = util::malloc(sizeof(data_t));
 
 	data_t *dst = (data_t*) ptr;
 	dst->x = 0.0;
 
 	printf("%f %f\n", data.x, dst->x);
 
-	ptr = Util_Free(ptr);
+	ptr = util::free(ptr);
 }
 
 void tutil3 (void)
@@ -218,9 +218,9 @@ void tutil3 (void)
 	size_t const numel = sizeof(data) / sizeof(double);
 	for (size_t i = 0; i != numel; ++i) {
 
-		data[i] = (double*) Util_Malloc(sizeof(double));
+		data[i] = (double*) util::malloc(sizeof(double));
 		if (!data[i]) {
-			Util_Clear();
+			util::clearall();
 			return;
 		}
 
@@ -239,7 +239,7 @@ void tutil3 (void)
 		printf("PASS\n");
 	}
 
-	Util_Clear();
+	util::clearall();
 }
 
 void tutil4 (void)
@@ -251,7 +251,7 @@ void tutil4 (void)
 void tutil5 (void)
 {
 	size_t const numel = 8;
-	Vector **vectors = (Vector**) Util_Malloc(numel * sizeof(Vector*));
+	Vector **vectors = (Vector**) util::malloc(numel * sizeof(Vector*));
 	for (size_t i = 0; i != numel; ++i) {
 		vectors[i] = new Vector();
 		if (!vectors[i]) {
@@ -259,20 +259,20 @@ void tutil5 (void)
 		}
 	}
 
-	Util_Clear();
+	util::clearall();
 }
 
 void tutil6 (void)
 {
 	Vector *r = new Vector();
 	if (!r) {
-		Util_Clear();
+		util::clearall();
 		return;
 	}
 
 	BDXObject *obj = new BDXObject(r);
 	delete(obj);
-	Util_Clear();
+	util::clearall();
 }
 
 #if COMPILE
@@ -283,7 +283,7 @@ void tutil7 (void)
 	Vector *r = new Vector();
 	Particle *particle = new Particle(r, id, kind);
 	delete(particle);
-	Util_Clear();
+	util::clearall();
 }
 #else
 void tutil7 (void)
@@ -297,7 +297,7 @@ void tutil8 (void)
 {
 	size_t const numel = 256;
 	size_t const size = numel * sizeof(Particle*);
-	Particle **particles = (Particle**) Util_Malloc(size);
+	Particle **particles = (Particle**) util::malloc(size);
 	if (!particles) {
 		return;
 	}
@@ -318,7 +318,7 @@ void tutil8 (void)
 		particles[i] = particle;
 	}
 
-	Util_Clear();
+	util::clearall();
 }
 #else
 void tutil8 (void)
@@ -339,7 +339,7 @@ void tutil9 (void)
 	double const height = 32;
 	BoundingBox *bb = new BoundingBox(r, length, width, height);
 	delete(bb);
-	Util_Clear();
+	util::clearall();
 }
 
 #if VERBOSE
@@ -347,7 +347,7 @@ void tutil10 (void)
 {
 	size_t const numel = 256;
 	size_t const size = numel * sizeof(Sphere*);
-	Sphere **spheres = (Sphere**) Util_Malloc(size);
+	Sphere **spheres = (Sphere**) util::malloc(size);
 	if (!spheres) {
 		return;
 	}
@@ -413,14 +413,14 @@ void tutil10 (void)
 		spheres[i] = sphere;
 	}
 
-	Util_Clear();
+	util::clearall();
 }
 #else
 void tutil10 (void)
 {
 	size_t const numel = 256;
 	size_t const size = numel * sizeof(Sphere*);
-	Sphere **spheres = (Sphere**) Util_Malloc(size);
+	Sphere **spheres = (Sphere**) util::malloc(size);
 	if (!spheres) {
 		return;
 	}
@@ -485,7 +485,7 @@ void tutil10 (void)
 		spheres[i] = sphere;
 	}
 
-	Util_Clear();
+	util::clearall();
 }
 #endif
 
@@ -494,7 +494,7 @@ void tutil11 (void)
 {
 	size_t const numel = 256;
 	size_t const size = numel * sizeof(Particle*);
-	Particle **particles = (Particle**) Util_Malloc(size);
+	Particle **particles = (Particle**) util::malloc(size);
 	if (!particles) {
 		return;
 	}
@@ -503,7 +503,7 @@ void tutil11 (void)
 
 		ID *id = new ID(i);
 		if (!id) {
-			Util_Clear();
+			util::clearall();
 			return;
 		}
 
@@ -512,7 +512,7 @@ void tutil11 (void)
 		double const k = min_k + (max_k - min_k) * (rand() / ((double) RAND_MAX));
 		Kind *kind = new Kind((kind_t) k);
 		if (!kind) {
-			Util_Clear();
+			util::clearall();
 			return;
 		}
 
@@ -521,31 +521,31 @@ void tutil11 (void)
 		double const z = rand();
 		Vector *r = new Vector(x, y, z);
 		if (!r) {
-			Util_Clear();
+			util::clearall();
 			return;
 		}
 
 		Vector *u = new Vector();
 		if (!u) {
-			Util_Clear();
+			util::clearall();
 			return;
 		}
 
 		Vector *E = new Vector();
 		if (!E) {
-			Util_Clear();
+			util::clearall();
 			return;
 		}
 
 		Vector *d = new Vector(0, 0, 1);
 		if (!d) {
-			Util_Clear();
+			util::clearall();
 			return;
 		}
 
 		Vector *F = new Vector();
 		if (!F) {
-			Util_Clear();
+			util::clearall();
 			return;
 		}
 
@@ -566,7 +566,7 @@ void tutil11 (void)
 
 		Particle *particle = _Particle(r, u, E, d, F, list, id, kind, a, b, c);
 		if (!particle) {
-			Util_Clear();
+			util::clearall();
 			return;
 		}
 
@@ -588,14 +588,14 @@ void tutil11 (void)
 		particle->ia(particles[i]);
 	}
 
-	Util_Clear();
+	util::clearall();
 }
 #else
 void tutil11 (void)
 {
 	size_t const numel = 256;
 	size_t const size = numel * sizeof(Particle*);
-	Particle **particles = (Particle**) Util_Malloc(size);
+	Particle **particles = (Particle**) util::malloc(size);
 	if (!particles) {
 		return;
 	}
@@ -666,7 +666,7 @@ void tutil11 (void)
 		particles[i] = particle;
 	}
 
-	Util_Clear();
+	util::clearall();
 }
 #endif
 
@@ -676,7 +676,7 @@ void tutil12 (void)
 	int rc = 0;
 	Stack *stack = new Stack();
 	if (!stack) {
-		Util_Clear();
+		util::clearall();
 		return;
 	}
 
@@ -746,7 +746,7 @@ void tutil12 (void)
 
 		rc = stack->add((void*) particle);
 		if (rc != 0) {
-			Util_Clear();
+			util::clearall();
 			return;
 		}
 	}
@@ -771,7 +771,7 @@ void tutil12 (void)
 	printf("numel: %lu\n", stack->numel());
 	printf("capacity: %lu\n", stack->cap());
 
-	Util_Clear();
+	util::clearall();
 }
 #else
 void tutil12 (void)
@@ -779,7 +779,7 @@ void tutil12 (void)
 	int rc = 0;
 	Stack *stack = new Stack();
 	if (!stack) {
-		Util_Clear();
+		util::clearall();
 		return;
 	}
 
@@ -849,12 +849,12 @@ void tutil12 (void)
 
 		rc = stack->add((void*) particle);
 		if (rc != 0) {
-			Util_Clear();
+			util::clearall();
 			return;
 		}
 	}
 
-	Util_Clear();
+	util::clearall();
 }
 #endif
 
@@ -864,13 +864,13 @@ void tutil13 (void)
 	int rc = 0;
 	Stack *stack = new Stack();
 	if (!stack) {
-		Util_Clear();
+		util::clearall();
 		return;
 	}
 
 	Handler *handler = new Handler(stack);
 	if (!handler) {
-		Util_Clear();
+		util::clearall();
 		return;
 	}
 
@@ -940,7 +940,7 @@ void tutil13 (void)
 
 		rc = handler->add(particle);
 		if (rc != 0) {
-			Util_Clear();
+			util::clearall();
 			return;
 		}
 	}
@@ -952,7 +952,7 @@ void tutil13 (void)
 		printf("%s\n", Kind::stringify(particle->kind));
 	}
 
-	Util_Clear();
+	util::clearall();
 }
 #else
 void tutil13 (void)
@@ -960,13 +960,13 @@ void tutil13 (void)
 	int rc = 0;
 	Stack *stack = new Stack();
 	if (!stack) {
-		Util_Clear();
+		util::clearall();
 		return;
 	}
 
 	Handler *handler = new Handler(stack);
 	if (!handler) {
-		Util_Clear();
+		util::clearall();
 		return;
 	}
 
@@ -1036,12 +1036,12 @@ void tutil13 (void)
 
 		rc = handler->add(particle);
 		if (rc != 0) {
-			Util_Clear();
+			util::clearall();
 			return;
 		}
 	}
 
-	Util_Clear();
+	util::clearall();
 }
 #endif
 
@@ -1049,7 +1049,7 @@ void tutil14(void)
 {
 	Vector *r = new Vector();
 	if (!r) {
-		Util_Clear();
+		util::clearall();
 		return;
 	}
 
@@ -1058,42 +1058,42 @@ void tutil14(void)
 	double const height = 32;
 	BoundingBox *bb = new BoundingBox(r, length, width, height);
 	if (!bb) {
-		Util_Clear();
+		util::clearall();
 		return;
 	}
 
 	struct Brownian *Brownian = new struct Brownian();
 	if (!Brownian) {
-		Util_Clear();
+		util::clearall();
 		return;
 	}
 
 	Stack *stack = new Stack();
 	if (!stack) {
-		Util_Clear();
+		util::clearall();
 		return;
 	}
 
 	Handler *handler = new Handler(stack);
 	if (!handler) {
-		Util_Clear();
+		util::clearall();
 		return;
 	}
 
 	System *system = new System(bb, Brownian, handler);
 	if (!system) {
-		Util_Clear();
+		util::clearall();
 		return;
 	}
 
-	Util_Clear();
+	util::clearall();
 }
 
 void tutil15 (void)
 {
 	Vector *r = new Vector();
 	if (!r) {
-		Util_Clear();
+		util::clearall();
 		return;
 	}
 
@@ -1102,79 +1102,79 @@ void tutil15 (void)
 	double const height = 32;
 	BoundingBox *bb = new BoundingBox(r, length, width, height);
 	if (!bb) {
-		Util_Clear();
+		util::clearall();
 		return;
 	}
 
 	struct Brownian *Brownian = new struct Brownian();
 	if (!Brownian) {
-		Util_Clear();
+		util::clearall();
 		return;
 	}
 
 	Stack *stack = new Stack();
 	if (!stack) {
-		Util_Clear();
+		util::clearall();
 		return;
 	}
 
 	Handler *handler = new Handler(stack);
 	if (!handler) {
-		Util_Clear();
+		util::clearall();
 		return;
 	}
 
 	System *system = new System(bb, Brownian, handler);
 	if (!system) {
-		Util_Clear();
+		util::clearall();
 		return;
 	}
 
 	Prompt *prompt = new Prompt();
 	if (!prompt) {
-		Util_Clear();
+		util::clearall();
 		return;
 	}
 
 	Config *config = new Config();
 	if (!config) {
-		Util_Clear();
+		util::clearall();
 		return;
 	}
 
 	Timer *timer = new Timer();
 	if (!timer) {
-		Util_Clear();
+		util::clearall();
 		return;
 	}
 
 	Random *random = new Random(random::NORMAL);
 	if (!random) {
-		Util_Clear();
+		util::clearall();
 		return;
 	}
 
 	Looper *looper = new Looper();
 	if (!looper) {
-		Util_Clear();
+		util::clearall();
 		return;
 	}
 
 	Driver *driver = new Driver();
 	if (!driver) {
-		Util_Clear();
+		util::clearall();
 		return;
 	}
 
 	Integrator *integrator = new Integrator();
 	if (!integrator) {
-		Util_Clear();
+		util::clearall();
 		return;
 	}
 
 	Logger *logger = new Logger();
 	if (!logger) {
-		Util_Clear();
+		util::clearall();
 		return;
 	}
 
@@ -1188,14 +1188,14 @@ void tutil15 (void)
 			   logger,
 			   system);
 	if (!App) {
-		Util_Clear();
+		util::clearall();
 		return;
 	}
 
 	config->load();
 	config->parse();
 	config->config();
-	Util_Clear();
+	util::clearall();
 }
 
 
@@ -1203,7 +1203,7 @@ void tutil16 (void)
 {
 	Vector *r = new Vector();
 	if (!r) {
-		Util_Clear();
+		util::clearall();
 		return;
 	}
 
@@ -1212,79 +1212,79 @@ void tutil16 (void)
 	double const height = 32;
 	BoundingBox *bb = new BoundingBox(r, length, width, height);
 	if (!bb) {
-		Util_Clear();
+		util::clearall();
 		return;
 	}
 
 	struct Brownian *Brownian = new struct Brownian();
 	if (!Brownian) {
-		Util_Clear();
+		util::clearall();
 		return;
 	}
 
 	Stack *stack = new Stack();
 	if (!stack) {
-		Util_Clear();
+		util::clearall();
 		return;
 	}
 
 	Handler *handler = new Handler(stack);
 	if (!handler) {
-		Util_Clear();
+		util::clearall();
 		return;
 	}
 
 	System *system = new System(bb, Brownian, handler);
 	if (!system) {
-		Util_Clear();
+		util::clearall();
 		return;
 	}
 
 	Prompt *prompt = new Prompt();
 	if (!prompt) {
-		Util_Clear();
+		util::clearall();
 		return;
 	}
 
 	Config *config = new Config();
 	if (!config) {
-		Util_Clear();
+		util::clearall();
 		return;
 	}
 
 	Timer *timer = new Timer();
 	if (!timer) {
-		Util_Clear();
+		util::clearall();
 		return;
 	}
 
 	Random *random = new Random(random::NORMAL);
 	if (!random) {
-		Util_Clear();
+		util::clearall();
 		return;
 	}
 
 	Looper *looper = new Looper();
 	if (!looper) {
-		Util_Clear();
+		util::clearall();
 		return;
 	}
 
 	Driver *driver = new Driver();
 	if (!driver) {
-		Util_Clear();
+		util::clearall();
 		return;
 	}
 
 	Integrator *integrator = new Integrator();
 	if (!integrator) {
-		Util_Clear();
+		util::clearall();
 		return;
 	}
 
 	Logger *logger = new Logger();
 	if (!logger) {
-		Util_Clear();
+		util::clearall();
 		return;
 	}
 
@@ -1298,7 +1298,7 @@ void tutil16 (void)
 			   logger,
 			   system);
 	if (!App) {
-		Util_Clear();
+		util::clearall();
 		return;
 	}
 
@@ -1307,20 +1307,20 @@ void tutil16 (void)
 	config->config();
 	App->_exec_ = true;
 	App->looper->loop();
-	Util_Clear();
+	util::clearall();
 }
 
 void tutil17 (void)
 {
 	Stack *stk = new Stack();
 	if (!stk) {
-		Util_Clear();
+		util::clearall();
 		return;
 	}
 
 	void *data = lmp::load();
 	if (!data) {
-		Util_Clear();
+		util::clearall();
 		return;
 	}
 
@@ -1330,36 +1330,36 @@ void tutil17 (void)
 	}
 
 	os::print("particles: %zu\n", num_particles);
-	Util_Clear();
+	util::clearall();
 }
 
 void tutil18 (void)
 {
 	Random *r = new Random(random::NORMAL);
 	if (!r) {
-		Util_Clear();
+		util::clearall();
 		return;
 	}
 
 	size_t const numel = 0x80000;
 	size_t const size = numel * sizeof(double);
-	double *x = (double*) Util_Malloc(size);
+	double *x = (double*) util::malloc(size);
 	if (!x) {
-		Util_Clear();
+		util::clearall();
 		return;
 	}
 
-	ssize_t *y = (ssize_t*) Util_Malloc(numel * sizeof(ssize_t));
+	ssize_t *y = (ssize_t*) util::malloc(numel * sizeof(ssize_t));
 	if (!y) {
-		Util_Clear();
+		util::clearall();
 		return;
 	}
 
 	size_t bins = 13;
 	ssize_t hist_size = bins * sizeof(ssize_t);
-	ssize_t *hist = (ssize_t*) Util_Malloc(hist_size);
+	ssize_t *hist = (ssize_t*) util::malloc(hist_size);
 	if (!hist) {
-		Util_Clear();
+		util::clearall();
 		return;
 	}
 	memset(hist, 0, hist_size);
@@ -1396,9 +1396,9 @@ void tutil18 (void)
 	std /= (((double) numel) - 1.0);
 	std = sqrt(std);
 
-	FILE **f = (FILE**) Util_OpenFile("hist.txt", "w");
+	FILE **f = (FILE**) util::fopen("hist.txt", "w");
 	if (!f) {
-		Util_Clear();
+		util::clearall();
 		return;
 	}
 
@@ -1409,15 +1409,15 @@ void tutil18 (void)
 	printf("avg: %f\n", avg);
 	printf("std: %f\n", std);
 	printf("histogram of Gaussian random numbers has been exported to hist.txt\n");
-	f = (FILE**) Util_CloseFile(f);
-	Util_Clear();
+	f = (FILE**) util::fclose(f);
+	util::clearall();
 }
 
 void tutil19 (void)
 {
 	Vector *r = new Vector();
 	if (!r) {
-		Util_Clear();
+		util::clearall();
 		return;
 	}
 
@@ -1426,79 +1426,79 @@ void tutil19 (void)
 	double const height = 0;
 	BoundingBox *bb = new BoundingBox(r, length, width, height);
 	if (!bb) {
-		Util_Clear();
+		util::clearall();
 		return;
 	}
 
 	struct Brownian *Brownian = new struct Brownian();
 	if (!Brownian) {
-		Util_Clear();
+		util::clearall();
 		return;
 	}
 
 	Stack *stack = new Stack();
 	if (!stack) {
-		Util_Clear();
+		util::clearall();
 		return;
 	}
 
 	Handler *handler = new Handler(stack);
 	if (!handler) {
-		Util_Clear();
+		util::clearall();
 		return;
 	}
 
 	System *system = new System(bb, Brownian, handler);
 	if (!system) {
-		Util_Clear();
+		util::clearall();
 		return;
 	}
 
 	Prompt *prompt = new Prompt();
 	if (!prompt) {
-		Util_Clear();
+		util::clearall();
 		return;
 	}
 
 	Config *config = new Config();
 	if (!config) {
-		Util_Clear();
+		util::clearall();
 		return;
 	}
 
 	Timer *timer = new Timer();
 	if (!timer) {
-		Util_Clear();
+		util::clearall();
 		return;
 	}
 
 	Random *random = new Random(random::NORMAL);
 	if (!random) {
-		Util_Clear();
+		util::clearall();
 		return;
 	}
 
 	Looper *looper = new Looper();
 	if (!looper) {
-		Util_Clear();
+		util::clearall();
 		return;
 	}
 
 	Driver *driver = new Driver();
 	if (!driver) {
-		Util_Clear();
+		util::clearall();
 		return;
 	}
 
 	Integrator *integrator = new Integrator();
 	if (!integrator) {
-		Util_Clear();
+		util::clearall();
 		return;
 	}
 
 	Logger *logger = new Logger();
 	if (!logger) {
-		Util_Clear();
+		util::clearall();
 		return;
 	}
 
@@ -1512,7 +1512,7 @@ void tutil19 (void)
 			   logger,
 			   system);
 	if (!App) {
-		Util_Clear();
+		util::clearall();
 		return;
 	}
 
@@ -1522,13 +1522,13 @@ void tutil19 (void)
 
 	stack = new Stack();
 	if (!stack) {
-		Util_Clear();
+		util::clearall();
 		return;
 	}
 
 	void *data = lmp::load();
 	if (!data) {
-		Util_Clear();
+		util::clearall();
 		return;
 	}
 
@@ -1540,13 +1540,13 @@ void tutil19 (void)
 
 		ID *id = new ID(i);
 		if (!id) {
-			Util_Clear();
+			util::clearall();
 			return;
 		}
 
 		Kind *kind = new Kind(SPHERE);
 		if (!kind) {
-			Util_Clear();
+			util::clearall();
 			return;
 		}
 
@@ -1561,43 +1561,43 @@ void tutil19 (void)
 
 		Vector *r = new Vector(x, y, z);
 		if (!r) {
-			Util_Clear();
+			util::clearall();
 			return;
 		}
 
 		Vector *u = new Vector();
 		if (!u) {
-			Util_Clear();
+			util::clearall();
 			return;
 		}
 
 		Vector *E = new Vector();
 		if (!E) {
-			Util_Clear();
+			util::clearall();
 			return;
 		}
 
 		Vector *d = new Vector(0, 0, 1);
 		if (!d) {
-			Util_Clear();
+			util::clearall();
 			return;
 		}
 
 		Vector *F = new Vector();
 		if (!F) {
-			Util_Clear();
+			util::clearall();
 			return;
 		}
 
 		Stack *stack = new Stack();
 		if (!stack) {
-			Util_Clear();
+			util::clearall();
 			return;
 		}
 
 		List *list = new List(stack);
 		if (!list) {
-			Util_Clear();
+			util::clearall();
 			return;
 		}
 
@@ -1605,7 +1605,7 @@ void tutil19 (void)
 
 		int const rc = handler->add(particle);
 		if (rc != 0) {
-			Util_Clear();
+			util::clearall();
 			return;
 		}
 
@@ -1614,17 +1614,17 @@ void tutil19 (void)
 
 	App->_exec_ = true;
 	App->looper->loop();
-	Util_Clear();
+	util::clearall();
 }
 
 void tutil20 (void)
 {
-	FILE **conf = (FILE**) Util_OpenFile("conf.json", "r");
-	FILE **lmp = (FILE**) Util_OpenFile("data.lmp", "r");
-	conf = (FILE**) Util_CloseFile(conf);
-	lmp = (FILE**) Util_CloseFile(lmp);
-	Util_CloseFiles();
-	Util_Clear();
+	FILE **conf = (FILE**) util::fopen("conf.json", "r");
+	FILE **lmp = (FILE**) util::fopen("data.lmp", "r");
+	conf = (FILE**) util::fclose(conf);
+	lmp = (FILE**) util::fclose(lmp);
+	util::fcloseall();
+	util::clearall();
 }
 
 /*

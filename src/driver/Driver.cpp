@@ -13,12 +13,12 @@ void Driver::bind (BDX *app)
 
 void *Driver::operator new (size_t size)
 {
-	return Util_Malloc(size);
+	return util::malloc(size);
 }
 
 void Driver::operator delete (void *p)
 {
-	p = Util_Free(p);
+	p = util::free(p);
 }
 
 /*

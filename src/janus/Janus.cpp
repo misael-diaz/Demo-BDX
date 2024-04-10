@@ -49,12 +49,12 @@ void Janus::ia (const Particle *particle)
 
 void *Janus::operator new (size_t size)
 {
-	return Util_Malloc(size);
+	return util::malloc(size);
 }
 
 void Janus::operator delete (void *p)
 {
-	p = Util_Free(p);
+	p = util::free(p);
 }
 
 /*
