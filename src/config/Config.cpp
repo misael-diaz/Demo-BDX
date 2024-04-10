@@ -312,9 +312,9 @@ static void Cfg_AddObjects (ObjectStack *objects, const char **json)
 	} while (**json);
 }
 
-static void Cfg_OpenJSON (FILE **f)
+static void Cfg_OpenJSON (FILE ***f)
 {
-	*f = fopen("conf.json", "r");
+	*f = (FILE**) Util_OpenFile("conf.json", "r");
 	if (!*f) {
 		Util_Clear();
 		os::error("Config::load: %s\n", strerror(errno));
@@ -322,29 +322,29 @@ static void Cfg_OpenJSON (FILE **f)
 	}
 }
 
-static void Cfg_CloseJSON (FILE **f)
+static void Cfg_CloseJSON (FILE ***f)
 {
-	fclose(*f);
+	*f = (FILE**) Util_CloseFile(*f);
 }
 
-static size_t Cfg_SizeJSON (FILE **f)
+static size_t Cfg_SizeJSON (FILE ***f)
 {
-	fseek(*f, 0L, SEEK_SET);
-	size_t const beg = ftell(*f);
-	fseek(*f, 0L, SEEK_END);
-	size_t const end = ftell(*f);
+	fseek(**f, 0L, SEEK_SET);
+	size_t const beg = ftell(**f);
+	fseek(**f, 0L, SEEK_END);
+	size_t const end = ftell(**f);
 	size_t const size = (end - beg);
-	fseek(*f, 0L, SEEK_SET);
+	fseek(**f, 0L, SEEK_SET);
 	return size;
 }
 
-static void *Cfg_ReadJSON (FILE **f)
+static void *Cfg_ReadJSON (FILE ***f)
 {
 	size_t const bytes = Cfg_SizeJSON(f);
 	size_t const sz = (bytes + 1);
 	void *json = Util_Malloc(sz);
 	memset(json, 0, sz);
-	size_t const size = fread(json, 1, bytes, *f);
+	size_t const size = fread(json, 1, bytes, **f);
 	if (size != bytes) {
 		Cfg_CloseJSON(f);
 		Util_Clear();
@@ -357,7 +357,7 @@ static void *Cfg_ReadJSON (FILE **f)
 
 void Config::load ()
 {
-	FILE *f[] = {NULL};
+	FILE **f[] = {NULL};
 	Cfg_OpenJSON(f);
 	Cfg_SizeJSON(f);
 	void *json = Cfg_ReadJSON(f);

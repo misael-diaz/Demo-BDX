@@ -20,26 +20,26 @@ static size_t lmp_SizeDataFile (FILE *f)
 
 void *lmp::load (void)
 {
-	FILE *lmp = fopen("data.lmp", "r");
+	FILE **lmp = (FILE**) Util_OpenFile("data.lmp", "r");
 	if (!lmp) {
 		os::error("lmp::load: IO ERROR\n");
 		return NULL;
 	}
 
-	size_t const len = lmp_SizeDataFile(lmp);
+	size_t const len = lmp_SizeDataFile(*lmp);
 	size_t const sz = (len + 1);
 	void *data = Util_Malloc(sz);
 	memset(data, 0, sz);
 
 	size_t const chunk = 1;
-	size_t const bytes = fread(data, chunk, len, lmp);
+	size_t const bytes = fread(data, chunk, len, *lmp);
 	if (len != bytes) {
 		os::error("lmp::load: IO READ ERROR\n");
-		fclose(lmp);
+		Util_CloseFile(lmp);
 		return NULL;
 	}
 
-	fclose(lmp);
+	Util_CloseFile(lmp);
 	return data;
 }
 
