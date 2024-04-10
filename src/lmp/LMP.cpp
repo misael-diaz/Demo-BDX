@@ -21,11 +21,6 @@ static size_t lmp_SizeDataFile (FILE *f)
 void *lmp::load (void)
 {
 	FILE **lmp = (FILE**) util::fopen("data.lmp", "r");
-	if (!lmp) {
-		os::error("lmp::load: IO ERROR\n");
-		return NULL;
-	}
-
 	size_t const len = lmp_SizeDataFile(*lmp);
 	size_t const sz = (len + 1);
 	void *data = util::malloc(sz);
@@ -36,7 +31,8 @@ void *lmp::load (void)
 	if (len != bytes) {
 		os::error("lmp::load: IO READ ERROR\n");
 		util::fclose(lmp);
-		return NULL;
+		util::clearall();
+		exit(EXIT_FAILURE);
 	}
 
 	util::fclose(lmp);
