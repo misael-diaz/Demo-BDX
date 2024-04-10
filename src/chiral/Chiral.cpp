@@ -57,12 +57,12 @@ void Chiral::ia (const Particle *particle)
 
 void *Chiral::operator new (size_t size)
 {
-	return Util_Malloc(size);
+	return util::malloc(size);
 }
 
 void Chiral::operator delete (void *p)
 {
-	p = Util_Free(p);
+	p = util::free(p);
 }
 
 /*

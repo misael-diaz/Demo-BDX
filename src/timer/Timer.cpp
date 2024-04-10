@@ -14,12 +14,12 @@ void Timer::bind (BDX *app)
 
 void *Timer::operator new (size_t size)
 {
-	return Util_Malloc(size);
+	return util::malloc(size);
 }
 
 void Timer::operator delete (void *p)
 {
-	p = Util_Free(p);
+	p = util::free(p);
 }
 
 void Timer::time ()

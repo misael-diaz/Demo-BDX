@@ -3,13 +3,15 @@
 
 #include <cstddef>
 
-void  Util_Clear(void);
-void *Util_Free(void *p);
-void *Util_Malloc(size_t const sz);
-char *Util_CopyString(const char *string);
-void *Util_OpenFile(const char *filename, const char *mode);
-void *Util_CloseFile(void* vfile);
-void  Util_CloseFiles(void);
+namespace util {
+	void  clearall(void);
+	void *free(void *p);
+	void *malloc(size_t const sz);
+	char *strcpy(const char *string);
+	void *fopen(const char *filename, const char *mode);
+	void *fclose(void* vfile);
+	void  fcloseall(void);
+};
 
 #endif
 

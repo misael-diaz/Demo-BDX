@@ -2,6 +2,7 @@
 #include <cstdlib>
 #include <cstring>
 #include <cerrno>
+#include "util.h"
 
 #define HEAD ((size_t) 0xffffffffffffffff)
 #define HASH ((size_t) 0xdb0f1d1d0dec2023)
@@ -57,7 +58,7 @@ static m_chain_t *Util_Remove (m_chain_t *node)
 	return node;
 }
 
-void *Util_Free (void *p)
+static void *Util_Free (void *p)
 {
 	if (!p) {
 		return NULL;
@@ -78,7 +79,7 @@ void *Util_Free (void *p)
 	return NULL;
 }
 
-void Util_Clear (void)
+static void Util_Clear (void)
 {
 	m_chain_t *next = NULL;
 	for (m_chain_t *node = m_chain.next; node; node = next) {
@@ -91,7 +92,7 @@ void Util_Clear (void)
 	m_count = 0;
 }
 
-void *Util_Malloc (size_t const sz)
+static void *Util_Malloc (size_t const sz)
 {
 	size_t const size = sizeof(m_chain_t) + sz;
 	void *p = malloc(size);
@@ -142,7 +143,7 @@ static f_chain_t *Util_ChainFile (f_chain_t *node)
 	return node;
 }
 
-void *Util_CloseFile (void *vfhandle)
+static void *Util_CloseFile (void *vfhandle)
 {
 	if (!vfhandle) {
 		return vfhandle;
@@ -176,7 +177,7 @@ void *Util_CloseFile (void *vfhandle)
 	return NULL;
 }
 
-void Util_CloseFiles (void)
+static void Util_CloseFiles (void)
 {
 	f_chain_t *next = NULL;
 	for (f_chain_t *node = f_chain.next; node; node = next) {
@@ -188,7 +189,7 @@ void Util_CloseFiles (void)
 	f_count = 0;
 }
 
-void *Util_OpenFile (const char *filename, const char *mode)
+static void *Util_OpenFile (const char *filename, const char *mode)
 {
 	FILE *file = fopen(filename, mode);
 	if (!file) {
@@ -215,6 +216,65 @@ void *Util_OpenFile (const char *filename, const char *mode)
 	++f_count;
 
 	return node->fhandle;
+}
+
+void *util::fopen (const char *filename, const char *mode)
+{
+	void *p = Util_OpenFile(filename, mode);
+	if (!p) {
+		Util_CloseFiles();
+		Util_Clear();
+		fprintf(stderr, "util::fopen: %s\n", strerror(errno));
+		exit(EXIT_FAILURE);
+	}
+
+	return p;
+}
+
+void *util::fclose (void *vfhandle)
+{
+	return Util_CloseFile(vfhandle);
+}
+
+void util::fcloseall (void)
+{
+	Util_CloseFiles();
+}
+
+void *util::malloc (size_t const sz)
+{
+	void *p = Util_Malloc(sz);
+	if (!p) {
+		Util_CloseFiles();
+		Util_Clear();
+		fprintf(stderr, "util::malloc: %s\n", strerror(errno));
+		exit(EXIT_FAILURE);
+	}
+
+	return p;
+}
+
+void *util::free (void *p)
+{
+	return Util_Free(p);
+}
+
+void util::clearall (void)
+{
+	Util_Clear();
+}
+
+char *util::strcpy (const char *string)
+{
+	char *p = Util_CopyString(string);
+	if (!p) {
+		Util_CloseFiles();
+		Util_Clear();
+		fprintf(stderr, "util::strcpy: %s\n", strerror(errno));
+		exit(EXIT_FAILURE);
+	}
+
+	return p;
 }
 
 /*

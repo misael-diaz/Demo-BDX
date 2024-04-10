@@ -25,12 +25,12 @@ Particle::Particle (Vector *r,
 
 void *Particle::operator new (size_t size)
 {
-	return Util_Malloc(size);
+	return util::malloc(size);
 }
 
 void Particle::operator delete (void *p)
 {
-	p = Util_Free(p);
+	p = util::free(p);
 }
 
 /*

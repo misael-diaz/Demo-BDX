@@ -47,12 +47,12 @@ Object::Object()
 
 void *Object::operator new (size_t size)
 {
-	return Util_Malloc(size);
+	return util::malloc(size);
 }
 
 void Object::operator delete (void *p)
 {
-	p = Util_Free(p);
+	p = util::free(p);
 }
 
 ObjectStack::ObjectStack(Stack *stack)
@@ -88,12 +88,12 @@ const Object **ObjectStack::end () const
 
 void *ObjectStack::operator new (size_t size)
 {
-	return Util_Malloc(size);
+	return util::malloc(size);
 }
 
 void ObjectStack::operator delete (void *p)
 {
-	p = Util_Free(p);
+	p = util::free(p);
 }
 
 Config::Config ()
@@ -108,12 +108,12 @@ void Config::bind (BDX *app)
 
 void *Config::operator new (size_t size)
 {
-	return Util_Malloc(size);
+	return util::malloc(size);
 }
 
 void Config::operator delete (void *p)
 {
-	p = Util_Free(p);
+	p = util::free(p);
 }
 
 static size_t Cfg_Count (const char **json, char const c)
@@ -230,29 +230,29 @@ static bool Cfg_AddPairs (Object *object, const char **json)
 
 		Object *next = new Object();
 		if (!next) {
-			Util_Clear();
+			util::clearall();
 			os::error("Config::config: memory error\n");
 			exit(EXIT_FAILURE);
 		}
 
-		next->type = Util_CopyString("data");
+		next->type = util::strcpy("data");
 		if (!next->type) {
-			Util_Clear();
+			util::clearall();
 			os::error("Config::config: memory error\n");
 			exit(EXIT_FAILURE);
 		}
 
-		next->key = Util_CopyString(fieldname);
+		next->key = util::strcpy(fieldname);
 		if (!next->key) {
-			Util_Clear();
+			util::clearall();
 			os::error("Config::config: memory error\n");
 			exit(EXIT_FAILURE);
 		}
 
 		Cfg_FindField(json, beg, end, fieldname);
-		next->value = Util_CopyString(fieldname);
+		next->value = util::strcpy(fieldname);
 		if (!next->value) {
-			Util_Clear();
+			util::clearall();
 			os::error("Config::config: memory error\n");
 			exit(EXIT_FAILURE);
 		}
@@ -273,35 +273,35 @@ static void Cfg_AddObjects (ObjectStack *objects, const char **json)
 
 		Object *object = new Object();
 		if (!object) {
-			Util_Clear();
+			util::clearall();
 			os::error("Config::config: memory error\n");
 			exit(EXIT_FAILURE);
 		}
 
-		object->type = Util_CopyString("object");
+		object->type = util::strcpy("object");
 		if (!object->type) {
-			Util_Clear();
+			util::clearall();
 			os::error("Config::config: memory error\n");
 			exit(EXIT_FAILURE);
 		}
 
-		object->key = Util_CopyString(fieldname);
+		object->key = util::strcpy(fieldname);
 		if (!object->key) {
-			Util_Clear();
+			util::clearall();
 			os::error("Config::config: memory error\n");
 			exit(EXIT_FAILURE);
 		}
 
 		Stack *stack = new Stack();
 		if (!stack) {
-			Util_Clear();
+			util::clearall();
 			os::error("Config::config: memory error\n");
 			exit(EXIT_FAILURE);
 		}
 
 		object->ostack = new ObjectStack(stack);
 		if (!object->ostack)  {
-			Util_Clear();
+			util::clearall();
 			os::error("Config::config: memory error\n");
 			exit(EXIT_FAILURE);
 		}
@@ -314,9 +314,9 @@ static void Cfg_AddObjects (ObjectStack *objects, const char **json)
 
 static void Cfg_OpenJSON (FILE ***f)
 {
-	*f = (FILE**) Util_OpenFile("conf.json", "r");
+	*f = (FILE**) util::fopen("conf.json", "r");
 	if (!*f) {
-		Util_Clear();
+		util::clearall();
 		os::error("Config::load: %s\n", strerror(errno));
 		exit(EXIT_FAILURE);
 	}
@@ -324,7 +324,7 @@ static void Cfg_OpenJSON (FILE ***f)
 
 static void Cfg_CloseJSON (FILE ***f)
 {
-	*f = (FILE**) Util_CloseFile(*f);
+	*f = (FILE**) util::fclose(*f);
 }
 
 static size_t Cfg_SizeJSON (FILE ***f)
@@ -342,12 +342,12 @@ static void *Cfg_ReadJSON (FILE ***f)
 {
 	size_t const bytes = Cfg_SizeJSON(f);
 	size_t const sz = (bytes + 1);
-	void *json = Util_Malloc(sz);
+	void *json = util::malloc(sz);
 	memset(json, 0, sz);
 	size_t const size = fread(json, 1, bytes, **f);
 	if (size != bytes) {
 		Cfg_CloseJSON(f);
-		Util_Clear();
+		util::clearall();
 		os::error("Config::load: error\n");
 		exit(EXIT_FAILURE);
 	}
@@ -370,21 +370,21 @@ void Config::parse ()
 	const char *JSON = (const char*) this->_json_;
 	const char *json[] = {JSON};
 	if (!Cfg_Parse(json)) {
-		Util_Clear();
+		util::clearall();
 		os::error("Config::config: syntax error in conf.json\n");
 		exit(EXIT_FAILURE);
 	}
 
 	Stack *stack = new Stack();
 	if (!stack) {
-		Util_Clear();
+		util::clearall();
 		os::error("Config::config: memory error\n");
 		exit(EXIT_FAILURE);
 	}
 
 	ObjectStack *objects = new ObjectStack(stack);
 	if (!objects) {
-		Util_Clear();
+		util::clearall();
 		os::error("Config::config: memory error\n");
 		exit(EXIT_FAILURE);
 	}
