@@ -261,6 +261,7 @@ void *util::free (void *p)
 
 void util::clearall (void)
 {
+	Util_CloseFiles();
 	Util_Clear();
 }
 

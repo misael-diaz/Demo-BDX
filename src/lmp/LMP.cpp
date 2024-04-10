@@ -77,10 +77,6 @@ static void *lmp_TokenizeString (const char **txt)
 	size_t const len = (e - b);
 	size_t const sz = (len + 1);
 	void *token = util::malloc(sz);
-	if (!token) {
-		os::error("lmp_TokenizeString: error\n");
-		return NULL;
-	}
 
 	memset(token, 0, sz);
 	memcpy(token, b, len);
@@ -92,20 +88,9 @@ static void lmp_TokenizeLine (const char **txt, Stack *stack)
 	while (**txt && **txt != '\n') {
 
 		void *token = lmp_TokenizeString(txt);
-		if (!token) {
-			util::clearall();
-			os::error("lmp_TokenizeLine: error\n");
-			exit(EXIT_FAILURE);
-		}
 
 		os::print("token: %s\n", (const char*) token);
 		double *p = (double*) util::malloc(sizeof(double));
-		if (!p) {
-			util::clearall();
-			os::error("lmp_TokenizeLine: error\n");
-			exit(EXIT_FAILURE);
-		}
-
 		*p = atof((const char*) token);
 		stack->add((void*) p);
 		util::free(token);
