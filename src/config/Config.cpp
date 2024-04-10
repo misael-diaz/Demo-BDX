@@ -229,33 +229,11 @@ static bool Cfg_AddPairs (Object *object, const char **json)
 		}
 
 		Object *next = new Object();
-		if (!next) {
-			util::clearall();
-			os::error("Config::config: memory error\n");
-			exit(EXIT_FAILURE);
-		}
-
 		next->type = util::strcpy("data");
-		if (!next->type) {
-			util::clearall();
-			os::error("Config::config: memory error\n");
-			exit(EXIT_FAILURE);
-		}
-
 		next->key = util::strcpy(fieldname);
-		if (!next->key) {
-			util::clearall();
-			os::error("Config::config: memory error\n");
-			exit(EXIT_FAILURE);
-		}
 
 		Cfg_FindField(json, beg, end, fieldname);
 		next->value = util::strcpy(fieldname);
-		if (!next->value) {
-			util::clearall();
-			os::error("Config::config: memory error\n");
-			exit(EXIT_FAILURE);
-		}
 
 		object->ostack->add(next);
 	}
@@ -270,56 +248,19 @@ static void Cfg_AddObjects (ObjectStack *objects, const char **json)
 		const char *end[] = {NULL};
 		char fieldname[MAX_FIELD_NAME_SIZE];
 		Cfg_FindField(json, beg, end, fieldname);
-
 		Object *object = new Object();
-		if (!object) {
-			util::clearall();
-			os::error("Config::config: memory error\n");
-			exit(EXIT_FAILURE);
-		}
-
 		object->type = util::strcpy("object");
-		if (!object->type) {
-			util::clearall();
-			os::error("Config::config: memory error\n");
-			exit(EXIT_FAILURE);
-		}
-
 		object->key = util::strcpy(fieldname);
-		if (!object->key) {
-			util::clearall();
-			os::error("Config::config: memory error\n");
-			exit(EXIT_FAILURE);
-		}
-
 		Stack *stack = new Stack();
-		if (!stack) {
-			util::clearall();
-			os::error("Config::config: memory error\n");
-			exit(EXIT_FAILURE);
-		}
-
 		object->ostack = new ObjectStack(stack);
-		if (!object->ostack)  {
-			util::clearall();
-			os::error("Config::config: memory error\n");
-			exit(EXIT_FAILURE);
-		}
-
 		Cfg_AddPairs(object, json);
 		objects->add(object);
-
 	} while (**json);
 }
 
 static void Cfg_OpenJSON (FILE ***f)
 {
 	*f = (FILE**) util::fopen("conf.json", "r");
-	if (!*f) {
-		util::clearall();
-		os::error("Config::load: %s\n", strerror(errno));
-		exit(EXIT_FAILURE);
-	}
 }
 
 static void Cfg_CloseJSON (FILE ***f)
@@ -376,18 +317,7 @@ void Config::parse ()
 	}
 
 	Stack *stack = new Stack();
-	if (!stack) {
-		util::clearall();
-		os::error("Config::config: memory error\n");
-		exit(EXIT_FAILURE);
-	}
-
 	ObjectStack *objects = new ObjectStack(stack);
-	if (!objects) {
-		util::clearall();
-		os::error("Config::config: memory error\n");
-		exit(EXIT_FAILURE);
-	}
 
 	Cfg_AddObjects(objects, json);
 	this->_objects_ = (void*) objects;

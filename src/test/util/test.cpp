@@ -128,56 +128,25 @@ Particle *_Particle (Vector *r,
 	{
 		case SPHERE:
 		particle = new Sphere(r, u, E, d, F, list, id, kind, a);
-		if (!particle) {
-			return NULL;
-		}
-
 		break;
 
 		case JANUS:
 		T = new Vector();
-		if (!T) {
-			return NULL;
-		}
-
 		particle = new Janus(r, u, E, d, F, T, list, id, kind, a);
-		if (!particle) {
-			return NULL;
-		}
-
 		break;
 
 		case SPHEROID:
 		T = new Vector();
-		if (!T) {
-			return NULL;
-		}
-
 		particle = new Spheroid(r, u, E, d, F, T, list, id, kind, a, b);
-		if (!particle) {
-			return NULL;
-		}
-
 		break;
 
 		case CHIRAL:
 		T = new Vector();
-		if (!T) {
-			return NULL;
-		}
-
 		particle = new Chiral(r, u, E, d, F, T, list, id, kind, a, b, c);
-		if (!particle) {
-			return NULL;
-		}
-
 		break;
 
 		default:
 		particle = new Sphere(r, u, E, d, F, list, id, kind, a);
-		if (!particle) {
-			return NULL;
-		}
 	}
 
 	return particle;
@@ -217,13 +186,7 @@ void tutil3 (void)
 	double *data[] = {NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL};
 	size_t const numel = sizeof(data) / sizeof(double);
 	for (size_t i = 0; i != numel; ++i) {
-
 		data[i] = (double*) util::malloc(sizeof(double));
-		if (!data[i]) {
-			util::clearall();
-			return;
-		}
-
 		*data[i] = ((double) i);
 	}
 
@@ -254,9 +217,6 @@ void tutil5 (void)
 	Vector **vectors = (Vector**) util::malloc(numel * sizeof(Vector*));
 	for (size_t i = 0; i != numel; ++i) {
 		vectors[i] = new Vector();
-		if (!vectors[i]) {
-			break;
-		}
 	}
 
 	util::clearall();
@@ -265,11 +225,6 @@ void tutil5 (void)
 void tutil6 (void)
 {
 	Vector *r = new Vector();
-	if (!r) {
-		util::clearall();
-		return;
-	}
-
 	BDXObject *obj = new BDXObject(r);
 	delete(obj);
 	util::clearall();
@@ -298,12 +253,7 @@ void tutil8 (void)
 	size_t const numel = 256;
 	size_t const size = numel * sizeof(Particle*);
 	Particle **particles = (Particle**) util::malloc(size);
-	if (!particles) {
-		return;
-	}
-
 	for (size_t i = 0; i != numel; ++i) {
-
 		ID *id = new ID(i);
 		Kind *kind = new Kind();
 		double const x = rand();
@@ -311,10 +261,6 @@ void tutil8 (void)
 		double const z = rand();
 		Vector *r = new Vector(x, y, z);
 		Particle *particle = new Particle(r, id, kind);
-		if (!particle) {
-			break;
-		}
-
 		particles[i] = particle;
 	}
 
@@ -330,10 +276,6 @@ void tutil8 (void)
 void tutil9 (void)
 {
 	Vector *r = new Vector();
-	if (!r) {
-		return;
-	}
-
 	double const length = 16;
 	double const width = 16;
 	double const height = 32;
@@ -348,67 +290,22 @@ void tutil10 (void)
 	size_t const numel = 256;
 	size_t const size = numel * sizeof(Sphere*);
 	Sphere **spheres = (Sphere**) util::malloc(size);
-	if (!spheres) {
-		return;
-	}
-
 	for (size_t i = 0; i != numel; ++i) {
-
 		ID *id = new ID(i);
-		if (!id) {
-			break;
-		}
-
 		Kind *kind = new Kind();
-		if (!kind) {
-			break;
-		}
-
 		double const x = rand();
 		double const y = rand();
 		double const z = rand();
 		Vector *r = new Vector(x, y, z);
-		if (!r) {
-			break;
-		}
-
 		Vector *u = new Vector();
-		if (!u) {
-			break;
-		}
-
 		Vector *E = new Vector();
-		if (!E) {
-			break;
-		}
-
 		Vector *d = new Vector(0, 0, 1);
-		if (!d) {
-			break;
-		}
-
 		Vector *F = new Vector();
-		if (!F) {
-			break;
-		}
-
 		Stack *stack = new Stack();
-		if (!stack) {
-			break;
-		}
-
 		List *list = new List(stack);
-		if (!list) {
-			break;
-		}
-
 		double const frand_max = RAND_MAX;
 		double const a = rand() / frand_max;
 		Sphere *sphere = new Sphere(r, u, E, d, F, list, id, kind, a);
-		if (!sphere) {
-			break;
-		}
-
 		printf("radius: %f\n", sphere->radius());
 		spheres[i] = sphere;
 	}
@@ -421,67 +318,22 @@ void tutil10 (void)
 	size_t const numel = 256;
 	size_t const size = numel * sizeof(Sphere*);
 	Sphere **spheres = (Sphere**) util::malloc(size);
-	if (!spheres) {
-		return;
-	}
-
 	for (size_t i = 0; i != numel; ++i) {
-
 		ID *id = new ID(i);
-		if (!id) {
-			break;
-		}
-
 		Kind *kind = new Kind();
-		if (!kind) {
-			break;
-		}
-
 		double const x = rand();
 		double const y = rand();
 		double const z = rand();
 		Vector *r = new Vector(x, y, z);
-		if (!r) {
-			break;
-		}
-
 		Vector *u = new Vector();
-		if (!u) {
-			break;
-		}
-
 		Vector *E = new Vector();
-		if (!E) {
-			break;
-		}
-
 		Vector *d = new Vector(0, 0, 1);
-		if (!d) {
-			break;
-		}
-
 		Vector *F = new Vector();
-		if (!F) {
-			break;
-		}
-
 		Stack *stack = new Stack();
-		if (!stack) {
-			break;
-		}
-
 		List *list = new List(stack);
-		if (!list) {
-			break;
-		}
-
 		double const frand_max = RAND_MAX;
 		double const a = rand() / frand_max;
 		Sphere *sphere = new Sphere(r, u, E, d, F, list, id, kind, a);
-		if (!sphere) {
-			break;
-		}
-
 		spheres[i] = sphere;
 	}
 
@@ -495,81 +347,27 @@ void tutil11 (void)
 	size_t const numel = 256;
 	size_t const size = numel * sizeof(Particle*);
 	Particle **particles = (Particle**) util::malloc(size);
-	if (!particles) {
-		return;
-	}
-
 	for (size_t i = 0; i != numel; ++i) {
-
 		ID *id = new ID(i);
-		if (!id) {
-			util::clearall();
-			return;
-		}
-
 		double const min_k = 0;
 		double const max_k = 4;
 		double const k = min_k + (max_k - min_k) * (rand() / ((double) RAND_MAX));
 		Kind *kind = new Kind((kind_t) k);
-		if (!kind) {
-			util::clearall();
-			return;
-		}
-
 		double const x = rand();
 		double const y = rand();
 		double const z = rand();
 		Vector *r = new Vector(x, y, z);
-		if (!r) {
-			util::clearall();
-			return;
-		}
-
 		Vector *u = new Vector();
-		if (!u) {
-			util::clearall();
-			return;
-		}
-
 		Vector *E = new Vector();
-		if (!E) {
-			util::clearall();
-			return;
-		}
-
 		Vector *d = new Vector(0, 0, 1);
-		if (!d) {
-			util::clearall();
-			return;
-		}
-
 		Vector *F = new Vector();
-		if (!F) {
-			util::clearall();
-			return;
-		}
-
 		Stack *stack = new Stack();
-		if (!stack) {
-			break;
-		}
-
 		List *list = new List(stack);
-		if (!list) {
-			break;
-		}
-
 		double const frand_max = RAND_MAX;
 		double const a = rand() / frand_max;
 		double const b = ASPECT_RATIO * a;
 		double const c = rand() / frand_max;
-
 		Particle *particle = _Particle(r, u, E, d, F, list, id, kind, a, b, c);
-		if (!particle) {
-			util::clearall();
-			return;
-		}
-
 		particles[i] = particle;
 	}
 
@@ -596,73 +394,27 @@ void tutil11 (void)
 	size_t const numel = 256;
 	size_t const size = numel * sizeof(Particle*);
 	Particle **particles = (Particle**) util::malloc(size);
-	if (!particles) {
-		return;
-	}
-
 	for (size_t i = 0; i != numel; ++i) {
-
 		ID *id = new ID(i);
-		if (!id) {
-			break;
-		}
-
 		double const min_k = 0;
 		double const max_k = 4;
 		double const k = min_k + (max_k - min_k) * (rand() / ((double) RAND_MAX));
 		Kind *kind = new Kind((kind_t) k);
-		if (!kind) {
-			break;
-		}
-
 		double const x = rand();
 		double const y = rand();
 		double const z = rand();
 		Vector *r = new Vector(x, y, z);
-		if (!r) {
-			break;
-		}
-
 		Vector *u = new Vector();
-		if (!u) {
-			break;
-		}
-
 		Vector *E = new Vector();
-		if (!E) {
-			break;
-		}
-
 		Vector *d = new Vector(0, 0, 1);
-		if (!d) {
-			break;
-		}
-
 		Vector *F = new Vector();
-		if (!F) {
-			break;
-		}
-
 		Stack *stack = new Stack();
-		if (!stack) {
-			break;
-		}
-
 		List *list = new List(stack);
-		if (!list) {
-			break;
-		}
-
 		double const frand_max = RAND_MAX;
 		double const a = rand() / frand_max;
 		double const b = ASPECT_RATIO * a;
 		double const c = rand() / frand_max;
-
 		Particle *particle = _Particle(r, u, E, d, F, list, id, kind, a, b, c);
-		if (!particle) {
-			break;
-		}
-
 		particles[i] = particle;
 	}
 
@@ -675,80 +427,29 @@ void tutil12 (void)
 {
 	int rc = 0;
 	Stack *stack = new Stack();
-	if (!stack) {
-		util::clearall();
-		return;
-	}
-
 	size_t const numel = 1024;
 	for (size_t i = 0; i != numel; ++i) {
-
 		ID *id = new ID(i);
-		if (!id) {
-			break;
-		}
-
 		double const min_k = 0;
 		double const max_k = 4;
 		double const k = min_k + (max_k - min_k) * (rand() / ((double) RAND_MAX));
 		Kind *kind = new Kind((kind_t) k);
-		if (!kind) {
-			break;
-		}
-
 		double const x = rand();
 		double const y = rand();
 		double const z = rand();
 		Vector *r = new Vector(x, y, z);
-		if (!r) {
-			break;
-		}
-
 		Vector *u = new Vector();
-		if (!u) {
-			break;
-		}
-
 		Vector *E = new Vector();
-		if (!E) {
-			break;
-		}
-
 		Vector *d = new Vector(0, 0, 1);
-		if (!d) {
-			break;
-		}
-
 		Vector *F = new Vector();
-		if (!F) {
-			break;
-		}
-
 		Stack *stack = new Stack();
-		if (!stack) {
-			break;
-		}
-
 		List *list = new List(stack);
-		if (!list) {
-			break;
-		}
-
 		double const frand_max = RAND_MAX;
 		double const a = rand() / frand_max;
 		double const b = ASPECT_RATIO * a;
 		double const c = rand() / frand_max;
-
 		Particle *particle = _Particle(r, u, E, d, F, list, id, kind, a, b, c);
-		if (!particle) {
-			break;
-		}
-
-		rc = stack->add((void*) particle);
-		if (rc != 0) {
-			util::clearall();
-			return;
-		}
+		stack->add((void*) particle);
 	}
 
 	for (const void **it = (const void**) stack->begin(); it != stack->end(); ++it) {
@@ -776,82 +477,29 @@ void tutil12 (void)
 #else
 void tutil12 (void)
 {
-	int rc = 0;
-	Stack *stack = new Stack();
-	if (!stack) {
-		util::clearall();
-		return;
-	}
-
 	size_t const numel = 1024;
 	for (size_t i = 0; i != numel; ++i) {
-
 		ID *id = new ID(i);
-		if (!id) {
-			break;
-		}
-
 		double const min_k = 0;
 		double const max_k = 4;
 		double const k = min_k + (max_k - min_k) * (rand() / ((double) RAND_MAX));
 		Kind *kind = new Kind((kind_t) k);
-		if (!kind) {
-			break;
-		}
-
 		double const x = rand();
 		double const y = rand();
 		double const z = rand();
 		Vector *r = new Vector(x, y, z);
-		if (!r) {
-			break;
-		}
-
 		Vector *u = new Vector();
-		if (!u) {
-			break;
-		}
-
 		Vector *E = new Vector();
-		if (!E) {
-			break;
-		}
-
 		Vector *d = new Vector(0, 0, 1);
-		if (!d) {
-			break;
-		}
-
 		Vector *F = new Vector();
-		if (!F) {
-			break;
-		}
-
 		Stack *stack = new Stack();
-		if (!stack) {
-			break;
-		}
-
 		List *list = new List(stack);
-		if (!list) {
-			break;
-		}
-
 		double const frand_max = RAND_MAX;
 		double const a = rand() / frand_max;
 		double const b = ASPECT_RATIO * a;
 		double const c = rand() / frand_max;
-
 		Particle *particle = _Particle(r, u, E, d, F, list, id, kind, a, b, c);
-		if (!particle) {
-			break;
-		}
-
-		rc = stack->add((void*) particle);
-		if (rc != 0) {
-			util::clearall();
-			return;
-		}
+		stack->add((void*) particle);
 	}
 
 	util::clearall();
@@ -863,86 +511,30 @@ void tutil13 (void)
 {
 	int rc = 0;
 	Stack *stack = new Stack();
-	if (!stack) {
-		util::clearall();
-		return;
-	}
-
 	Handler *handler = new Handler(stack);
-	if (!handler) {
-		util::clearall();
-		return;
-	}
-
 	size_t const numel = 1024;
 	for (size_t i = 0; i != numel; ++i) {
-
 		ID *id = new ID(i);
-		if (!id) {
-			break;
-		}
-
 		double const min_k = 0;
 		double const max_k = 4;
 		double const k = min_k + (max_k - min_k) * (rand() / ((double) RAND_MAX));
 		Kind *kind = new Kind((kind_t) k);
-		if (!kind) {
-			break;
-		}
-
 		double const x = rand();
 		double const y = rand();
 		double const z = rand();
 		Vector *r = new Vector(x, y, z);
-		if (!r) {
-			break;
-		}
-
 		Vector *u = new Vector();
-		if (!u) {
-			break;
-		}
-
 		Vector *E = new Vector();
-		if (!E) {
-			break;
-		}
-
 		Vector *d = new Vector(0, 0, 1);
-		if (!d) {
-			break;
-		}
-
 		Vector *F = new Vector();
-		if (!F) {
-			break;
-		}
-
 		Stack *stack = new Stack();
-		if (!stack) {
-			break;
-		}
-
 		List *list = new List(stack);
-		if (!list) {
-			break;
-		}
-
 		double const frand_max = RAND_MAX;
 		double const a = rand() / frand_max;
 		double const b = ASPECT_RATIO * a;
 		double const c = rand() / frand_max;
-
 		Particle *particle = _Particle(r, u, E, d, F, list, id, kind, a, b, c);
-		if (!particle) {
-			break;
-		}
-
-		rc = handler->add(particle);
-		if (rc != 0) {
-			util::clearall();
-			return;
-		}
+		handler->add(particle);
 	}
 
 	const Particle **begin = handler->begin();
@@ -957,88 +549,31 @@ void tutil13 (void)
 #else
 void tutil13 (void)
 {
-	int rc = 0;
 	Stack *stack = new Stack();
-	if (!stack) {
-		util::clearall();
-		return;
-	}
-
 	Handler *handler = new Handler(stack);
-	if (!handler) {
-		util::clearall();
-		return;
-	}
-
 	size_t const numel = 1024;
 	for (size_t i = 0; i != numel; ++i) {
-
 		ID *id = new ID(i);
-		if (!id) {
-			break;
-		}
-
 		double const min_k = 0;
 		double const max_k = 4;
 		double const k = min_k + (max_k - min_k) * (rand() / ((double) RAND_MAX));
 		Kind *kind = new Kind((kind_t) k);
-		if (!kind) {
-			break;
-		}
-
 		double const x = rand();
 		double const y = rand();
 		double const z = rand();
 		Vector *r = new Vector(x, y, z);
-		if (!r) {
-			break;
-		}
-
 		Vector *u = new Vector();
-		if (!u) {
-			break;
-		}
-
 		Vector *E = new Vector();
-		if (!E) {
-			break;
-		}
-
 		Vector *d = new Vector(0, 0, 1);
-		if (!d) {
-			break;
-		}
-
 		Vector *F = new Vector();
-		if (!F) {
-			break;
-		}
-
 		Stack *stack = new Stack();
-		if (!stack) {
-			break;
-		}
-
 		List *list = new List(stack);
-		if (!list) {
-			break;
-		}
-
 		double const frand_max = RAND_MAX;
 		double const a = rand() / frand_max;
 		double const b = ASPECT_RATIO * a;
 		double const c = rand() / frand_max;
-
 		Particle *particle = _Particle(r, u, E, d, F, list, id, kind, a, b, c);
-		if (!particle) {
-			break;
-		}
-
-		rc = handler->add(particle);
-		if (rc != 0) {
-			util::clearall();
-			return;
-		}
+		handler->add(particle);
 	}
 
 	util::clearall();
@@ -1048,136 +583,37 @@ void tutil13 (void)
 void tutil14(void)
 {
 	Vector *r = new Vector();
-	if (!r) {
-		util::clearall();
-		return;
-	}
-
 	double const length = 16;
 	double const width = 16;
 	double const height = 32;
 	BoundingBox *bb = new BoundingBox(r, length, width, height);
-	if (!bb) {
-		util::clearall();
-		return;
-	}
-
 	struct Brownian *Brownian = new struct Brownian();
-	if (!Brownian) {
-		util::clearall();
-		return;
-	}
-
 	Stack *stack = new Stack();
-	if (!stack) {
-		util::clearall();
-		return;
-	}
-
 	Handler *handler = new Handler(stack);
-	if (!handler) {
-		util::clearall();
-		return;
-	}
-
 	System *system = new System(bb, Brownian, handler);
-	if (!system) {
-		util::clearall();
-		return;
-	}
-
+	delete(system);
 	util::clearall();
 }
 
 void tutil15 (void)
 {
 	Vector *r = new Vector();
-	if (!r) {
-		util::clearall();
-		return;
-	}
-
 	double const length = 16;
 	double const width = 16;
 	double const height = 32;
 	BoundingBox *bb = new BoundingBox(r, length, width, height);
-	if (!bb) {
-		util::clearall();
-		return;
-	}
-
 	struct Brownian *Brownian = new struct Brownian();
-	if (!Brownian) {
-		util::clearall();
-		return;
-	}
-
 	Stack *stack = new Stack();
-	if (!stack) {
-		util::clearall();
-		return;
-	}
-
 	Handler *handler = new Handler(stack);
-	if (!handler) {
-		util::clearall();
-		return;
-	}
-
 	System *system = new System(bb, Brownian, handler);
-	if (!system) {
-		util::clearall();
-		return;
-	}
-
 	Prompt *prompt = new Prompt();
-	if (!prompt) {
-		util::clearall();
-		return;
-	}
-
 	Config *config = new Config();
-	if (!config) {
-		util::clearall();
-		return;
-	}
-
 	Timer *timer = new Timer();
-	if (!timer) {
-		util::clearall();
-		return;
-	}
-
 	Random *random = new Random(random::NORMAL);
-	if (!random) {
-		util::clearall();
-		return;
-	}
-
 	Looper *looper = new Looper();
-	if (!looper) {
-		util::clearall();
-		return;
-	}
-
 	Driver *driver = new Driver();
-	if (!driver) {
-		util::clearall();
-		return;
-	}
-
 	Integrator *integrator = new Integrator();
-	if (!integrator) {
-		util::clearall();
-		return;
-	}
-
 	Logger *logger = new Logger();
-	if (!logger) {
-		util::clearall();
-		return;
-	}
-
 	BDX *App = new BDX(prompt,
 			   config,
 			   timer,
@@ -1187,14 +623,11 @@ void tutil15 (void)
 			   integrator,
 			   logger,
 			   system);
-	if (!App) {
-		util::clearall();
-		return;
-	}
 
 	config->load();
 	config->parse();
 	config->config();
+	delete(App);
 	util::clearall();
 }
 
@@ -1202,92 +635,22 @@ void tutil15 (void)
 void tutil16 (void)
 {
 	Vector *r = new Vector();
-	if (!r) {
-		util::clearall();
-		return;
-	}
-
 	double const length = 16;
 	double const width = 16;
 	double const height = 32;
 	BoundingBox *bb = new BoundingBox(r, length, width, height);
-	if (!bb) {
-		util::clearall();
-		return;
-	}
-
 	struct Brownian *Brownian = new struct Brownian();
-	if (!Brownian) {
-		util::clearall();
-		return;
-	}
-
 	Stack *stack = new Stack();
-	if (!stack) {
-		util::clearall();
-		return;
-	}
-
 	Handler *handler = new Handler(stack);
-	if (!handler) {
-		util::clearall();
-		return;
-	}
-
 	System *system = new System(bb, Brownian, handler);
-	if (!system) {
-		util::clearall();
-		return;
-	}
-
 	Prompt *prompt = new Prompt();
-	if (!prompt) {
-		util::clearall();
-		return;
-	}
-
 	Config *config = new Config();
-	if (!config) {
-		util::clearall();
-		return;
-	}
-
 	Timer *timer = new Timer();
-	if (!timer) {
-		util::clearall();
-		return;
-	}
-
 	Random *random = new Random(random::NORMAL);
-	if (!random) {
-		util::clearall();
-		return;
-	}
-
 	Looper *looper = new Looper();
-	if (!looper) {
-		util::clearall();
-		return;
-	}
-
 	Driver *driver = new Driver();
-	if (!driver) {
-		util::clearall();
-		return;
-	}
-
 	Integrator *integrator = new Integrator();
-	if (!integrator) {
-		util::clearall();
-		return;
-	}
-
 	Logger *logger = new Logger();
-	if (!logger) {
-		util::clearall();
-		return;
-	}
-
 	BDX *App = new BDX(prompt,
 			   config,
 			   timer,
@@ -1297,10 +660,6 @@ void tutil16 (void)
 			   integrator,
 			   logger,
 			   system);
-	if (!App) {
-		util::clearall();
-		return;
-	}
 
 	config->load();
 	config->parse();
@@ -1313,22 +672,11 @@ void tutil16 (void)
 void tutil17 (void)
 {
 	Stack *stk = new Stack();
-	if (!stk) {
-		util::clearall();
-		return;
-	}
-
 	void *data = lmp::load();
-	if (!data) {
-		util::clearall();
-		return;
-	}
-
 	size_t const num_particles = lmp::parse(data, stk);
 	for (double **it = (double**) stk->begin(); it != (double**) stk->end(); ++it) {
 		os::print("%f\n", **it);
 	}
-
 	os::print("particles: %zu\n", num_particles);
 	util::clearall();
 }
@@ -1336,32 +684,13 @@ void tutil17 (void)
 void tutil18 (void)
 {
 	Random *r = new Random(random::NORMAL);
-	if (!r) {
-		util::clearall();
-		return;
-	}
-
 	size_t const numel = 0x80000;
 	size_t const size = numel * sizeof(double);
 	double *x = (double*) util::malloc(size);
-	if (!x) {
-		util::clearall();
-		return;
-	}
-
 	ssize_t *y = (ssize_t*) util::malloc(numel * sizeof(ssize_t));
-	if (!y) {
-		util::clearall();
-		return;
-	}
-
 	size_t bins = 13;
 	ssize_t hist_size = bins * sizeof(ssize_t);
 	ssize_t *hist = (ssize_t*) util::malloc(hist_size);
-	if (!hist) {
-		util::clearall();
-		return;
-	}
 	memset(hist, 0, hist_size);
 
 	for (size_t i = 0; i != numel; ++i) {
@@ -1397,11 +726,6 @@ void tutil18 (void)
 	std = sqrt(std);
 
 	FILE **f = (FILE**) util::fopen("hist.txt", "w");
-	if (!f) {
-		util::clearall();
-		return;
-	}
-
 	for (size_t bin = 0; bin != bins; ++bin) {
 		fprintf(*f, "%zd\n", hist[bin]);
 	}
@@ -1416,92 +740,22 @@ void tutil18 (void)
 void tutil19 (void)
 {
 	Vector *r = new Vector();
-	if (!r) {
-		util::clearall();
-		return;
-	}
-
 	double const length = 0;
 	double const width = 0;
 	double const height = 0;
 	BoundingBox *bb = new BoundingBox(r, length, width, height);
-	if (!bb) {
-		util::clearall();
-		return;
-	}
-
 	struct Brownian *Brownian = new struct Brownian();
-	if (!Brownian) {
-		util::clearall();
-		return;
-	}
-
 	Stack *stack = new Stack();
-	if (!stack) {
-		util::clearall();
-		return;
-	}
-
 	Handler *handler = new Handler(stack);
-	if (!handler) {
-		util::clearall();
-		return;
-	}
-
 	System *system = new System(bb, Brownian, handler);
-	if (!system) {
-		util::clearall();
-		return;
-	}
-
 	Prompt *prompt = new Prompt();
-	if (!prompt) {
-		util::clearall();
-		return;
-	}
-
 	Config *config = new Config();
-	if (!config) {
-		util::clearall();
-		return;
-	}
-
 	Timer *timer = new Timer();
-	if (!timer) {
-		util::clearall();
-		return;
-	}
-
 	Random *random = new Random(random::NORMAL);
-	if (!random) {
-		util::clearall();
-		return;
-	}
-
 	Looper *looper = new Looper();
-	if (!looper) {
-		util::clearall();
-		return;
-	}
-
 	Driver *driver = new Driver();
-	if (!driver) {
-		util::clearall();
-		return;
-	}
-
 	Integrator *integrator = new Integrator();
-	if (!integrator) {
-		util::clearall();
-		return;
-	}
-
 	Logger *logger = new Logger();
-	if (!logger) {
-		util::clearall();
-		return;
-	}
-
 	BDX *App = new BDX(prompt,
 			   config,
 			   timer,
@@ -1511,44 +765,19 @@ void tutil19 (void)
 			   integrator,
 			   logger,
 			   system);
-	if (!App) {
-		util::clearall();
-		return;
-	}
 
 	config->load();
 	config->parse();
 	config->config();
 
 	stack = new Stack();
-	if (!stack) {
-		util::clearall();
-		return;
-	}
-
 	void *data = lmp::load();
-	if (!data) {
-		util::clearall();
-		return;
-	}
-
 	size_t const num_particles = lmp::parse(data, stack);
 	const double **it = (const double**) stack->begin();
 	for (size_t i = 0; i != num_particles; ++i) {
-
 		double const a = 1.0;
-
 		ID *id = new ID(i);
-		if (!id) {
-			util::clearall();
-			return;
-		}
-
 		Kind *kind = new Kind(SPHERE);
-		if (!kind) {
-			util::clearall();
-			return;
-		}
 
 		it += 2; // skips LAMMPS ID and Group
 
@@ -1560,54 +789,14 @@ void tutil19 (void)
 		it += 3;
 
 		Vector *r = new Vector(x, y, z);
-		if (!r) {
-			util::clearall();
-			return;
-		}
-
 		Vector *u = new Vector();
-		if (!u) {
-			util::clearall();
-			return;
-		}
-
 		Vector *E = new Vector();
-		if (!E) {
-			util::clearall();
-			return;
-		}
-
 		Vector *d = new Vector(0, 0, 1);
-		if (!d) {
-			util::clearall();
-			return;
-		}
-
 		Vector *F = new Vector();
-		if (!F) {
-			util::clearall();
-			return;
-		}
-
 		Stack *stack = new Stack();
-		if (!stack) {
-			util::clearall();
-			return;
-		}
-
 		List *list = new List(stack);
-		if (!list) {
-			util::clearall();
-			return;
-		}
-
 		Particle *particle = _Particle(r, u, E, d, F, list, id, kind, a, 0, 0);
-
-		int const rc = handler->add(particle);
-		if (rc != 0) {
-			util::clearall();
-			return;
-		}
+		handler->add(particle);
 
 		it += 3; // skips optional director (of zeros)
 	}
