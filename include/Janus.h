@@ -1,18 +1,15 @@
 #ifndef GUARD_BDX_JANUS_H
 #define GUARD_BDX_JANUS_H
 
+#include "Sphere.h"
+
 struct ID;
 struct Kind;
 struct List;
 struct Vector;
-struct BDXObject;
-struct Particle;
-struct Sphere;
 
 struct Janus : Sphere
 {
-	public:
-	Vector *T = NULL;
 	Janus(Vector *r,
 	      Vector *u,
 	      Vector *E,

@@ -16,6 +16,7 @@ struct System
 	void bind(BDX *app);
 	void *operator new(size_t size);
 	void operator delete(void *p);
+	void contain();
 };
 
 #endif

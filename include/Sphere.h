@@ -1,24 +1,21 @@
 #ifndef GUARD_BDX_SPHERE_H
 #define GUARD_BDX_SPHERE_H
 
+#include "Particle.h"
+
 struct ID;
 struct Kind;
 struct Vector;
-struct BDXObject;
-struct Particle;
 struct List;
 
 struct Sphere : Particle
 {
-	protected:
-	double a = 1.0;
-	public:
-	Vector *F = NULL;
 	Sphere(Vector *r,
 	       Vector *u,
 	       Vector *E,
 	       Vector *d,
 	       Vector *F,
+	       Vector *T,
 	       List *list,
 	       ID *id,
 	       Kind *kind,

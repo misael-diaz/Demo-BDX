@@ -3,10 +3,7 @@
 #include "ID.h"
 #include "Kind.h"
 #include "Vector.h"
-#include "BDXObject.h"
-#include "Particle.h"
 #include "List.h"
-#include "Spheroid.h"
 #include "Chiral.h"
 
 Chiral::Chiral (Vector *r,
@@ -22,14 +19,14 @@ Chiral::Chiral (Vector *r,
 		double const b,
 		double const c):
 		Spheroid(r, u, E, d, F, T, list, id, kind, a, b),
-		c(c)
+		_chiral_(c)
 {
 	return;
 }
 
 double Chiral::chiral () const
 {
-	return this->c;
+	return this->_chiral_;
 }
 
 void Chiral::ia (const Particle *particle)

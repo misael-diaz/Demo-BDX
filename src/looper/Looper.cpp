@@ -1,6 +1,7 @@
 #include "util.h"
-#include "Timer.h"
+#include "Driver.h"
 #include "Looper.h"
+#include "Timer.h"
 #include "BDX.h"
 
 Looper::Looper ()
@@ -25,8 +26,13 @@ void Looper::operator delete (void *p)
 
 void Looper::loop ()
 {
+	Driver *driver = this->app->driver;
+	this->app->timer->begin();
 	while (this->app->exec()) {
-		this->app->timer->time();
+		driver->BrownianMotion();
+		driver->contain();
+		this->app->timer->end();
+		this->app->timer->etime();
 	}
 }
 

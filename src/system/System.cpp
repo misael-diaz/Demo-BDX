@@ -1,5 +1,11 @@
+#include "os.h"
 #include "util.h"
 #include "Brownian.h"
+#include "BoundingBox.h"
+#include "Handler.h"
+#include "Vector.h"
+#include "Particle.h"
+#include "GFORTRAN.h"
 #include "System.h"
 
 System::System (BoundingBox *bb, struct Brownian *Brownian, Handler *handler)
@@ -23,6 +29,26 @@ void *System::operator new (size_t size)
 void System::operator delete (void *p)
 {
 	p = util::free(p);
+}
+
+void container (double *x, double const *len)
+{
+	const double t = (*x / *len);
+	*x -= *len * fanint(&t);
+}
+
+void System::contain ()
+{
+	Handler *h = this->handler;
+	for (Particle **particles = h->begin(); particles != h->end(); ++particles) {
+		double const l = this->bb->length();
+		double const w = this->bb->width();
+		double const h = this->bb->height();
+		Particle *particle = *particles;
+		container(&particle->r->x, &l);
+		container(&particle->r->y, &w);
+		container(&particle->r->z, &h);
+	}
 }
 
 /*

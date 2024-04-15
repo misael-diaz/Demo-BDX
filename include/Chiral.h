@@ -1,19 +1,16 @@
 #ifndef GUARD_BDX_CHIRAL_H
 #define GUARD_BDX_CHIRAL_H
 
+#include "Spheroid.h"
+
 struct ID;
 struct Kind;
 struct List;
 struct Vector;
-struct BDXObject;
-struct Particle;
-struct Spheroid;
 
 struct Chiral : Spheroid
 {
-	protected:
-	double c = 1.0;
-	public:
+	double _chiral_ = 1.0;
 	Chiral(Vector *r,
 	       Vector *u,
 	       Vector *E,
