@@ -847,7 +847,7 @@ void tutil21 (void)
 	System *system = new System(bb, Brownian, handler);
 	Prompt *prompt = new Prompt();
 	Config *config = new Config();
-	ssize_t const walltime = 15 * 60;
+	time_t const walltime = 15 * 60;
 	Timer *timer = new Timer(walltime);
 	Random *random = new Random(random::NORMAL);
 	Looper *looper = new Looper();

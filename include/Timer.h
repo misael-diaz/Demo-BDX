@@ -2,18 +2,17 @@
 #define GUARD_BDX_TIMER_H
 
 #include <ctime>
-#include <cstdlib>
 
 struct BDX;
 
 struct Timer
 {
 	BDX *app = NULL;
-	ssize_t _begin_ = 0;
-	ssize_t _end_ = 0;
-	ssize_t _walltime_ = 0;
+	time_t _begin_ = 0;
+	time_t _end_ = 0;
+	time_t _walltime_ = 0;
 	Timer();
-	Timer(ssize_t const walltime);
+	Timer(time_t const walltime);
 	void bind(BDX *app);
 	void *operator new(size_t size);
 	void operator delete(void *p);
