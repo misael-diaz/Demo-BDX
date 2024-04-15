@@ -1,6 +1,7 @@
 #ifndef GUARD_BDX_BROWNIAN_H
 #define GUARD_BDX_BROWNIAN_H
 
+struct Vector;
 struct System;
 
 struct Brownian
@@ -10,6 +11,7 @@ struct Brownian
 	void bind(System *system);
 	void *operator new(size_t size);
 	void operator delete(void *p);
+	void generate();
 };
 
 #endif

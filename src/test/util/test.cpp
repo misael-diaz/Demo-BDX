@@ -55,6 +55,7 @@ void tutil17(void);
 void tutil18(void);
 void tutil19(void);
 void tutil20(void);
+void tutil21(void);
 
 #ifdef GXX
 Particle *_Particle(Vector *r,
@@ -62,19 +63,21 @@ Particle *_Particle(Vector *r,
 		    Vector *E,
 		    Vector *d,
 		    Vector *F,
+		    Vector *T,
 		    List *list,
 		    ID *id,
 		    Kind *kind,
 		    double const a,
 		    double const b,
 		    double const c)
-__attribute__ ((nonnull (1, 2, 3, 4, 5, 6, 7, 8)));
+__attribute__ ((nonnull (1, 2, 3, 4, 5, 6, 7, 8, 9)));
 #else
 Particle *_Particle(Vector *r,
 		    Vector *u,
 		    Vector *E,
 		    Vector *d,
 		    Vector *F,
+		    Vector *T,
 		    List *list,
 		    ID *id,
 		    Kind *kind,
@@ -105,6 +108,7 @@ int main ()
 	tutil18();
 	tutil19();
 	tutil20();
+	tutil21();
 	util::clearall();
 	return 0;
 }
@@ -114,6 +118,7 @@ Particle *_Particle (Vector *r,
 		     Vector *E,
 		     Vector *d,
 		     Vector *F,
+		     Vector *T,
 		     List *list,
 		     ID *id,
 		     Kind *kind,
@@ -121,32 +126,28 @@ Particle *_Particle (Vector *r,
 		     double const b,
 		     double const c)
 {
-	Vector *T = NULL;
 	Particle *particle = NULL;
 	kind_t const k = kind->k();
 	switch(k)
 	{
 		case SPHERE:
-		particle = new Sphere(r, u, E, d, F, list, id, kind, a);
+		particle = new Sphere(r, u, E, d, F, T, list, id, kind, a);
 		break;
 
 		case JANUS:
-		T = new Vector();
 		particle = new Janus(r, u, E, d, F, T, list, id, kind, a);
 		break;
 
 		case SPHEROID:
-		T = new Vector();
 		particle = new Spheroid(r, u, E, d, F, T, list, id, kind, a, b);
 		break;
 
 		case CHIRAL:
-		T = new Vector();
 		particle = new Chiral(r, u, E, d, F, T, list, id, kind, a, b, c);
 		break;
 
 		default:
-		particle = new Sphere(r, u, E, d, F, list, id, kind, a);
+		particle = new Sphere(r, u, E, d, F, T, list, id, kind, a);
 	}
 
 	return particle;
@@ -301,11 +302,12 @@ void tutil10 (void)
 		Vector *E = new Vector();
 		Vector *d = new Vector(0, 0, 1);
 		Vector *F = new Vector();
+		Vector *T = new Vector();
 		Stack *stack = new Stack();
 		List *list = new List(stack);
 		double const frand_max = RAND_MAX;
 		double const a = rand() / frand_max;
-		Sphere *sphere = new Sphere(r, u, E, d, F, list, id, kind, a);
+		Sphere *sphere = new Sphere(r, u, E, d, F, T, list, id, kind, a);
 		printf("radius: %f\n", sphere->radius());
 		spheres[i] = sphere;
 	}
@@ -329,11 +331,12 @@ void tutil10 (void)
 		Vector *E = new Vector();
 		Vector *d = new Vector(0, 0, 1);
 		Vector *F = new Vector();
+		Vector *T = new Vector();
 		Stack *stack = new Stack();
 		List *list = new List(stack);
 		double const frand_max = RAND_MAX;
 		double const a = rand() / frand_max;
-		Sphere *sphere = new Sphere(r, u, E, d, F, list, id, kind, a);
+		Sphere *sphere = new Sphere(r, u, E, d, F, T, list, id, kind, a);
 		spheres[i] = sphere;
 	}
 
@@ -361,13 +364,14 @@ void tutil11 (void)
 		Vector *E = new Vector();
 		Vector *d = new Vector(0, 0, 1);
 		Vector *F = new Vector();
+		Vector *T = new Vector();
 		Stack *stack = new Stack();
 		List *list = new List(stack);
 		double const frand_max = RAND_MAX;
 		double const a = rand() / frand_max;
 		double const b = ASPECT_RATIO * a;
 		double const c = rand() / frand_max;
-		Particle *particle = _Particle(r, u, E, d, F, list, id, kind, a, b, c);
+		Particle *particle = _Particle(r, u, E, d, F, T, list, id, kind, a, b, c);
 		particles[i] = particle;
 	}
 
@@ -408,13 +412,14 @@ void tutil11 (void)
 		Vector *E = new Vector();
 		Vector *d = new Vector(0, 0, 1);
 		Vector *F = new Vector();
+		Vector *T = new Vector();
 		Stack *stack = new Stack();
 		List *list = new List(stack);
 		double const frand_max = RAND_MAX;
 		double const a = rand() / frand_max;
 		double const b = ASPECT_RATIO * a;
 		double const c = rand() / frand_max;
-		Particle *particle = _Particle(r, u, E, d, F, list, id, kind, a, b, c);
+		Particle *particle = _Particle(r, u, E, d, F, T, list, id, kind, a, b, c);
 		particles[i] = particle;
 	}
 
@@ -442,13 +447,14 @@ void tutil12 (void)
 		Vector *E = new Vector();
 		Vector *d = new Vector(0, 0, 1);
 		Vector *F = new Vector();
+		Vector *T = new Vector();
 		Stack *stack = new Stack();
 		List *list = new List(stack);
 		double const frand_max = RAND_MAX;
 		double const a = rand() / frand_max;
 		double const b = ASPECT_RATIO * a;
 		double const c = rand() / frand_max;
-		Particle *particle = _Particle(r, u, E, d, F, list, id, kind, a, b, c);
+		Particle *particle = _Particle(r, u, E, d, F, T, list, id, kind, a, b, c);
 		stack->add((void*) particle);
 	}
 
@@ -492,13 +498,14 @@ void tutil12 (void)
 		Vector *E = new Vector();
 		Vector *d = new Vector(0, 0, 1);
 		Vector *F = new Vector();
+		Vector *T = new Vector();
 		Stack *stack = new Stack();
 		List *list = new List(stack);
 		double const frand_max = RAND_MAX;
 		double const a = rand() / frand_max;
 		double const b = ASPECT_RATIO * a;
 		double const c = rand() / frand_max;
-		Particle *particle = _Particle(r, u, E, d, F, list, id, kind, a, b, c);
+		Particle *particle = _Particle(r, u, E, d, F, T, list, id, kind, a, b, c);
 		stack->add((void*) particle);
 	}
 
@@ -527,13 +534,14 @@ void tutil13 (void)
 		Vector *E = new Vector();
 		Vector *d = new Vector(0, 0, 1);
 		Vector *F = new Vector();
+		Vector *T = new Vector();
 		Stack *stack = new Stack();
 		List *list = new List(stack);
 		double const frand_max = RAND_MAX;
 		double const a = rand() / frand_max;
 		double const b = ASPECT_RATIO * a;
 		double const c = rand() / frand_max;
-		Particle *particle = _Particle(r, u, E, d, F, list, id, kind, a, b, c);
+		Particle *particle = _Particle(r, u, E, d, F, T, list, id, kind, a, b, c);
 		handler->add(particle);
 	}
 
@@ -566,13 +574,14 @@ void tutil13 (void)
 		Vector *E = new Vector();
 		Vector *d = new Vector(0, 0, 1);
 		Vector *F = new Vector();
+		Vector *T = new Vector();
 		Stack *stack = new Stack();
 		List *list = new List(stack);
 		double const frand_max = RAND_MAX;
 		double const a = rand() / frand_max;
 		double const b = ASPECT_RATIO * a;
 		double const c = rand() / frand_max;
-		Particle *particle = _Particle(r, u, E, d, F, list, id, kind, a, b, c);
+		Particle *particle = _Particle(r, u, E, d, F, T, list, id, kind, a, b, c);
 		handler->add(particle);
 	}
 
@@ -793,9 +802,10 @@ void tutil19 (void)
 		Vector *E = new Vector();
 		Vector *d = new Vector(0, 0, 1);
 		Vector *F = new Vector();
+		Vector *T = new Vector();
 		Stack *stack = new Stack();
 		List *list = new List(stack);
-		Particle *particle = _Particle(r, u, E, d, F, list, id, kind, a, 0, 0);
+		Particle *particle = _Particle(r, u, E, d, F, T, list, id, kind, a, 0, 0);
 		handler->add(particle);
 
 		it += 3; // skips optional director (of zeros)
@@ -813,6 +823,116 @@ void tutil20 (void)
 	conf = (FILE**) util::fclose(conf);
 	lmp = (FILE**) util::fclose(lmp);
 	util::fcloseall();
+	util::clearall();
+}
+
+/*
+
+void tutil21(void)
+- imports LAMMPS (unit) spheres data
+- performs a 15 minute simulation test run
+- checks that no particle is outside the system boundaries when the BDX simulation ends
+- displays the outcome of the test on the console
+
+*/
+
+void tutil21 (void)
+{
+	double const length = 0;
+	double const width = 0;
+	double const height = 0;
+	BoundingBox *bb = new BoundingBox(new Vector(), length, width, height);
+	struct Brownian *Brownian = new struct Brownian();
+	Handler *handler = new Handler(new Stack());
+	System *system = new System(bb, Brownian, handler);
+	Prompt *prompt = new Prompt();
+	Config *config = new Config();
+	ssize_t const walltime = 15 * 60;
+	Timer *timer = new Timer(walltime);
+	Random *random = new Random(random::NORMAL);
+	Looper *looper = new Looper();
+	Driver *driver = new Driver();
+	Integrator *integrator = new Integrator();
+	Logger *logger = new Logger();
+	BDX *App = new BDX(prompt,
+			   config,
+			   timer,
+			   random,
+			   looper,
+			   driver,
+			   integrator,
+			   logger,
+			   system);
+
+	os::print("configuring BDX App\n");
+	config->load();
+	config->parse();
+	config->config();
+
+	Stack *stack = new Stack();
+	void *data = lmp::load();
+	size_t const num_particles = lmp::parse(data, stack);
+	const double **it = (const double**) stack->begin();
+	for (size_t i = 0; i != num_particles; ++i) {
+		double const a = 1.0;
+		ID *id = new ID(i);
+		Kind *kind = new Kind(SPHERE);
+
+		it += 2; // skips LAMMPS ID and Group
+
+		const double **coords = it;
+		double const x = *coords[0];
+		double const y = *coords[1];
+		double const z = *coords[2];
+
+		it += 3;
+
+		Vector *r = new Vector(x, y, z);
+		Vector *u = new Vector();
+		Vector *E = new Vector();
+		Vector *d = new Vector(0, 0, 1);
+		Vector *F = new Vector();
+		Vector *T = new Vector();
+		List *list = new List(new Stack());
+		Particle *particle = _Particle(r, u, E, d, F, T, list, id, kind, a, 0, 0);
+		handler->add(particle);
+
+		it += 3; // skips optional director (of zeros)
+	}
+
+	os::print("executing BDX test-run\n");
+	App->_exec_ = true;
+	App->looper->loop();
+
+	ssize_t fails = 0;
+	Handler *h = handler;
+	for (Particle **particles = h->begin(); particles != h->end(); ++particles) {
+
+		Particle *p = *particles;
+
+		if (p->r->x < -0.5 * bb->length() || p->r->x > 0.5 * bb->length()) {
+			++fails;
+			break;
+		}
+
+		if (p->r->y < -0.5 * bb->width() || p->r->y > 0.5 * bb->width()) {
+			++fails;
+			break;
+		}
+
+		if (p->r->z < -0.5 * bb->height() || p->r->z > 0.5 * bb->height()) {
+			++fails;
+			break;
+		}
+	}
+
+	os::print("particle-container-test: ");
+	if (fails != 0) {
+		os::print("FAIL\n");
+	} else {
+		os::print("PASS\n");
+	}
+
 	util::clearall();
 }
 

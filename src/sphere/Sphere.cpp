@@ -3,8 +3,6 @@
 #include "ID.h"
 #include "Kind.h"
 #include "Vector.h"
-#include "BDXObject.h"
-#include "Particle.h"
 #include "List.h"
 #include "Sphere.h"
 
@@ -13,19 +11,19 @@ Sphere::Sphere (Vector *r,
 		Vector *E,
 		Vector *d,
 		Vector *F,
+		Vector *T,
 		List *list,
 		ID *id,
 		Kind *kind,
 		double const a):
-		Particle(r, u, E, d, list, id, kind),
-		a(a)
+		Particle(r, u, E, d, F, T, list, id, kind, a)
 {
-	this->F = F;
+	return;
 }
 
 double Sphere::radius () const
 {
-	return this->a;
+	return this->_radius_;
 }
 
 void Sphere::ia (const Particle *particle)

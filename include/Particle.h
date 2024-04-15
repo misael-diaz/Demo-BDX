@@ -1,30 +1,42 @@
 #ifndef GUARD_BDX_PARTICLE_H
 #define GUARD_BDX_PARTICLE_H
 
+#include "BDXObject.h"
+
 struct ID;
 struct Kind;
 struct List;
 struct Vector;
-struct BDXObject;
 
 struct Particle : BDXObject
 {
 	Vector *u = NULL;
 	Vector *E = NULL;
 	Vector *d = NULL;
+	Vector *F = NULL;
+	Vector *T = NULL;
 	List *list = NULL;
 	ID *id = NULL;
 	Kind *kind = NULL;
+	double _radius_ = 1.0;
 	Particle(Vector *r,
 		 Vector *u,
 		 Vector *E,
 		 Vector *d,
+		 Vector *F,
+		 Vector *T,
 		 List *list,
 		 ID *id,
-		 Kind *kind);
+		 Kind *kind,
+		 double const a);
 	virtual void ia(const Particle *particle) = 0;
 	void *operator new(size_t size);
 	void operator delete(void *p);
+	void _updatePositionVectorComponent_(double *x,
+					     double const F_x,
+					     double const mobility);
+	void _translate_(double const mobility);
+	void BrownianMotion();
 };
 
 #endif

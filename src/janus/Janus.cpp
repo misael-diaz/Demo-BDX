@@ -3,10 +3,7 @@
 #include "ID.h"
 #include "Kind.h"
 #include "Vector.h"
-#include "BDXObject.h"
-#include "Particle.h"
 #include "List.h"
-#include "Sphere.h"
 #include "Janus.h"
 
 Janus::Janus (Vector *r,
@@ -19,9 +16,9 @@ Janus::Janus (Vector *r,
 	      ID *id,
 	      Kind *kind,
 	      double const a):
-	      Sphere(r, u, E, d, F, list, id, kind, a)
+	      Sphere(r, u, E, d, F, T, list, id, kind, a)
 {
-	this->T = T;
+	return;
 }
 
 void Janus::ia (const Particle *particle)

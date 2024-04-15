@@ -5,7 +5,7 @@
 #define fanint(x) _gfortran_specific__anint_r8(x)
 
 extern "C" void _gfortran_random_r8(double*);
-extern "C" double _gfortran_specific__anint_r8(double*);
+extern "C" double _gfortran_specific__anint_r8(const double*);
 
 #endif
 

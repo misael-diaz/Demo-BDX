@@ -1,26 +1,32 @@
+#include <cmath>
 #include "util.h"
 #include "ID.h"
 #include "Kind.h"
 #include "Vector.h"
-#include "BDXObject.h"
-#include "Particle.h"
 #include "List.h"
+#include "Particle.h"
 
 Particle::Particle (Vector *r,
 		    Vector *u,
 		    Vector *E,
 		    Vector *d,
+		    Vector *F,
+		    Vector *T,
 		    List *list,
 		    ID *id,
-		    Kind *kind):
+		    Kind *kind,
+		    double const a):
 		    BDXObject(r)
 {
 	this->u = u;
 	this->E = E;
 	this->d = d;
+	this->F = F;
+	this->T = T;
 	this->list = list;
 	this->id = id;
 	this->kind = kind;
+	this->_radius_ = a;
 }
 
 void *Particle::operator new (size_t size)
@@ -32,6 +38,33 @@ void Particle::operator delete (void *p)
 {
 	p = util::free(p);
 }
+
+void Particle::_updatePositionVectorComponent_ (double *x,
+					        double const F_x,
+					        double const mobility)
+{
+	double const mob = mobility;
+	*x += (mob * F_x);
+}
+
+void Particle::_translate_ (double const mobility)
+{
+	double const mob = mobility;
+	this->_updatePositionVectorComponent_(&this->r->x, this->F->x, mob);
+	this->_updatePositionVectorComponent_(&this->r->y, this->F->y, mob);
+	this->_updatePositionVectorComponent_(&this->r->z, this->F->z, mob);
+	this->_updatePositionVectorComponent_(&this->u->x, this->F->x, mob);
+	this->_updatePositionVectorComponent_(&this->u->y, this->F->y, mob);
+	this->_updatePositionVectorComponent_(&this->u->z, this->F->z, mob);
+}
+
+void Particle::BrownianMotion ()
+{
+	constexpr double dt = GLOBAL_TIME_STEP;
+	constexpr double mobility = sqrt(2.0 * dt);
+	this->_translate_(mobility);
+}
+
 
 /*
 

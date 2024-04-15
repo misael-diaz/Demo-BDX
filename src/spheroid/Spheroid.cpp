@@ -3,8 +3,6 @@
 #include "ID.h"
 #include "Kind.h"
 #include "Vector.h"
-#include "BDXObject.h"
-#include "Particle.h"
 #include "List.h"
 #include "Spheroid.h"
 
@@ -19,22 +17,21 @@ Spheroid::Spheroid (Vector *r,
 		    Kind *kind,
 		    double const a,
 		    double const b):
-		    Particle(r, u, E, d, list, id, kind),
-		    a(a),
-		    b(b)
+		    Particle(r, u, E, d, F, T, list, id, kind, a),
+		    _radius_minor_(a),
+		    _radius_major_(b)
 {
-	this->F = F;
-	this->T = T;
+	return;
 }
 
 double Spheroid::radius_minor () const
 {
-	return this->a;
+	return this->_radius_minor_;
 }
 
 double Spheroid::radius_major () const
 {
-	return this->b;
+	return this->_radius_major_;
 }
 
 void Spheroid::ia (const Particle *particle)

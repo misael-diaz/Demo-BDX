@@ -7,6 +7,11 @@ Timer::Timer ()
 	return;
 }
 
+Timer::Timer (ssize_t const walltime) : _walltime_(walltime)
+{
+	return;
+}
+
 void Timer::bind (BDX *app)
 {
 	this->app = app;
@@ -22,9 +27,24 @@ void Timer::operator delete (void *p)
 	p = util::free(p);
 }
 
-void Timer::time ()
+void Timer::begin ()
 {
-	this->app->_exec_ = false;
+	this->_begin_ = ((ssize_t) time(NULL));
+}
+
+void Timer::end ()
+{
+	this->_end_ = ((ssize_t) time(NULL));
+}
+
+void Timer::etime ()
+{
+	ssize_t const walltime = this->_walltime_;
+	ssize_t const elapsedTime = (this->_end_ - this->_begin_);
+	ssize_t const etime = elapsedTime;
+	if (etime >= walltime) {
+		this->app->_exec_ = false;
+	}
 }
 
 /*

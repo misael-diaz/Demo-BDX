@@ -1,8 +1,9 @@
 #ifndef GUARD_BDX_BOUNDING_BOX_H
 #define GUARD_BDX_BOUNDING_BOX_H
 
+#include "BDXObject.h"
+
 struct Vector;
-struct BDXObject;
 
 struct BoundingBox : BDXObject
 {

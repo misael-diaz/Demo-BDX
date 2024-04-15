@@ -1,5 +1,10 @@
 #include "util.h"
 #include "Driver.h"
+#include "Brownian.h"
+#include "Handler.h"
+#include "Particle.h"
+#include "System.h"
+#include "BDX.h"
 
 Driver::Driver ()
 {
@@ -19,6 +24,23 @@ void *Driver::operator new (size_t size)
 void Driver::operator delete (void *p)
 {
 	p = util::free(p);
+}
+
+void Driver::BrownianMotion ()
+{
+	struct Brownian *Brownian = this->app->system->Brownian;
+	Brownian->generate();
+	Handler *h = this->app->system->handler;
+	for (Particle **particles = h->begin(); particles != h->end(); ++particles) {
+		Particle *p = *particles;
+		p->BrownianMotion();
+	}
+}
+
+void Driver::contain ()
+{
+	System *system = this->app->system;
+	system->contain();
 }
 
 /*

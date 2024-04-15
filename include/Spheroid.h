@@ -1,21 +1,17 @@
 #ifndef GUARD_BDX_SPHEROID_H
 #define GUARD_BDX_SPHEROID_H
 
+#include "Particle.h"
+
 struct ID;
 struct Kind;
 struct List;
 struct Vector;
-struct BDXObject;
-struct Particle;
 
 struct Spheroid : Particle
 {
-	protected:
-	double a = 1.0;
-	double b = 3.0;
-	public:
-	Vector *F = NULL;
-	Vector *T = NULL;
+	double _radius_minor_ = 1.0;
+	double _radius_major_ = 3.0;
 	Spheroid(Vector *r,
 	         Vector *u,
 	         Vector *E,

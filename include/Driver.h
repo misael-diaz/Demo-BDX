@@ -10,6 +10,8 @@ struct Driver
 	void bind(BDX *app);
 	void *operator new(size_t size);
 	void operator delete(void *p);
+	void BrownianMotion();
+	void contain();
 };
 
 #endif

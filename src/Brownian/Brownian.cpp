@@ -1,4 +1,10 @@
 #include "util.h"
+#include "BDX.h"
+#include "Handler.h"
+#include "System.h"
+#include "Vector.h"
+#include "Random.h"
+#include "Particle.h"
 #include "Brownian.h"
 
 Brownian::Brownian ()
@@ -20,6 +26,27 @@ void Brownian::operator delete (void *p)
 {
 	p = util::free(p);
 }
+
+static void BrownianForce (double *x, const double *r)
+{
+	*x = *r;
+}
+
+void Brownian::generate ()
+{
+	Random *rand = this->system->app->random;
+	Handler *h = this->system->handler;
+	for (Particle **particles = h->begin(); particles != h->end(); ++particles) {
+		Particle *particle = *particles;
+		double const x = rand->fetch();
+		double const y = rand->fetch();
+		double const z = rand->fetch();
+		BrownianForce(&particle->F->x, &x);
+		BrownianForce(&particle->F->y, &y);
+		BrownianForce(&particle->F->z, &z);
+	}
+}
+
 
 /*
 
