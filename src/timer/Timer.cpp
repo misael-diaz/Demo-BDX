@@ -1,3 +1,4 @@
+#include <cstdlib>
 #include "util.h"
 #include "Timer.h"
 #include "BDX.h"
@@ -29,12 +30,12 @@ void Timer::operator delete (void *p)
 
 void Timer::begin ()
 {
-	this->_begin_ = ((ssize_t) time(NULL));
+	this->_begin_ = time(NULL);
 }
 
 void Timer::end ()
 {
-	this->_end_ = ((ssize_t) time(NULL));
+	this->_end_ = time(NULL);
 }
 
 void Timer::etime ()
