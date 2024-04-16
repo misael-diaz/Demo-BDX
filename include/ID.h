@@ -3,11 +3,12 @@
 
 struct ID
 {
-	long i;
+	long i = 0L;
 	ID();
 	ID(long const i);
 	void *operator new(size_t size);
 	void operator delete(void *p);
+	void txt(void *stream) const;
 };
 
 #endif

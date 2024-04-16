@@ -21,11 +21,6 @@ Sphere::Sphere (Vector *r,
 	return;
 }
 
-double Sphere::radius () const
-{
-	return this->_radius_;
-}
-
 void Sphere::ia (const Particle *particle)
 {
 	const Particle *that = particle;

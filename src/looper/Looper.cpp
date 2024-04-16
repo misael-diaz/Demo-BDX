@@ -1,6 +1,7 @@
 #include "util.h"
 #include "Driver.h"
 #include "Looper.h"
+#include "Logger.h"
 #include "Timer.h"
 #include "BDX.h"
 
@@ -24,15 +25,29 @@ void Looper::operator delete (void *p)
 	p = util::free(p);
 }
 
+size_t Looper::step () const
+{
+	return this->_step_;
+}
+
 void Looper::loop ()
 {
+	Logger *logger = this->app->logger;
 	Driver *driver = this->app->driver;
 	this->app->timer->begin();
+	this->_step_ = 0;
 	while (this->app->exec()) {
-		driver->BrownianMotion();
-		driver->contain();
+		size_t istep = 0;
+		constexpr size_t isteps = (GLOBAL_TIME_STEP_LOGGER / GLOBAL_TIME_STEP);
+		while (istep != isteps) {
+			driver->BrownianMotion();
+			driver->contain();
+			++istep;
+		}
+		logger->txt();
 		this->app->timer->end();
 		this->app->timer->etime();
+		this->_step_ += isteps;
 	}
 }
 

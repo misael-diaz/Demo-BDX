@@ -13,6 +13,8 @@
 # (at your option) any later version.
 #
 
+GLOBALS = -DGLOBAL_TIME_STEP=1.52587890625e-05\
+	  -DGLOBAL_TIME_STEP_LOGGER=0.015625
 CXX = g++-10
-CXXOPT = -DGXX=1 -DDEBUG=1 -DGLOBAL_TIME_STEP=1.52587890625e-05 -std=gnu++11 -g -Wall -Wextra -Wformat -O0
+CXXOPT = -DGXX=1 -DDEBUG=1 $(GLOBALS) -std=gnu++11 -g -Wall -Wextra -Wformat -O0
 LIBS = -lgfortran

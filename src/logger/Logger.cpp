@@ -1,5 +1,13 @@
+#include <cstdio>
+#include <cstring>
+#include "os.h"
 #include "util.h"
+#include "Looper.h"
 #include "Logger.h"
+#include "System.h"
+#include "Particle.h"
+#include "Handler.h"
+#include "BDX.h"
 
 Logger::Logger ()
 {
@@ -19,6 +27,32 @@ void *Logger::operator new (size_t size)
 void Logger::operator delete (void *p)
 {
 	p = util::free(p);
+}
+
+void Logger::txt () const
+{
+	constexpr char name[] = "particles-";
+	constexpr char ext[] = ".txt";
+	char anum[16];
+	memset(anum, 0, 16);
+	Looper *looper = this->app->looper;
+	size_t const step = looper->step();
+	sprintf(anum, "%015zu", step);
+	constexpr size_t len = 1 + (strlen(name) + strlen(ext) + 16);
+	char filename[len];
+	filename[0] = 0;
+	strcat(filename, name);
+	strcat(filename, anum);
+	strcat(filename, ext);
+
+	FILE **stream = (FILE**) util::fopen(filename, "w");
+	Handler *h = this->app->system->handler;
+	for (Particle **particles = h->begin(); particles != h->end(); ++particles) {
+		Particle *particle = *particles;
+		particle->txt(*stream);
+	}
+
+	util::fclose(stream);
 }
 
 /*

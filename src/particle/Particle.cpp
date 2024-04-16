@@ -1,4 +1,5 @@
 #include <cmath>
+#include <cstdio>
 #include "util.h"
 #include "ID.h"
 #include "Kind.h"
@@ -39,6 +40,11 @@ void Particle::operator delete (void *p)
 	p = util::free(p);
 }
 
+double Particle::radius () const
+{
+	return this->_radius_;
+}
+
 void Particle::_updatePositionVectorComponent_ (double *x,
 					        double const F_x,
 					        double const mobility)
@@ -65,6 +71,19 @@ void Particle::BrownianMotion ()
 	this->_translate_(mobility);
 }
 
+void Particle::txt (void *stream) const
+{
+	FILE *f = (FILE*) stream;
+	this->id->txt(stream);
+	this->kind->txt(stream);
+	this->r->txt(stream);
+	this->u->txt(stream);
+	this->E->txt(stream);
+	this->d->txt(stream);
+	this->F->txt(stream);
+	this->T->txt(stream);
+	fprintf(f, "%.15e \n", this->radius());
+}
 
 /*
 
