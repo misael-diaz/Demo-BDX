@@ -10,6 +10,7 @@ struct Vector {
 	void copy(const Vector *vector);
 	void *operator new(size_t size);
 	void operator delete(void *p);
+	void txt(void *stream) const;
 };
 
 #endif

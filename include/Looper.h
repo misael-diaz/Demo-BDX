@@ -1,16 +1,20 @@
 #ifndef GUARD_BDX_LOOPER_H
 #define GUARD_BDX_LOOPER_H
 
+#include <cstddef>
+
 struct BDX;
 
 struct Looper
 {
 	BDX *app = NULL;
+	size_t _step_ = 0;
 	Looper();
 	void bind(BDX *app);
-	void loop();
 	void *operator new(size_t size);
 	void operator delete(void *p);
+	size_t step() const;
+	void loop();
 };
 
 #endif

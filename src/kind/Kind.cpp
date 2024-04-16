@@ -1,3 +1,4 @@
+#include <cstdio>
 #include <cstring>
 
 #include "util.h"
@@ -65,6 +66,13 @@ void *Kind::operator new (size_t size)
 void Kind::operator delete (void *p)
 {
 	p = util::free(p);
+}
+
+void Kind::txt (void *stream) const
+{
+	FILE *f = (FILE*) stream;
+	ssize_t const k = ((ssize_t) this->k());
+	fprintf(f, "%zd ", k);
 }
 
 /*

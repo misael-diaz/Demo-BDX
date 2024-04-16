@@ -18,6 +18,7 @@ struct Kind
 	static kind_t enumerator(const char *kind);
 	void *operator new(size_t size);
 	void operator delete(void *p);
+	void txt(void *stream) const;
 };
 
 #endif

@@ -1,3 +1,4 @@
+#include <cstdio>
 #include "util.h"
 #include "Vector.h"
 
@@ -26,6 +27,12 @@ void *Vector::operator new (size_t size)
 void Vector::operator delete (void *p)
 {
 	p = util::free(p);
+}
+
+void Vector::txt (void *stream) const
+{
+	FILE *f = (FILE*) stream;
+	fprintf(f, "%.15e %.15e %.15e ", this->x, this->y, this->z);
 }
 
 /*

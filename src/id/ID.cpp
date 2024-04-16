@@ -1,3 +1,5 @@
+#include <cstdio>
+#include <cstdlib>
 #include "util.h"
 #include "ID.h"
 
@@ -19,6 +21,13 @@ void *ID::operator new (size_t size)
 void ID::operator delete (void *p)
 {
 	p = util::free(p);
+}
+
+void ID::txt (void *stream) const
+{
+	FILE *f = (FILE*) stream;
+	ssize_t id = ((ssize_t) this->i);
+	fprintf(f, "%zd ", id);
 }
 
 /*
