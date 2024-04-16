@@ -41,6 +41,7 @@ void Looper::loop ()
 	Driver *driver = this->app->driver;
 	this->app->timer->begin();
 	this->_step_ = 0;
+	logger->txt();
 	while (this->app->exec() && this->step() != this->num_steps()) {
 		size_t istep = 0;
 		constexpr size_t isteps = (GLOBAL_TIME_STEP_LOGGER / GLOBAL_TIME_STEP);
