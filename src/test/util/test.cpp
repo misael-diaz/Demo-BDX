@@ -832,6 +832,7 @@ void tutil21(void)
 - imports LAMMPS (unit) spheres data
 - performs a 15 minute simulation test run
 - checks that no particle is outside the system boundaries when the BDX simulation ends
+- dumps the particle and simulation data to plain text file
 - displays the outcome of the test on the console
 
 */
@@ -903,6 +904,7 @@ void tutil21 (void)
 	os::print("executing BDX test-run\n");
 	App->_exec_ = true;
 	App->looper->loop();
+	App->logger->params();
 
 	ssize_t fails = 0;
 	Handler *h = handler;

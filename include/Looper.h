@@ -9,11 +9,14 @@ struct Looper
 {
 	BDX *app = NULL;
 	size_t _step_ = 0;
+	size_t const _num_steps_ = (GLOBAL_TIME_END - GLOBAL_TIME_START) /
+				    GLOBAL_TIME_STEP;
 	Looper();
 	void bind(BDX *app);
 	void *operator new(size_t size);
 	void operator delete(void *p);
 	size_t step() const;
+	size_t num_steps() const;
 	void loop();
 };
 

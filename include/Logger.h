@@ -10,6 +10,7 @@ struct Logger
 	void bind(BDX *app);
 	void *operator new(size_t size);
 	void operator delete(void *p);
+	void params() const;
 	void txt() const;
 };
 

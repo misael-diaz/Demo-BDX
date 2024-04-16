@@ -5,6 +5,7 @@
 #include "Looper.h"
 #include "Logger.h"
 #include "System.h"
+#include "BoundingBox.h"
 #include "Particle.h"
 #include "Handler.h"
 #include "BDX.h"
@@ -27,6 +28,22 @@ void *Logger::operator new (size_t size)
 void Logger::operator delete (void *p)
 {
 	p = util::free(p);
+}
+
+void Logger::params () const
+{
+	BoundingBox *bb = this->app->system->bb;
+	Handler *handler = this->app->system->handler;
+	constexpr char PostProcessingBDXParamsFile[] = "ppBDXParams.txt";
+	FILE **f = (FILE**) util::fopen(PostProcessingBDXParamsFile, "w");
+	fprintf(*f, "GLOBAL_TIME_START: %.15e\n", GLOBAL_TIME_START);
+	fprintf(*f, "GLOBAL_TIME_END: %.15e\n", GLOBAL_TIME_END);
+	fprintf(*f, "GLOBAL_TIME_STEP: %.15e\n", GLOBAL_TIME_STEP);
+	fprintf(*f, "SYSTEM_BOX_LENGTH: %.15e\n", bb->length());
+	fprintf(*f, "SYSTEM_BOX_WIDTH: %.15e\n", bb->width());
+	fprintf(*f, "SYSTEM_BOX_HEIGHT: %.15e\n", bb->height());
+	fprintf(*f, "NUM_PARTICLES: %zu\n", handler->numel());
+	util::fclose(f);
 }
 
 void Logger::txt () const
