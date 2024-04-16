@@ -30,13 +30,18 @@ size_t Looper::step () const
 	return this->_step_;
 }
 
+size_t Looper::num_steps () const
+{
+	return this->_num_steps_;
+}
+
 void Looper::loop ()
 {
 	Logger *logger = this->app->logger;
 	Driver *driver = this->app->driver;
 	this->app->timer->begin();
 	this->_step_ = 0;
-	while (this->app->exec()) {
+	while (this->app->exec() && this->step() != this->num_steps()) {
 		size_t istep = 0;
 		constexpr size_t isteps = (GLOBAL_TIME_STEP_LOGGER / GLOBAL_TIME_STEP);
 		while (istep != isteps) {
@@ -48,6 +53,10 @@ void Looper::loop ()
 		this->app->timer->end();
 		this->app->timer->etime();
 		this->_step_ += isteps;
+	}
+
+	if (this->step() == this->num_steps()) {
+		logger->txt();
 	}
 }
 
