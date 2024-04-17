@@ -39,6 +39,7 @@ void Logger::params () const
 	fprintf(*f, "GLOBAL_TIME_START: %.15e\n", GLOBAL_TIME_START);
 	fprintf(*f, "GLOBAL_TIME_END: %.15e\n", GLOBAL_TIME_END);
 	fprintf(*f, "GLOBAL_TIME_STEP: %.15e\n", GLOBAL_TIME_STEP);
+	fprintf(*f, "GLOBAL_TIME_STEP_LOGGER: %.15e\n", GLOBAL_TIME_STEP_LOGGER);
 	fprintf(*f, "SYSTEM_BOX_LENGTH: %.15e\n", bb->length());
 	fprintf(*f, "SYSTEM_BOX_WIDTH: %.15e\n", bb->width());
 	fprintf(*f, "SYSTEM_BOX_HEIGHT: %.15e\n", bb->height());
