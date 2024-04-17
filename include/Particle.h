@@ -18,7 +18,9 @@ struct Particle : BDXObject
 	List *list = NULL;
 	ID *id = NULL;
 	Kind *kind = NULL;
-	double _radius_ = 1.0;
+	double __radius__ = 1.0;
+	double __translational_mobility_scaling__ = 1.0;
+	double __rotational_mobility_scaling__ = 1.0;
 	Particle(Vector *r,
 		 Vector *u,
 		 Vector *E,
@@ -32,6 +34,8 @@ struct Particle : BDXObject
 	virtual void ia(const Particle *particle) = 0;
 	void *operator new(size_t size);
 	void operator delete(void *p);
+	double _rotational_mobility_scaling_() const;
+	double _translational_mobility_scaling_() const;
 	void _updatePositionVectorComponent_(double *x,
 					     double const F_x,
 					     double const mobility);

@@ -829,7 +829,7 @@ void tutil20 (void)
 /*
 
 void tutil21(void)
-- imports LAMMPS (unit) spheres data
+- imports LAMMPS spheres data
 - performs a 15 minute simulation test run
 - checks that no particle is outside the system boundaries when the BDX simulation ends
 - dumps the particle and simulation data to plain text file
@@ -875,7 +875,8 @@ void tutil21 (void)
 	size_t const num_particles = lmp::parse(data, stack);
 	const double **it = (const double**) stack->begin();
 	for (size_t i = 0; i != num_particles; ++i) {
-		double const a = 1.0;
+		// we can double the radius `a' because the spheres are non-interacting
+		double const a = 2.0;
 		ID *id = new ID(i);
 		Kind *kind = new Kind(SPHERE);
 
