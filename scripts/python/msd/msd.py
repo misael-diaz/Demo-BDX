@@ -40,7 +40,7 @@ def params():
 
   return params
 
-def translational_msd():
+def msd():
   prms = params()
   time_start = prms['GLOBAL_TIME_START']
   time_end = prms['GLOBAL_TIME_END']
@@ -56,14 +56,17 @@ def translational_msd():
   step_size_start, step_size_end = (0, num_data_files)
   step_sizes = arange(step_size_start, step_size_end).astype(int)
   msd = zeros([num_data_files])
+  amsd = zeros([num_data_files])
 
+  shifts = zeros([num_particles])
   displacements = zeros([num_particles])
   mult = step_size_multiplier = step_size_logger
-  # loop-invariant: so far we have obtained `step_size' elements of the MSD array
+  # loop-invariant: so far we have obtained `step_size' elements of the MSD arrays
   for step_size in step_sizes:
     begin, end = [0, (num_data_files - step_size)]
     num_steps = (end - begin)
     displacements[:] = 0
+    shifts[:] = 0
     # loop-invariant: so far we have considered `i' steps to obtain this MSD element
     for i in range(begin, end):
       step_idx = i * mult
@@ -74,18 +77,24 @@ def translational_msd():
       data = loadtxt(data_file).transpose()
       data_next = loadtxt(data_file_next).transpose()
 
-      x1, y1, z1 = data[5:8, :]
-      x2, y2, z2 = data_next[5:8, :]
+      x1, y1, z1, theta1_x, theta1_y, theta1_z = data[5:11, :]
+      x2, y2, z2, theta2_x, theta2_y, theta2_z = data_next[5:11, :]
 
       displacements += ( (x2 - x1)**2 + (y2 - y1)**2 + (z2 - z1)**2 )
+      shifts += ( (theta2_x - theta1_x)**2 +
+                  (theta2_y - theta1_y)**2 +
+                  (theta2_z - theta1_z)**2 )
 
+    avg_shift = shifts.sum() / (3 * num_particles * num_steps)
     avg_displacement = displacements.sum() / (3 * num_particles * num_steps)
     msd[step_size] = avg_displacement
+    amsd[step_size] = avg_shift
 
   times = times[newaxis, :]
   msd = msd[newaxis, :]
-  results = vstack([times, msd]).transpose()
+  amsd = amsd[newaxis, :]
+  results = vstack([times, msd, amsd]).transpose()
   return results
 
-msd = translational_msd()
-savetxt("translational-time-averaged-mean-squared-displacement.txt", msd)
+res = msd()
+savetxt("msd.txt", res)

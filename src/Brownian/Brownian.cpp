@@ -41,9 +41,15 @@ void Brownian::generate ()
 		double const x = rand->fetch();
 		double const y = rand->fetch();
 		double const z = rand->fetch();
+		double const u = rand->fetch();
+		double const v = rand->fetch();
+		double const w = rand->fetch();
 		BrownianForce(&particle->F->x, &x);
 		BrownianForce(&particle->F->y, &y);
 		BrownianForce(&particle->F->z, &z);
+		BrownianForce(&particle->T->x, &u);
+		BrownianForce(&particle->T->y, &v);
+		BrownianForce(&particle->T->z, &w);
 	}
 }
 
