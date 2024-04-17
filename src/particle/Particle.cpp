@@ -64,11 +64,21 @@ void Particle::_translate_ (double const mobility)
 	this->_updatePositionVectorComponent_(&this->u->z, this->F->z, mob);
 }
 
+void Particle::_rotate_ (double const mobility)
+{
+	double const mob = mobility;
+	this->_updatePositionVectorComponent_(&this->E->x, this->T->x, mob);
+	this->_updatePositionVectorComponent_(&this->E->y, this->T->y, mob);
+	this->_updatePositionVectorComponent_(&this->E->z, this->T->z, mob);
+}
+
 void Particle::BrownianMotion ()
 {
 	constexpr double dt = GLOBAL_TIME_STEP;
-	constexpr double mobility = sqrt(2.0 * dt);
-	this->_translate_(mobility);
+	constexpr double translational_mobility = sqrt(2.0 * dt);
+	constexpr double rotational_mobility = sqrt(1.5 * dt);
+	this->_translate_(translational_mobility);
+	this->_rotate_(rotational_mobility);
 }
 
 void Particle::txt (void *stream) const
