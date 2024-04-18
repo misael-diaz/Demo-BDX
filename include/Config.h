@@ -5,8 +5,8 @@ struct BDX;
 
 struct Config
 {
-	void *_json_ = NULL;
-	void *_objects_ = NULL;
+	void *__json__ = NULL;
+	void *__objects__ = NULL;
 	void _Box_(void *vobject);
 	BDX *app = NULL;
 	Config();
