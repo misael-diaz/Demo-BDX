@@ -5,9 +5,7 @@ struct BDX;
 
 struct Integrator
 {
-	private:
 	BDX *app = NULL;
-	public:
 	Integrator();
 	void bind(BDX *app);
 	void *operator new(size_t size);

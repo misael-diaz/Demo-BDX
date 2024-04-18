@@ -5,11 +5,9 @@ struct BDX;
 
 struct Config
 {
-	private:
-	void *_json_ = NULL;
-	void *_objects_ = NULL;
-	void Box(void *vobject);
-	public:
+	void *__json__ = NULL;
+	void *__objects__ = NULL;
+	void _Box_(void *vobject);
 	BDX *app = NULL;
 	Config();
 	void bind(BDX *app);

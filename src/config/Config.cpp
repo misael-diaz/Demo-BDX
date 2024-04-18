@@ -303,12 +303,12 @@ void Config::load ()
 	Cfg_SizeJSON(f);
 	void *json = Cfg_ReadJSON(f);
 	Cfg_CloseJSON(f);
-	this->_json_= json;
+	this->__json__= json;
 }
 
 void Config::parse ()
 {
-	const char *JSON = (const char*) this->_json_;
+	const char *JSON = (const char*) this->__json__;
 	const char *json[] = {JSON};
 	if (!Cfg_Parse(json)) {
 		util::clearall();
@@ -320,10 +320,10 @@ void Config::parse ()
 	ObjectStack *objects = new ObjectStack(stack);
 
 	Cfg_AddObjects(objects, json);
-	this->_objects_ = (void*) objects;
+	this->__objects__ = (void*) objects;
 }
 
-void Config::Box (void *vobject)
+void Config::_Box_ (void *vobject)
 {
 	Object *object = (Object*) vobject;
 	ObjectStack *ostack = object->ostack;
@@ -354,12 +354,12 @@ void Config::Box (void *vobject)
 
 void Config::config ()
 {
-	ObjectStack *ostack = (ObjectStack*) this->_objects_;
+	ObjectStack *ostack = (ObjectStack*) this->__objects__;
 	for (const Object **iter = ostack->begin(); iter != ostack->end(); ++iter) {
 		const Object *object = *iter;
 		if (!strcmp(object->key, "Box")) {
 			void *vobject = (void*) object;
-			this->Box(vobject);
+			this->_Box_(vobject);
 			continue;
 		}
 	}
