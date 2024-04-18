@@ -67,12 +67,10 @@ void Stack::_grow_ ()
 {
 	void *data = this->_copy_();
 	size_t const numel = this->numel();
+	size_t const bytes = this->_bytes_();
 	size_t const allot = 2 * numel;
 	void **stack = create(allot);
-
-	void *vstack = (void*) stack;
-	size_t const size = numel * sizeof(void*);
-	memcpy(vstack, data, size);
+	memcpy(stack, data, bytes);
 	data = util::free(data);
 
 	this->__stack__ = stack;
