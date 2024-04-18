@@ -46,6 +46,13 @@ void Vector::unit ()
 	this->z /= norm;
 }
 
+void Vector::zero ()
+{
+	this->x = 0.0;
+	this->y = 0.0;
+	this->z = 0.0;
+}
+
 void vector::cross (Vector *w, const Vector *u, const Vector *v)
 {
 	w->x = ((u->y * v->z) - (u->z * v->y));

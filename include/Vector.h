@@ -12,6 +12,7 @@ struct Vector {
 	void operator delete(void *p);
 	void txt(void *stream) const;
 	void unit();
+	void zero();
 };
 
 namespace vector {
