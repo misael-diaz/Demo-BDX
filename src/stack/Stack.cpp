@@ -39,10 +39,6 @@ void Stack::clear ()
 	if (!this->__stack__) {
 		return;
 	}
-
-	void *vstack = (void*) this->__stack__;
-	size_t const bytes = this->_bytes_();
-	memset(vstack, 0, bytes);
 	this->__avail__ = this->__begin__;
 	this->__size__ = 0;
 }
