@@ -1,3 +1,4 @@
+#include <cmath>
 #include <cstdio>
 #include "util.h"
 #include "Vector.h"
@@ -33,6 +34,16 @@ void Vector::txt (void *stream) const
 {
 	FILE *f = (FILE*) stream;
 	fprintf(f, "%.15e %.15e %.15e ", this->x, this->y, this->z);
+}
+
+void Vector::unit ()
+{
+	double const norm = sqrt(this->x * this->x +
+				 this->y * this->y +
+				 this->z * this->z);
+	this->x /= norm;
+	this->y /= norm;
+	this->z /= norm;
 }
 
 /*
