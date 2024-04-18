@@ -14,6 +14,10 @@ struct Vector {
 	void unit();
 };
 
+namespace vector {
+	void cross(Vector *w, const Vector *u, const Vector *v);
+};
+
 #endif
 
 /*
