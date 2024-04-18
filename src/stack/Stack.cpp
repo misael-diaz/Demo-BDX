@@ -69,7 +69,7 @@ void *Stack::_copy_ () const
 
 void Stack::_grow_ ()
 {
-	void *data = Stack::_copy_();
+	void *data = this->_copy_();
 	size_t const numel = this->numel();
 	size_t const allot = 2 * numel;
 	void **stack = create(allot);
@@ -97,11 +97,11 @@ void Stack::_init_ ()
 void Stack::add (void *elem)
 {
 	if (!this->_stack_) {
-		Stack::_init_();
+		this->_init_();
 	}
 
 	if (this->_avail_ == this->_limit_) {
-		_grow_();
+		this->_grow_();
 	}
 
 	*this->_avail_ = elem;
