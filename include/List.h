@@ -10,7 +10,7 @@ struct List
 	List(Stack *stack);
 	size_t cap() const;
 	size_t numel() const;
-	int add(Particle *particle);
+	void add(Particle *particle);
 	void clear();
 	const Particle **begin() const;
 	const Particle **end() const;

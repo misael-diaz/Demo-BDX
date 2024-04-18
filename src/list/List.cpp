@@ -29,10 +29,10 @@ const Particle **List::end () const
 	return ((const Particle**) this->stack->end());
 }
 
-int List::add (Particle *particle)
+void List::add (Particle *particle)
 {
 	void *elem = (void*) particle;
-	return this->stack->add(elem);
+	this->stack->add(elem);
 }
 
 void List::clear ()

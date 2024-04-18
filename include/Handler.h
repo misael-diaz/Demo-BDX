@@ -10,7 +10,7 @@ struct Handler
 	Handler(Stack *stack);
 	size_t cap() const;
 	size_t numel() const;
-	int add(Particle *particle);
+	void add(Particle *particle);
 	Particle **begin();
 	Particle **end();
 	void *operator new(size_t size);

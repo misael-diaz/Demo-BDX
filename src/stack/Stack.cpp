@@ -67,9 +67,8 @@ void *Stack::copy () const
 	return dst;
 }
 
-int Stack::grow ()
+void Stack::grow ()
 {
-	int rc = 0;
 	void *data = Stack::copy();
 	size_t const numel = this->numel();
 	size_t const allot = 2 * numel;
@@ -85,34 +84,29 @@ int Stack::grow ()
 	this->_avail_ = stack + numel;
 	this->_limit_ = stack + allot;
 	this->_allot_ = allot;
-	return rc;
 }
 
-int Stack::init ()
+void Stack::init ()
 {
-	int rc = 0;
 	this->_stack_ = create(this->_allot_);
 	this->_begin_ = this->_stack_;
 	this->_avail_ = this->_stack_;
 	this->_limit_ = this->_stack_ + this->_allot_;
-	return rc;
 }
 
-int Stack::add (void *elem)
+void Stack::add (void *elem)
 {
-	int rc = 0;
 	if (!this->_stack_) {
-		rc = Stack::init();
+		Stack::init();
 	}
 
 	if (this->_avail_ == this->_limit_) {
-		rc = grow();
+		grow();
 	}
 
 	*this->_avail_ = elem;
 	++this->_avail_;
 	this->_size_ += sizeof(void*);
-	return rc;
 }
 
 void *Stack::operator new (size_t size)
