@@ -323,7 +323,7 @@ void Config::parse ()
 	this->_objects_ = (void*) objects;
 }
 
-void Config::Box (void *vobject)
+void Config::_Box_ (void *vobject)
 {
 	Object *object = (Object*) vobject;
 	ObjectStack *ostack = object->ostack;
@@ -359,7 +359,7 @@ void Config::config ()
 		const Object *object = *iter;
 		if (!strcmp(object->key, "Box")) {
 			void *vobject = (void*) object;
-			this->Box(vobject);
+			this->_Box_(vobject);
 			continue;
 		}
 	}
