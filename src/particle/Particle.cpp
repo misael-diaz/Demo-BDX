@@ -60,6 +60,23 @@ void Particle::_updatePositionVectorComponent_ (double *x,
 	*x += (mob * F_x);
 }
 
+void Particle::_orient_ (double const mobility)
+{
+	double const mob = mobility;
+	Vector *dTheta = this->F;
+	dTheta->zero();
+	this->_updatePositionVectorComponent_(&dTheta->x, this->T->x, mob);
+	this->_updatePositionVectorComponent_(&dTheta->y, this->T->y, mob);
+	this->_updatePositionVectorComponent_(&dTheta->z, this->T->z, mob);
+	Vector *dOrient = this->T;
+	Vector *director = this->d;
+	vector::cross(dOrient, dTheta, director);
+	this->_updatePositionVectorComponent_(&director->x, dOrient->x, 1.0);
+	this->_updatePositionVectorComponent_(&director->y, dOrient->y, 1.0);
+	this->_updatePositionVectorComponent_(&director->z, dOrient->z, 1.0);
+	director->unit();
+}
+
 void Particle::_translate_ (double const mobility)
 {
 	double const mob = mobility;
@@ -90,6 +107,7 @@ void Particle::BrownianMotion ()
 					    rotational_mobility_base);
 	this->_translate_(translational_mobility);
 	this->_rotate_(rotational_mobility);
+	this->_orient_(rotational_mobility);
 }
 
 void Particle::txt (void *stream) const
