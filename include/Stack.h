@@ -3,12 +3,12 @@
 
 struct Stack
 {
-	void **_stack_ = NULL;
-	void **_begin_ = NULL;
-	void **_avail_ = NULL;
-	void **_limit_ = NULL;
-	size_t _allot_ = 8;
-	size_t _size_ = 0;
+	void **__stack__ = NULL;
+	void **__begin__ = NULL;
+	void **__avail__ = NULL;
+	void **__limit__ = NULL;
+	size_t __allot__ = 8;
+	size_t __size__ = 0;
 	void _init_();
 	void *_copy_() const;
 	size_t _bytes_ () const;

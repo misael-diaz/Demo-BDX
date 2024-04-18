@@ -21,40 +21,40 @@ Stack::Stack (void)
 
 size_t Stack::cap () const
 {
-	return (this->_limit_ - this->_begin_);
+	return (this->__limit__ - this->__begin__);
 }
 
 size_t Stack::numel () const
 {
-	return (this->_avail_ - this->_begin_);
+	return (this->__avail__ - this->__begin__);
 }
 
 size_t Stack::_bytes_ () const
 {
-	return this->_size_;
+	return this->__size__;
 }
 
 void Stack::clear ()
 {
-	if (!this->_stack_) {
+	if (!this->__stack__) {
 		return;
 	}
 
-	void *vstack = (void*) this->_stack_;
+	void *vstack = (void*) this->__stack__;
 	size_t const bytes = this->_bytes_();
 	memset(vstack, 0, bytes);
-	this->_avail_ = this->_begin_;
-	this->_size_ = 0;
+	this->__avail__ = this->__begin__;
+	this->__size__ = 0;
 }
 
 void **Stack::begin ()
 {
-	return this->_begin_;
+	return this->__begin__;
 }
 
 void **Stack::end ()
 {
-	return this->_avail_;
+	return this->__avail__;
 }
 
 void *Stack::_copy_ () const
@@ -62,7 +62,7 @@ void *Stack::_copy_ () const
 	size_t const numel = this->numel();
 	size_t const size = numel * sizeof(void*);
 	void *dst = util::malloc(size);
-	const void *src = ((const void*) this->_stack_);
+	const void *src = ((const void*) this->__stack__);
 	memcpy(dst, src, size);
 	return dst;
 }
@@ -79,34 +79,34 @@ void Stack::_grow_ ()
 	memcpy(vstack, data, size);
 	data = util::free(data);
 
-	this->_stack_ = stack;
-	this->_begin_ = stack;
-	this->_avail_ = stack + numel;
-	this->_limit_ = stack + allot;
-	this->_allot_ = allot;
+	this->__stack__ = stack;
+	this->__begin__ = stack;
+	this->__avail__ = stack + numel;
+	this->__limit__ = stack + allot;
+	this->__allot__ = allot;
 }
 
 void Stack::_init_ ()
 {
-	this->_stack_ = create(this->_allot_);
-	this->_begin_ = this->_stack_;
-	this->_avail_ = this->_stack_;
-	this->_limit_ = this->_stack_ + this->_allot_;
+	this->__stack__ = create(this->__allot__);
+	this->__begin__ = this->__stack__;
+	this->__avail__ = this->__stack__;
+	this->__limit__ = this->__stack__ + this->__allot__;
 }
 
 void Stack::add (void *elem)
 {
-	if (!this->_stack_) {
+	if (!this->__stack__) {
 		this->_init_();
 	}
 
-	if (this->_avail_ == this->_limit_) {
+	if (this->__avail__ == this->__limit__) {
 		this->_grow_();
 	}
 
-	*this->_avail_ = elem;
-	++this->_avail_;
-	this->_size_ += sizeof(void*);
+	*this->__avail__ = elem;
+	++this->__avail__;
+	this->__size__ += sizeof(void*);
 }
 
 void *Stack::operator new (size_t size)
