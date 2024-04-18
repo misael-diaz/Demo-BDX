@@ -29,7 +29,7 @@ size_t Stack::numel () const
 	return (this->_avail_ - this->_begin_);
 }
 
-size_t Stack::bytes () const
+size_t Stack::_bytes_ () const
 {
 	return this->_size_;
 }
@@ -41,7 +41,7 @@ void Stack::clear ()
 	}
 
 	void *vstack = (void*) this->_stack_;
-	size_t const bytes = this->bytes();
+	size_t const bytes = this->_bytes_();
 	memset(vstack, 0, bytes);
 	this->_avail_ = this->_begin_;
 	this->_size_ = 0;
@@ -57,7 +57,7 @@ void **Stack::end ()
 	return this->_avail_;
 }
 
-void *Stack::copy () const
+void *Stack::_copy_ () const
 {
 	size_t const numel = this->numel();
 	size_t const size = numel * sizeof(void*);
@@ -67,9 +67,9 @@ void *Stack::copy () const
 	return dst;
 }
 
-void Stack::grow ()
+void Stack::_grow_ ()
 {
-	void *data = Stack::copy();
+	void *data = Stack::_copy_();
 	size_t const numel = this->numel();
 	size_t const allot = 2 * numel;
 	void **stack = create(allot);
@@ -86,7 +86,7 @@ void Stack::grow ()
 	this->_allot_ = allot;
 }
 
-void Stack::init ()
+void Stack::_init_ ()
 {
 	this->_stack_ = create(this->_allot_);
 	this->_begin_ = this->_stack_;
@@ -97,11 +97,11 @@ void Stack::init ()
 void Stack::add (void *elem)
 {
 	if (!this->_stack_) {
-		Stack::init();
+		Stack::_init_();
 	}
 
 	if (this->_avail_ == this->_limit_) {
-		grow();
+		_grow_();
 	}
 
 	*this->_avail_ = elem;
