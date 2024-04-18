@@ -27,7 +27,9 @@ Particle::Particle (Vector *r,
 	this->list = list;
 	this->id = id;
 	this->kind = kind;
-	this->_radius_ = a;
+	this->__radius__ = a;
+	this->__rotational_mobility_scaling__= (1.0 / sqrt(a * a * a));
+	this->__translational_mobility_scaling__ = (1.0 / sqrt(a));
 }
 
 void *Particle::operator new (size_t size)
@@ -40,9 +42,14 @@ void Particle::operator delete (void *p)
 	p = util::free(p);
 }
 
-double Particle::radius () const
+double Particle::_rotational_mobility_scaling_() const
 {
-	return this->_radius_;
+	return this->__rotational_mobility_scaling__;
+}
+
+double Particle::_translational_mobility_scaling_() const
+{
+	return this->__translational_mobility_scaling__;
 }
 
 void Particle::_updatePositionVectorComponent_ (double *x,
@@ -75,8 +82,12 @@ void Particle::_rotate_ (double const mobility)
 void Particle::BrownianMotion ()
 {
 	constexpr double dt = GLOBAL_TIME_STEP;
-	constexpr double translational_mobility = sqrt(2.0 * dt);
-	constexpr double rotational_mobility = sqrt(1.5 * dt);
+	constexpr double translational_mobility_base = sqrt(2.0 * dt);
+	constexpr double rotational_mobility_base = sqrt(1.5 * dt);
+	double const translational_mobility = (this->_translational_mobility_scaling_() *
+					       translational_mobility_base);
+	double const rotational_mobility = (this->_rotational_mobility_scaling_() *
+					    rotational_mobility_base);
 	this->_translate_(translational_mobility);
 	this->_rotate_(rotational_mobility);
 }
@@ -93,6 +104,11 @@ void Particle::txt (void *stream) const
 	this->F->txt(stream);
 	this->T->txt(stream);
 	fprintf(f, "%.15e \n", this->radius());
+}
+
+double Particle::radius () const
+{
+	return this->__radius__;
 }
 
 /*
