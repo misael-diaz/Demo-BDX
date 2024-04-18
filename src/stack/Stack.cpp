@@ -5,16 +5,6 @@
 #include "util.h"
 #include "Stack.h"
 
-static void err_create ()
-{
-	os::error("Stack::create: error\n");
-}
-
-static void err_copy ()
-{
-	os::error("Stack::copy: error\n");
-}
-
 static void **create (size_t const allot)
 {
 	size_t const limit = (allot + 1);
