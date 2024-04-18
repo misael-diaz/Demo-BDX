@@ -11,6 +11,7 @@ struct Vector {
 	void *operator new(size_t size);
 	void operator delete(void *p);
 	void txt(void *stream) const;
+	void unit();
 };
 
 #endif
