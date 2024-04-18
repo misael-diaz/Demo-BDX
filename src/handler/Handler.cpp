@@ -29,10 +29,10 @@ Particle **Handler::end ()
 	return ((Particle**) this->stack->end());
 }
 
-int Handler::add (Particle *particle)
+void Handler::add (Particle *particle)
 {
 	void *elem = (void*) particle;
-	return this->stack->add(elem);
+	this->stack->add(elem);
 }
 
 void *Handler::operator new (size_t size)

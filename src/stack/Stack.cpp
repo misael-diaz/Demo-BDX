@@ -5,27 +5,11 @@
 #include "util.h"
 #include "Stack.h"
 
-static void err_create ()
-{
-	os::error("Stack::create: error\n");
-}
-
-static void err_copy ()
-{
-	os::error("Stack::copy: error\n");
-}
-
 static void **create (size_t const allot)
 {
 	size_t const limit = (allot + 1);
 	size_t const size = limit * sizeof(void*);
 	void *p = util::malloc(size);
-	if (!p) {
-		err_create();
-		util::clearall();
-		exit(EXIT_FAILURE);
-	}
-
 	memset(p, 0, size);
 	return ((void**) p);
 }
@@ -78,20 +62,13 @@ void *Stack::copy () const
 	size_t const numel = this->numel();
 	size_t const size = numel * sizeof(void*);
 	void *dst = util::malloc(size);
-	if (!dst) {
-		err_copy();
-		util::clearall();
-		exit(EXIT_FAILURE);
-	}
-
 	const void *src = ((const void*) this->_stack_);
 	memcpy(dst, src, size);
 	return dst;
 }
 
-int Stack::grow ()
+void Stack::grow ()
 {
-	int rc = 0;
 	void *data = Stack::copy();
 	size_t const numel = this->numel();
 	size_t const allot = 2 * numel;
@@ -107,34 +84,29 @@ int Stack::grow ()
 	this->_avail_ = stack + numel;
 	this->_limit_ = stack + allot;
 	this->_allot_ = allot;
-	return rc;
 }
 
-int Stack::init ()
+void Stack::init ()
 {
-	int rc = 0;
 	this->_stack_ = create(this->_allot_);
 	this->_begin_ = this->_stack_;
 	this->_avail_ = this->_stack_;
 	this->_limit_ = this->_stack_ + this->_allot_;
-	return rc;
 }
 
-int Stack::add (void *elem)
+void Stack::add (void *elem)
 {
-	int rc = 0;
 	if (!this->_stack_) {
-		rc = Stack::init();
+		Stack::init();
 	}
 
 	if (this->_avail_ == this->_limit_) {
-		rc = grow();
+		grow();
 	}
 
 	*this->_avail_ = elem;
 	++this->_avail_;
 	this->_size_ += sizeof(void*);
-	return rc;
 }
 
 void *Stack::operator new (size_t size)

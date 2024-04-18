@@ -22,7 +22,7 @@ struct ObjectStack
 	ObjectStack(Stack *stack);
 	size_t cap() const;
 	size_t numel() const;
-	int add(Object *object);
+	void add(Object *object);
 	const Object **begin() const;
 	const Object **end() const;
 	void *operator new(size_t size);
@@ -70,10 +70,10 @@ size_t ObjectStack::numel () const
         return this->stack->numel();
 }
 
-int ObjectStack::add (Object *object)
+void ObjectStack::add (Object *object)
 {
         void *elem = (void*) object;
-        return this->stack->add(elem);
+        this->stack->add(elem);
 }
 
 const Object **ObjectStack::begin () const

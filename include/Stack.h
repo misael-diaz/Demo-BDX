@@ -10,15 +10,15 @@ struct Stack
 	void **_limit_ = NULL;
 	size_t _allot_ = 8;
 	size_t _size_ = 0;
-	int init();
+	void init();
 	void *copy() const;
 	size_t bytes () const;
-	int grow();
+	void grow();
 	public:
 	Stack(void);
 	size_t cap() const;
 	size_t numel() const;
-	int add(void *elem);
+	void add(void *elem);
 	void clear();
 	void **begin();
 	void **end();
