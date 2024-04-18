@@ -46,6 +46,13 @@ void Vector::unit ()
 	this->z /= norm;
 }
 
+void vector::cross (Vector *w, const Vector *u, const Vector *v)
+{
+	w->x = ((u->y * v->z) - (u->z * v->y));
+	w->y = ((u->z * v->x) - (u->x * v->z));
+	w->z = ((u->x * v->y) - (u->y * v->x));
+}
+
 /*
 
 BDX                                             December 31, 2023
