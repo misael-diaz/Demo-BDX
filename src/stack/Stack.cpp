@@ -20,12 +20,6 @@ static void **create (size_t const allot)
 	size_t const limit = (allot + 1);
 	size_t const size = limit * sizeof(void*);
 	void *p = util::malloc(size);
-	if (!p) {
-		err_create();
-		util::clearall();
-		exit(EXIT_FAILURE);
-	}
-
 	memset(p, 0, size);
 	return ((void**) p);
 }
@@ -78,12 +72,6 @@ void *Stack::copy () const
 	size_t const numel = this->numel();
 	size_t const size = numel * sizeof(void*);
 	void *dst = util::malloc(size);
-	if (!dst) {
-		err_copy();
-		util::clearall();
-		exit(EXIT_FAILURE);
-	}
-
 	const void *src = ((const void*) this->_stack_);
 	memcpy(dst, src, size);
 	return dst;
