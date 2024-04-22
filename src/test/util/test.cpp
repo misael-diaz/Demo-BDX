@@ -130,19 +130,19 @@ Particle *_Particle (Vector *r,
 	enum kind const k = kind->k();
 	switch(k)
 	{
-		case SPHERE:
+		case kind::SPHERE:
 		particle = new Sphere(r, u, E, d, F, T, list, id, kind, a);
 		break;
 
-		case JANUS:
+		case kind::JANUS:
 		particle = new Janus(r, u, E, d, F, T, list, id, kind, a);
 		break;
 
-		case SPHEROID:
+		case kind::SPHEROID:
 		particle = new Spheroid(r, u, E, d, F, T, list, id, kind, a, b);
 		break;
 
-		case CHIRAL:
+		case kind::CHIRAL:
 		particle = new Chiral(r, u, E, d, F, T, list, id, kind, a, b, c);
 		break;
 
@@ -786,7 +786,7 @@ void tutil19 (void)
 	for (size_t i = 0; i != num_particles; ++i) {
 		double const a = 1.0;
 		ID *id = new ID(i);
-		Kind *kind = new Kind(SPHERE);
+		Kind *kind = new Kind(kind::SPHERE);
 
 		it += 2; // skips LAMMPS ID and Group
 
@@ -878,7 +878,7 @@ void tutil21 (void)
 		// we can double the radius `a' because the spheres are non-interacting
 		double const a = 2.0;
 		ID *id = new ID(i);
-		Kind *kind = new Kind(SPHERE);
+		Kind *kind = new Kind(kind::SPHERE);
 
 		it += 2; // skips LAMMPS ID and Group
 

@@ -23,13 +23,13 @@ const char *Kind::stringify (const Kind *kind)
 {
 	enum kind const k = kind->k();
 	switch(k) {
-		case SPHERE:
+		case kind::SPHERE:
 			return "Sphere";
-		case JANUS:
+		case kind::JANUS:
 			return "Janus";
-		case SPHEROID:
+		case kind::SPHEROID:
 			return "Spheroid";
-		case CHIRAL:
+		case kind::CHIRAL:
 			return "Chiral";
 		default:
 			return "";
@@ -39,19 +39,19 @@ const char *Kind::stringify (const Kind *kind)
 enum kind Kind::enumerator (const char *kind)
 {
 	if (!strcmp(kind, "Sphere")) {
-		return SPHERE;
+		return kind::SPHERE;
 	}
 
 	if (!strcmp(kind, "Janus")) {
-		return JANUS;
+		return kind::JANUS;
 	}
 
 	if (!strcmp(kind, "Spheroid")) {
-		return SPHEROID;
+		return kind::SPHEROID;
 	}
 
 	if (!strcmp(kind, "Chiral")) {
-		return CHIRAL;
+		return kind::CHIRAL;
 	}
 
 	enum kind unknown = ((enum kind) -1);

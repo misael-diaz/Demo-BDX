@@ -27,16 +27,16 @@ void Sphere::ia (const Particle *particle)
 	const Kind *kind = that->kind;
 	enum kind const k = kind->k();
 	switch(k){
-		case SPHERE:
+		case kind::SPHERE:
 		os::print("sphere-sphere interaction\n");
 		break;
-		case JANUS:
+		case kind::JANUS:
 		os::print("sphere-janus interaction\n");
 		break;
-		case SPHEROID:
+		case kind::SPHEROID:
 		os::print("sphere-spheroid interaction\n");
 		break;
-		case CHIRAL:
+		case kind::CHIRAL:
 		os::print("sphere-chiral interaction\n");
 		break;
 		default:
