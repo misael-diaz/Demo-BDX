@@ -25,18 +25,18 @@ void Janus::ia (const Particle *particle)
 {
 	const Particle *that = particle;
 	const Kind *kind = that->kind;
-	kind_t const k = kind->k();
+	enum kind const k = kind->k();
 	switch(k){
-		case SPHERE:
+		case kind::SPHERE:
 		os::print("janus-sphere interaction\n");
 		break;
-		case JANUS:
+		case kind::JANUS:
 		os::print("janus-janus interaction\n");
 		break;
-		case SPHEROID:
+		case kind::SPHEROID:
 		os::print("janus-spheroid interaction\n");
 		break;
-		case CHIRAL:
+		case kind::CHIRAL:
 		os::print("janus-chiral interaction\n");
 		break;
 		default:

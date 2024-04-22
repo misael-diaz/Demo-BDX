@@ -127,22 +127,22 @@ Particle *_Particle (Vector *r,
 		     double const c)
 {
 	Particle *particle = NULL;
-	kind_t const k = kind->k();
+	enum kind const k = kind->k();
 	switch(k)
 	{
-		case SPHERE:
+		case kind::SPHERE:
 		particle = new Sphere(r, u, E, d, F, T, list, id, kind, a);
 		break;
 
-		case JANUS:
+		case kind::JANUS:
 		particle = new Janus(r, u, E, d, F, T, list, id, kind, a);
 		break;
 
-		case SPHEROID:
+		case kind::SPHEROID:
 		particle = new Spheroid(r, u, E, d, F, T, list, id, kind, a, b);
 		break;
 
-		case CHIRAL:
+		case kind::CHIRAL:
 		particle = new Chiral(r, u, E, d, F, T, list, id, kind, a, b, c);
 		break;
 
@@ -355,7 +355,7 @@ void tutil11 (void)
 		double const min_k = 0;
 		double const max_k = 4;
 		double const k = min_k + (max_k - min_k) * (rand() / ((double) RAND_MAX));
-		Kind *kind = new Kind((kind_t) k);
+		Kind *kind = new Kind((enum kind) k);
 		double const x = rand();
 		double const y = rand();
 		double const z = rand();
@@ -403,7 +403,7 @@ void tutil11 (void)
 		double const min_k = 0;
 		double const max_k = 4;
 		double const k = min_k + (max_k - min_k) * (rand() / ((double) RAND_MAX));
-		Kind *kind = new Kind((kind_t) k);
+		Kind *kind = new Kind((enum kind) k);
 		double const x = rand();
 		double const y = rand();
 		double const z = rand();
@@ -438,7 +438,7 @@ void tutil12 (void)
 		double const min_k = 0;
 		double const max_k = 4;
 		double const k = min_k + (max_k - min_k) * (rand() / ((double) RAND_MAX));
-		Kind *kind = new Kind((kind_t) k);
+		Kind *kind = new Kind((enum kind) k);
 		double const x = rand();
 		double const y = rand();
 		double const z = rand();
@@ -489,7 +489,7 @@ void tutil12 (void)
 		double const min_k = 0;
 		double const max_k = 4;
 		double const k = min_k + (max_k - min_k) * (rand() / ((double) RAND_MAX));
-		Kind *kind = new Kind((kind_t) k);
+		Kind *kind = new Kind((enum kind) k);
 		double const x = rand();
 		double const y = rand();
 		double const z = rand();
@@ -525,7 +525,7 @@ void tutil13 (void)
 		double const min_k = 0;
 		double const max_k = 4;
 		double const k = min_k + (max_k - min_k) * (rand() / ((double) RAND_MAX));
-		Kind *kind = new Kind((kind_t) k);
+		Kind *kind = new Kind((enum kind) k);
 		double const x = rand();
 		double const y = rand();
 		double const z = rand();
@@ -565,7 +565,7 @@ void tutil13 (void)
 		double const min_k = 0;
 		double const max_k = 4;
 		double const k = min_k + (max_k - min_k) * (rand() / ((double) RAND_MAX));
-		Kind *kind = new Kind((kind_t) k);
+		Kind *kind = new Kind((enum kind) k);
 		double const x = rand();
 		double const y = rand();
 		double const z = rand();
@@ -786,7 +786,7 @@ void tutil19 (void)
 	for (size_t i = 0; i != num_particles; ++i) {
 		double const a = 1.0;
 		ID *id = new ID(i);
-		Kind *kind = new Kind(SPHERE);
+		Kind *kind = new Kind(kind::SPHERE);
 
 		it += 2; // skips LAMMPS ID and Group
 
@@ -878,7 +878,7 @@ void tutil21 (void)
 		// we can double the radius `a' because the spheres are non-interacting
 		double const a = 2.0;
 		ID *id = new ID(i);
-		Kind *kind = new Kind(SPHERE);
+		Kind *kind = new Kind(kind::SPHERE);
 
 		it += 2; // skips LAMMPS ID and Group
 

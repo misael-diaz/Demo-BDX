@@ -4,57 +4,57 @@
 #include "util.h"
 #include "Kind.h"
 
-Kind::Kind () : kind(SPHERE)
+Kind::Kind () : kind(kind::SPHERE)
 {
 	return;
 }
 
-Kind::Kind (kind_t const kind) : kind(kind)
+Kind::Kind (enum kind const kind) : kind(kind)
 {
 	return;
 }
 
-kind_t Kind::k() const
+enum kind Kind::k() const
 {
 	return this->kind;
 }
 
 const char *Kind::stringify (const Kind *kind)
 {
-	kind_t const k = kind->k();
+	enum kind const k = kind->k();
 	switch(k) {
-		case SPHERE:
+		case kind::SPHERE:
 			return "Sphere";
-		case JANUS:
+		case kind::JANUS:
 			return "Janus";
-		case SPHEROID:
+		case kind::SPHEROID:
 			return "Spheroid";
-		case CHIRAL:
+		case kind::CHIRAL:
 			return "Chiral";
 		default:
 			return "";
 	}
 }
 
-kind_t Kind::enumerator (const char *kind)
+enum kind Kind::enumerator (const char *kind)
 {
 	if (!strcmp(kind, "Sphere")) {
-		return SPHERE;
+		return kind::SPHERE;
 	}
 
 	if (!strcmp(kind, "Janus")) {
-		return JANUS;
+		return kind::JANUS;
 	}
 
 	if (!strcmp(kind, "Spheroid")) {
-		return SPHEROID;
+		return kind::SPHEROID;
 	}
 
 	if (!strcmp(kind, "Chiral")) {
-		return CHIRAL;
+		return kind::CHIRAL;
 	}
 
-	kind_t unknown = ((kind_t) -1);
+	enum kind unknown = ((enum kind) -1);
 	return unknown;
 }
 
