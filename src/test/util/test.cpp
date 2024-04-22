@@ -303,8 +303,7 @@ void tutil10 (void)
 		Vector *d = new Vector(0, 0, 1);
 		Vector *F = new Vector();
 		Vector *T = new Vector();
-		Stack *stack = new Stack();
-		List *list = new List(stack);
+		List *list = new List(new Stack());
 		double const frand_max = RAND_MAX;
 		double const a = rand() / frand_max;
 		Sphere *sphere = new Sphere(r, u, E, d, F, T, list, id, kind, a);
@@ -332,8 +331,7 @@ void tutil10 (void)
 		Vector *d = new Vector(0, 0, 1);
 		Vector *F = new Vector();
 		Vector *T = new Vector();
-		Stack *stack = new Stack();
-		List *list = new List(stack);
+		List *list = new List(new Stack());
 		double const frand_max = RAND_MAX;
 		double const a = rand() / frand_max;
 		Sphere *sphere = new Sphere(r, u, E, d, F, T, list, id, kind, a);
@@ -365,8 +363,7 @@ void tutil11 (void)
 		Vector *d = new Vector(0, 0, 1);
 		Vector *F = new Vector();
 		Vector *T = new Vector();
-		Stack *stack = new Stack();
-		List *list = new List(stack);
+		List *list = new List(new Stack());
 		double const frand_max = RAND_MAX;
 		double const a = rand() / frand_max;
 		double const b = ASPECT_RATIO * a;
@@ -413,8 +410,7 @@ void tutil11 (void)
 		Vector *d = new Vector(0, 0, 1);
 		Vector *F = new Vector();
 		Vector *T = new Vector();
-		Stack *stack = new Stack();
-		List *list = new List(stack);
+		List *list = new List(new Stack());
 		double const frand_max = RAND_MAX;
 		double const a = rand() / frand_max;
 		double const b = ASPECT_RATIO * a;
@@ -448,8 +444,7 @@ void tutil12 (void)
 		Vector *d = new Vector(0, 0, 1);
 		Vector *F = new Vector();
 		Vector *T = new Vector();
-		Stack *stack = new Stack();
-		List *list = new List(stack);
+		List *list = new List(new Stack());
 		double const frand_max = RAND_MAX;
 		double const a = rand() / frand_max;
 		double const b = ASPECT_RATIO * a;
@@ -484,6 +479,7 @@ void tutil12 (void)
 void tutil12 (void)
 {
 	size_t const numel = 1024;
+	Stack *stack = new Stack();
 	for (size_t i = 0; i != numel; ++i) {
 		ID *id = new ID(i);
 		double const min_k = 0;
@@ -499,8 +495,7 @@ void tutil12 (void)
 		Vector *d = new Vector(0, 0, 1);
 		Vector *F = new Vector();
 		Vector *T = new Vector();
-		Stack *stack = new Stack();
-		List *list = new List(stack);
+		List *list = new List(new Stack());
 		double const frand_max = RAND_MAX;
 		double const a = rand() / frand_max;
 		double const b = ASPECT_RATIO * a;
@@ -517,8 +512,7 @@ void tutil12 (void)
 void tutil13 (void)
 {
 	int rc = 0;
-	Stack *stack = new Stack();
-	Handler *handler = new Handler(stack);
+	Handler *handler = new Handler(new Stack());
 	size_t const numel = 1024;
 	for (size_t i = 0; i != numel; ++i) {
 		ID *id = new ID(i);
@@ -535,8 +529,7 @@ void tutil13 (void)
 		Vector *d = new Vector(0, 0, 1);
 		Vector *F = new Vector();
 		Vector *T = new Vector();
-		Stack *stack = new Stack();
-		List *list = new List(stack);
+		List *list = new List(new Stack());
 		double const frand_max = RAND_MAX;
 		double const a = rand() / frand_max;
 		double const b = ASPECT_RATIO * a;
@@ -557,8 +550,7 @@ void tutil13 (void)
 #else
 void tutil13 (void)
 {
-	Stack *stack = new Stack();
-	Handler *handler = new Handler(stack);
+	Handler *handler = new Handler(new Stack());
 	size_t const numel = 1024;
 	for (size_t i = 0; i != numel; ++i) {
 		ID *id = new ID(i);
@@ -575,8 +567,7 @@ void tutil13 (void)
 		Vector *d = new Vector(0, 0, 1);
 		Vector *F = new Vector();
 		Vector *T = new Vector();
-		Stack *stack = new Stack();
-		List *list = new List(stack);
+		List *list = new List(new Stack());
 		double const frand_max = RAND_MAX;
 		double const a = rand() / frand_max;
 		double const b = ASPECT_RATIO * a;
@@ -597,8 +588,7 @@ void tutil14(void)
 	double const height = 32;
 	BoundingBox *bb = new BoundingBox(r, length, width, height);
 	struct Brownian *Brownian = new struct Brownian();
-	Stack *stack = new Stack();
-	Handler *handler = new Handler(stack);
+	Handler *handler = new Handler(new Stack());
 	System *system = new System(bb, Brownian, handler);
 	delete(system);
 	util::clearall();
@@ -612,8 +602,7 @@ void tutil15 (void)
 	double const height = 32;
 	BoundingBox *bb = new BoundingBox(r, length, width, height);
 	struct Brownian *Brownian = new struct Brownian();
-	Stack *stack = new Stack();
-	Handler *handler = new Handler(stack);
+	Handler *handler = new Handler(new Stack());
 	System *system = new System(bb, Brownian, handler);
 	Prompt *prompt = new Prompt();
 	Config *cfg = new Config();
@@ -649,8 +638,7 @@ void tutil16 (void)
 	double const height = 32;
 	BoundingBox *bb = new BoundingBox(r, length, width, height);
 	struct Brownian *Brownian = new struct Brownian();
-	Stack *stack = new Stack();
-	Handler *handler = new Handler(stack);
+	Handler *handler = new Handler(new Stack());
 	System *system = new System(bb, Brownian, handler);
 	Prompt *prompt = new Prompt();
 	Config *cfg = new Config();
@@ -754,8 +742,7 @@ void tutil19 (void)
 	double const height = 0;
 	BoundingBox *bb = new BoundingBox(r, length, width, height);
 	struct Brownian *Brownian = new struct Brownian();
-	Stack *stack = new Stack();
-	Handler *handler = new Handler(stack);
+	Handler *handler = new Handler(new Stack());
 	System *system = new System(bb, Brownian, handler);
 	Prompt *prompt = new Prompt();
 	Config *cfg = new Config();
@@ -779,7 +766,7 @@ void tutil19 (void)
 	cfg->parse();
 	cfg->config();
 
-	stack = new Stack();
+	Stack *stack = new Stack();
 	void *data = lmp::load();
 	size_t const num_particles = lmp::parse(data, stack);
 	const double **it = (const double**) stack->begin();
@@ -803,8 +790,7 @@ void tutil19 (void)
 		Vector *d = new Vector(0, 0, 1);
 		Vector *F = new Vector();
 		Vector *T = new Vector();
-		Stack *stack = new Stack();
-		List *list = new List(stack);
+		List *list = new List(new Stack());
 		Particle *particle = _Particle(r, u, E, d, F, T, list, id, kind, a, 0, 0);
 		handler->add(particle);
 
