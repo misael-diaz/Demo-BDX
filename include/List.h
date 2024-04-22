@@ -12,8 +12,8 @@ struct List
 	size_t numel() const;
 	void add(Particle *particle);
 	void clear();
-	const Particle **begin() const;
-	const Particle **end() const;
+	Particle **begin();
+	Particle **end();
 	void *operator new(size_t size);
 	void operator delete(void *p);
 };

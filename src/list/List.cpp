@@ -19,14 +19,14 @@ size_t List::numel () const
 	return this->__stack__->numel();
 }
 
-const Particle **List::begin () const
+Particle **List::begin ()
 {
-	return ((const Particle**) this->__stack__->begin());
+	return ((Particle**) this->__stack__->begin());
 }
 
-const Particle **List::end () const
+Particle **List::end ()
 {
-	return ((const Particle**) this->__stack__->end());
+	return ((Particle**) this->__stack__->end());
 }
 
 void List::add (Particle *particle)

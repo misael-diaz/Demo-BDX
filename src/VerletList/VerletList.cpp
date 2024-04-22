@@ -24,12 +24,12 @@ void VerletList::clear ()
 	this->__list__->clear();
 }
 
-const Particle **VerletList::begin () const
+Particle **VerletList::begin ()
 {
 	return this->__list__->begin();
 }
 
-const Particle **VerletList::end () const
+Particle **VerletList::end ()
 {
 	return this->__list__->end();
 }
