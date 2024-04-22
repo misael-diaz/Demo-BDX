@@ -46,6 +46,7 @@ void Looper::loop ()
 		size_t istep = 0;
 		constexpr size_t isteps = (GLOBAL_TIME_STEP_LOGGER / GLOBAL_TIME_STEP);
 		while (istep != isteps) {
+			driver->buildVerletList();
 			driver->BrownianMotion();
 			driver->contain();
 			++istep;

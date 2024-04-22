@@ -129,6 +129,17 @@ double Particle::radius () const
 	return this->__radius__;
 }
 
+void Particle::buildVerletList (Particle **begin, Particle **end)
+{
+	for (Particle **particles = begin; particles != end; ++particles) {
+		Particle *particle = *particles;
+		Particle *that = particle;
+		if (this == that) {
+			continue;
+		}
+	}
+}
+
 /*
 
 BDX                                             December 31, 2023

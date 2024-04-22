@@ -42,6 +42,7 @@ struct Particle : BDXObject
 	void _translate_(double const mobility);
 	void _rotate_(double const mobility);
 	void _orient_(double const mobility);
+	void buildVerletList(Particle **begin, Particle **end);
 	void BrownianMotion();
 	void txt(void *stream) const;
 	double radius() const;
