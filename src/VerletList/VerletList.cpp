@@ -1,21 +1,53 @@
-#ifndef GUARD_BDX_DRIVER_H
-#define GUARD_BDX_DRIVER_H
+#include "util.h"
+#include "List.h"
+#include "Particle.h"
+#include "VerletList.h"
 
-struct BDX;
-
-struct Driver
+VerletList::VerletList (List *list, Vector *displacement) : d(0)
 {
-	BDX *app = NULL;
-	Driver();
-	void bind(BDX *app);
-	void *operator new(size_t size);
-	void operator delete(void *p);
-	void buildVerletList();
-	void BrownianMotion();
-	void contain();
-};
+	this->__list__ = list;
+	this->dr = displacement;
+}
 
-#endif
+size_t VerletList::cap () const
+{
+	return this->__list__->cap();
+}
+
+size_t VerletList::numel () const
+{
+	return this->__list__->numel();
+}
+
+void VerletList::clear ()
+{
+	this->__list__->clear();
+}
+
+const Particle **VerletList::begin () const
+{
+	return this->__list__->begin();
+}
+
+const Particle **VerletList::end () const
+{
+	return this->__list__->end();
+}
+
+void VerletList::add (Particle *particle)
+{
+	this->__list__->add(particle);
+}
+
+void *VerletList::operator new (size_t size)
+{
+	return util::malloc(size);
+}
+
+void VerletList::operator delete (void *p)
+{
+	p = util::free(p);
+}
 
 /*
 
@@ -37,7 +69,7 @@ You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 author: @misael-diaz
-source: include/Driver.h
+source: src/VerletList/VerletList.cpp
 
 References:
 [0] A Koenig and B Moo, Accelerated C++ Practical Programming by Example.

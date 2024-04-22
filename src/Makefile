@@ -24,6 +24,8 @@ handlers: particles
 	@$(MAKE) -C handler
 lists: particles
 	@$(MAKE) -C list
+verlet-lists: lists
+	@$(MAKE) -C VerletList
 utils:
 	@$(MAKE) -C util
 lmps:
@@ -74,6 +76,7 @@ BDX: boxes\
      handlers\
      PRNGs\
      lists\
+     verlet-lists\
      virtuals\
      configs\
      loopers\
@@ -97,6 +100,7 @@ clean:
 	@$(MAKE) -C stack clean
 	@$(MAKE) -C handler clean
 	@$(MAKE) -C list clean
+	@$(MAKE) -C VerletList clean
 	@$(MAKE) -C id clean
 	@$(MAKE) -C kind clean
 	@$(MAKE) -C vector clean

@@ -43,6 +43,15 @@ void Driver::contain ()
 	system->contain();
 }
 
+void Driver::buildVerletList ()
+{
+	Handler *h = this->app->system->handler;
+	for (Particle **particles = h->begin(); particles != h->end(); ++particles) {
+		Particle *p = *particles;
+		p->buildVerletList(h->begin(), h->end());
+	}
+}
+
 /*
 
 BDX                                             December 31, 2023

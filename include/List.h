@@ -6,7 +6,7 @@ struct Particle;
 
 struct List
 {
-	Stack *stack = NULL;
+	Stack *__stack__ = NULL;
 	List(Stack *stack);
 	size_t cap() const;
 	size_t numel() const;

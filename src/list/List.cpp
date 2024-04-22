@@ -6,38 +6,38 @@
 
 List::List (Stack *stack)
 {
-	this->stack = stack;
+	this->__stack__ = stack;
 }
 
 size_t List::cap () const
 {
-	return this->stack->cap();
+	return this->__stack__->cap();
 }
 
 size_t List::numel () const
 {
-	return this->stack->numel();
+	return this->__stack__->numel();
 }
 
 const Particle **List::begin () const
 {
-	return ((const Particle**) this->stack->begin());
+	return ((const Particle**) this->__stack__->begin());
 }
 
 const Particle **List::end () const
 {
-	return ((const Particle**) this->stack->end());
+	return ((const Particle**) this->__stack__->end());
 }
 
 void List::add (Particle *particle)
 {
 	void *elem = (void*) particle;
-	this->stack->add(elem);
+	this->__stack__->add(elem);
 }
 
 void List::clear ()
 {
-	this->stack->clear();
+	this->__stack__->clear();
 }
 
 void *List::operator new (size_t size)
