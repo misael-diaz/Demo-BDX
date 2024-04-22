@@ -5,7 +5,8 @@ enum kind {
 	SPHERE,
 	JANUS,
 	SPHEROID,
-	CHIRAL
+	CHIRAL,
+	NUM_ENUM_KIND
 };
 
 struct Kind
