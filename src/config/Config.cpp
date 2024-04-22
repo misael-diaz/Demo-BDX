@@ -5,6 +5,7 @@
 
 #include "os.h"
 #include "util.h"
+#include "Kind.h"
 #include "Stack.h"
 #include "BDXObject.h"
 #include "BoundingBox.h"
@@ -13,6 +14,9 @@
 #include "BDX.h"
 
 #define MAX_FIELD_NAME_SIZE 80
+
+static double particle_interaction_range_table[kind::NUM_ENUM_KIND][kind::NUM_ENUM_KIND];
+static double (*pirtbl)[][kind::NUM_ENUM_KIND] = &particle_interaction_range_table;
 
 struct Object;
 
@@ -98,7 +102,8 @@ void ObjectStack::operator delete (void *p)
 
 Config::Config ()
 {
-	return;
+	// sets default sphere-sphere interaction range, user can override via config.json
+	(*pirtbl)[kind::SPHERE][kind::SPHERE] = 1.5;
 }
 
 void Config::bind (BDX *app)
