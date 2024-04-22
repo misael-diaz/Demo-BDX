@@ -15,10 +15,10 @@
 
 #define MAX_FIELD_NAME_SIZE 80
 
-static double particle_interaction_range_table[kind::NUM_ENUM_KIND][kind::NUM_ENUM_KIND];
-static double particle_extended_interaction_range_table[kind::NUM_ENUM_KIND][kind::NUM_ENUM_KIND];
-static double (*pirtbl)[][kind::NUM_ENUM_KIND] = &particle_interaction_range_table;
-static double (*pxirtbl)[][kind::NUM_ENUM_KIND] = &particle_extended_interaction_range_table;
+static double part_interact_range_table[kind::NUM_ENUM_KIND][kind::NUM_ENUM_KIND];
+static double part_ext_interact_range_table[kind::NUM_ENUM_KIND][kind::NUM_ENUM_KIND];
+static double (*pirtbl)[][kind::NUM_ENUM_KIND] = &part_interact_range_table;
+static double (*pxirtbl)[][kind::NUM_ENUM_KIND] = &part_ext_interact_range_table;
 
 struct Object;
 
