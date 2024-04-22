@@ -1,21 +1,21 @@
 #ifndef GUARD_BDX_KIND_H
 #define GUARD_BDX_KIND_H
 
-typedef enum {
+enum kind {
 	SPHERE,
 	JANUS,
 	SPHEROID,
 	CHIRAL
-} kind_t;
+};
 
 struct Kind
 {
-	kind_t kind;
+	enum kind kind;
 	Kind();
-	Kind(kind_t const kind);
-	kind_t k(void) const;
+	Kind(enum kind const kind);
+	enum kind k(void) const;
 	static const char *stringify(const Kind *kind);
-	static kind_t enumerator(const char *kind);
+	static enum kind enumerator(const char *kind);
 	void *operator new(size_t size);
 	void operator delete(void *p);
 	void txt(void *stream) const;

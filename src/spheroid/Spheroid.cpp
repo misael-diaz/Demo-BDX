@@ -38,7 +38,7 @@ void Spheroid::ia (const Particle *particle)
 {
 	const Particle *that = particle;
 	const Kind *kind = that->kind;
-	kind_t const k = kind->k();
+	enum kind const k = kind->k();
 	switch(k){
 		case SPHERE:
 		os::print("spheroid-sphere interaction\n");

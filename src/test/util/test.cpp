@@ -127,7 +127,7 @@ Particle *_Particle (Vector *r,
 		     double const c)
 {
 	Particle *particle = NULL;
-	kind_t const k = kind->k();
+	enum kind const k = kind->k();
 	switch(k)
 	{
 		case SPHERE:
@@ -355,7 +355,7 @@ void tutil11 (void)
 		double const min_k = 0;
 		double const max_k = 4;
 		double const k = min_k + (max_k - min_k) * (rand() / ((double) RAND_MAX));
-		Kind *kind = new Kind((kind_t) k);
+		Kind *kind = new Kind((enum kind) k);
 		double const x = rand();
 		double const y = rand();
 		double const z = rand();
@@ -403,7 +403,7 @@ void tutil11 (void)
 		double const min_k = 0;
 		double const max_k = 4;
 		double const k = min_k + (max_k - min_k) * (rand() / ((double) RAND_MAX));
-		Kind *kind = new Kind((kind_t) k);
+		Kind *kind = new Kind((enum kind) k);
 		double const x = rand();
 		double const y = rand();
 		double const z = rand();
@@ -438,7 +438,7 @@ void tutil12 (void)
 		double const min_k = 0;
 		double const max_k = 4;
 		double const k = min_k + (max_k - min_k) * (rand() / ((double) RAND_MAX));
-		Kind *kind = new Kind((kind_t) k);
+		Kind *kind = new Kind((enum kind) k);
 		double const x = rand();
 		double const y = rand();
 		double const z = rand();
@@ -489,7 +489,7 @@ void tutil12 (void)
 		double const min_k = 0;
 		double const max_k = 4;
 		double const k = min_k + (max_k - min_k) * (rand() / ((double) RAND_MAX));
-		Kind *kind = new Kind((kind_t) k);
+		Kind *kind = new Kind((enum kind) k);
 		double const x = rand();
 		double const y = rand();
 		double const z = rand();
@@ -525,7 +525,7 @@ void tutil13 (void)
 		double const min_k = 0;
 		double const max_k = 4;
 		double const k = min_k + (max_k - min_k) * (rand() / ((double) RAND_MAX));
-		Kind *kind = new Kind((kind_t) k);
+		Kind *kind = new Kind((enum kind) k);
 		double const x = rand();
 		double const y = rand();
 		double const z = rand();
@@ -565,7 +565,7 @@ void tutil13 (void)
 		double const min_k = 0;
 		double const max_k = 4;
 		double const k = min_k + (max_k - min_k) * (rand() / ((double) RAND_MAX));
-		Kind *kind = new Kind((kind_t) k);
+		Kind *kind = new Kind((enum kind) k);
 		double const x = rand();
 		double const y = rand();
 		double const z = rand();
