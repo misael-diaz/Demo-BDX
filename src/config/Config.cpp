@@ -15,6 +15,7 @@
 
 #define MAX_FIELD_NAME_SIZE 80
 
+// particle (extended) interaction range tables for Verlet-list building
 static double part_interact_range_table[kind::NUM_ENUM_KIND][kind::NUM_ENUM_KIND];
 static double part_ext_interact_range_table[kind::NUM_ENUM_KIND][kind::NUM_ENUM_KIND];
 static double (*pirtbl)[][kind::NUM_ENUM_KIND] = &part_interact_range_table;
