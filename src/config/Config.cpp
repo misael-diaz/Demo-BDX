@@ -9,14 +9,18 @@
 #include "Stack.h"
 #include "BDXObject.h"
 #include "BoundingBox.h"
+#include "Particle.h"
 #include "Config.h"
 #include "System.h"
 #include "BDX.h"
 
 #define MAX_FIELD_NAME_SIZE 80
 
-static double particle_interaction_range_table[kind::NUM_ENUM_KIND][kind::NUM_ENUM_KIND];
-static double (*pirtbl)[][kind::NUM_ENUM_KIND] = &particle_interaction_range_table;
+// particle (extended) interaction range tables for Verlet-list building
+static double part_interact_range_table[kind::NUM_ENUM_KIND][kind::NUM_ENUM_KIND];
+static double part_ext_interact_range_table[kind::NUM_ENUM_KIND][kind::NUM_ENUM_KIND];
+static double (*pirtbl)[][kind::NUM_ENUM_KIND] = &part_interact_range_table;
+static double (*pxirtbl)[][kind::NUM_ENUM_KIND] = &part_ext_interact_range_table;
 
 struct Object;
 
@@ -104,6 +108,7 @@ Config::Config ()
 {
 	// sets default sphere-sphere interaction range, user can override via config.json
 	(*pirtbl)[kind::SPHERE][kind::SPHERE] = 1.5;
+	(*pxirtbl)[kind::SPHERE][kind::SPHERE] = 2.0;
 }
 
 void Config::bind (BDX *app)
@@ -368,6 +373,16 @@ void Config::config ()
 			continue;
 		}
 	}
+}
+
+double config::particleInteractionRange(const Particle *p1, const Particle *p2)
+{
+	return (*pirtbl)[p1->kind->k()][p2->kind->k()];
+}
+
+double config::particleExtendedInteractionRange(const Particle *p1, const Particle *p2)
+{
+	return (*pxirtbl)[p1->kind->k()][p2->kind->k()];
 }
 
 /*

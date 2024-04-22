@@ -616,7 +616,7 @@ void tutil15 (void)
 	Handler *handler = new Handler(stack);
 	System *system = new System(bb, Brownian, handler);
 	Prompt *prompt = new Prompt();
-	Config *config = new Config();
+	Config *cfg = new Config();
 	Timer *timer = new Timer();
 	Random *random = new Random(random::NORMAL);
 	Looper *looper = new Looper();
@@ -624,7 +624,7 @@ void tutil15 (void)
 	Integrator *integrator = new Integrator();
 	Logger *logger = new Logger();
 	BDX *App = new BDX(prompt,
-			   config,
+			   cfg,
 			   timer,
 			   random,
 			   looper,
@@ -633,9 +633,9 @@ void tutil15 (void)
 			   logger,
 			   system);
 
-	config->load();
-	config->parse();
-	config->config();
+	cfg->load();
+	cfg->parse();
+	cfg->config();
 	delete(App);
 	util::clearall();
 }
@@ -653,7 +653,7 @@ void tutil16 (void)
 	Handler *handler = new Handler(stack);
 	System *system = new System(bb, Brownian, handler);
 	Prompt *prompt = new Prompt();
-	Config *config = new Config();
+	Config *cfg = new Config();
 	Timer *timer = new Timer();
 	Random *random = new Random(random::NORMAL);
 	Looper *looper = new Looper();
@@ -661,7 +661,7 @@ void tutil16 (void)
 	Integrator *integrator = new Integrator();
 	Logger *logger = new Logger();
 	BDX *App = new BDX(prompt,
-			   config,
+			   cfg,
 			   timer,
 			   random,
 			   looper,
@@ -670,9 +670,9 @@ void tutil16 (void)
 			   logger,
 			   system);
 
-	config->load();
-	config->parse();
-	config->config();
+	cfg->load();
+	cfg->parse();
+	cfg->config();
 	App->_exec_ = true;
 	App->looper->loop();
 	util::clearall();
@@ -758,7 +758,7 @@ void tutil19 (void)
 	Handler *handler = new Handler(stack);
 	System *system = new System(bb, Brownian, handler);
 	Prompt *prompt = new Prompt();
-	Config *config = new Config();
+	Config *cfg = new Config();
 	Timer *timer = new Timer();
 	Random *random = new Random(random::NORMAL);
 	Looper *looper = new Looper();
@@ -766,7 +766,7 @@ void tutil19 (void)
 	Integrator *integrator = new Integrator();
 	Logger *logger = new Logger();
 	BDX *App = new BDX(prompt,
-			   config,
+			   cfg,
 			   timer,
 			   random,
 			   looper,
@@ -775,9 +775,9 @@ void tutil19 (void)
 			   logger,
 			   system);
 
-	config->load();
-	config->parse();
-	config->config();
+	cfg->load();
+	cfg->parse();
+	cfg->config();
 
 	stack = new Stack();
 	void *data = lmp::load();
@@ -847,7 +847,7 @@ void tutil21 (void)
 	Handler *handler = new Handler(new Stack());
 	System *system = new System(bb, Brownian, handler);
 	Prompt *prompt = new Prompt();
-	Config *config = new Config();
+	Config *cfg = new Config();
 	time_t const walltime = 15 * 60;
 	Timer *timer = new Timer(walltime);
 	Random *random = new Random(random::NORMAL);
@@ -856,7 +856,7 @@ void tutil21 (void)
 	Integrator *integrator = new Integrator();
 	Logger *logger = new Logger();
 	BDX *App = new BDX(prompt,
-			   config,
+			   cfg,
 			   timer,
 			   random,
 			   looper,
@@ -866,9 +866,9 @@ void tutil21 (void)
 			   system);
 
 	os::print("configuring BDX App\n");
-	config->load();
-	config->parse();
-	config->config();
+	cfg->load();
+	cfg->parse();
+	cfg->config();
 
 	Stack *stack = new Stack();
 	void *data = lmp::load();
