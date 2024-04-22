@@ -1,7 +1,13 @@
 #ifndef GUARD_BDX_CONFIG_H
 #define GUARD_BDX_CONFIG_H
 
+struct Particle;
 struct BDX;
+
+namespace config {
+	double particleInteractionRange(const Particle *p1, const Particle *p2);
+	double particleExtendedInteractionRange(const Particle *p1, const Particle *p2);
+};
 
 struct Config
 {

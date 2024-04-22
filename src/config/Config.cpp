@@ -9,6 +9,7 @@
 #include "Stack.h"
 #include "BDXObject.h"
 #include "BoundingBox.h"
+#include "Particle.h"
 #include "Config.h"
 #include "System.h"
 #include "BDX.h"
@@ -372,6 +373,16 @@ void Config::config ()
 			continue;
 		}
 	}
+}
+
+double config::particleInteractionRange(const Particle *p1, const Particle *p2)
+{
+	return (*pirtbl)[p1->kind->k()][p2->kind->k()];
+}
+
+double config::particleExtendedInteractionRange(const Particle *p1, const Particle *p2)
+{
+	return (*pxirtbl)[p1->kind->k()][p2->kind->k()];
 }
 
 /*
