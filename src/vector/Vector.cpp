@@ -36,6 +36,15 @@ void Vector::txt (void *stream) const
 	fprintf(f, "%.15e %.15e %.15e ", this->x, this->y, this->z);
 }
 
+double Vector::norm2 ()
+{
+	double const norm2 = (this->x * this->x +
+			      this->y * this->y +
+			      this->z * this->z);
+
+	return norm2;
+}
+
 void Vector::unit ()
 {
 	double const norm = sqrt(this->x * this->x +
