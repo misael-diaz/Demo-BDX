@@ -21,6 +21,7 @@ LMP_H      = ../../../include/LMP.h
 STACK_H    = ../../../include/Stack.h
 HANDLER_H  = ../../../include/Handler.h
 LIST_H     = ../../../include/List.h
+VERLET_LIST_H = ../../../include/VerletList.h
 ID_H       = ../../../include/ID.h
 KIND_H     = ../../../include/Kind.h
 VECTOR_H   = ../../../include/Vector.h
@@ -47,6 +48,7 @@ HEADERS = $(OS_H)\
 	  $(STACK_H)\
 	  $(HANDLER_H)\
 	  $(LIST_H)\
+	  $(VERLET_LIST_H)\
 	  $(ID_H)\
 	  $(KIND_H)\
 	  $(VECTOR_H)\
@@ -78,6 +80,7 @@ LMP_OBJ      = ../../../src/lmp/LMP.obj
 STACK_OBJ    = ../../../src/stack/Stack.obj
 HANDLER_OBJ  = ../../../src/handler/Handler.obj
 LIST_OBJ     = ../../../src/list/List.obj
+VERLET_LIST_OBJ = ../../../src/VerletList/VerletList.obj
 ID_OBJ       = ../../../src/id/ID.obj
 KIND_OBJ     = ../../../src/kind/Kind.obj
 VECTOR_OBJ   = ../../../src/vector/Vector.obj
@@ -106,6 +109,7 @@ OBJS = $(OS_OBJ)\
        $(STACK_OBJ)\
        $(HANDLER_OBJ)\
        $(LIST_OBJ)\
+       $(VERLET_LIST_OBJ)\
        $(ID_OBJ)\
        $(KIND_OBJ)\
        $(VECTOR_OBJ)\

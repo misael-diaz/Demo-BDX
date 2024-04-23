@@ -7,6 +7,7 @@ struct ID;
 struct Kind;
 struct List;
 struct Vector;
+struct VerletList;
 
 struct Particle : BDXObject
 {
@@ -15,7 +16,7 @@ struct Particle : BDXObject
 	Vector *d = NULL;
 	Vector *F = NULL;
 	Vector *T = NULL;
-	List *list = NULL;
+	VerletList *vl = NULL;
 	ID *id = NULL;
 	Kind *kind = NULL;
 	double __radius__ = 1.0;
@@ -27,7 +28,7 @@ struct Particle : BDXObject
 		 Vector *d,
 		 Vector *F,
 		 Vector *T,
-		 List *list,
+		 VerletList *vl,
 		 ID *id,
 		 Kind *kind,
 		 double const a);

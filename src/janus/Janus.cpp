@@ -12,11 +12,11 @@ Janus::Janus (Vector *r,
 	      Vector *d,
 	      Vector *F,
 	      Vector *T,
-	      List *list,
+	      VerletList *vl,
 	      ID *id,
 	      Kind *kind,
 	      double const a):
-	      Sphere(r, u, E, d, F, T, list, id, kind, a)
+	      Sphere(r, u, E, d, F, T, vl, id, kind, a)
 {
 	return;
 }

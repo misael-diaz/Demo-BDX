@@ -17,7 +17,7 @@ struct Chiral : Spheroid
 	       Vector *d,
 	       Vector *F,
 	       Vector *T,
-	       List *list,
+	       VerletList *vl,
 	       ID *id,
 	       Kind *kind,
 	       double const a,
