@@ -16,6 +16,7 @@ struct Vector {
 };
 
 namespace vector {
+	void sub(Vector *w, const Vector *u, const Vector *v);
 	void cross(Vector *w, const Vector *u, const Vector *v);
 };
 

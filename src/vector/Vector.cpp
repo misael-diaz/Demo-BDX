@@ -53,6 +53,13 @@ void Vector::zero ()
 	this->z = 0.0;
 }
 
+void vector::sub (Vector *w, const Vector *u, const Vector *v)
+{
+	w->x = u->x - v->x;
+	w->y = u->y - v->y;
+	w->z = u->z - v->z;
+}
+
 void vector::cross (Vector *w, const Vector *u, const Vector *v)
 {
 	w->x = ((u->y * v->z) - (u->z * v->y));
