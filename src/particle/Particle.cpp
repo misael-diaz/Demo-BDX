@@ -1,10 +1,15 @@
 #include <cmath>
 #include <cstdio>
+#if defined(DEBUG) && DEBUG
+#include "os.h"
+#endif
 #include "util.h"
 #include "ID.h"
 #include "Kind.h"
 #include "Vector.h"
 #include "List.h"
+#include "Config.h"
+#include "VerletList.h"
 #include "Particle.h"
 
 Particle::Particle (Vector *r,
@@ -135,16 +140,85 @@ double Particle::contact (const Particle *particle) const
 	return (this->radius() + that->radius());
 }
 
+double Particle::extent2 (const Particle *particle) const
+{
+	const Particle *that = particle;
+	double const extent_base = config::particleExtendedInteractionRange(this, that);
+	double const contact = this->contact(that);
+	double const extent2 = (contact * extent_base) * (contact * extent_base);
+	return extent2;
+}
+
+bool Particle::isNeighbor (const Particle *particle) const
+{
+	Vector relativePosition = Vector();
+	Vector *relpos = &relativePosition;
+	const Particle *that = particle;
+	vector::sub(relpos, this->r, that->r);
+	double const dist2 = relpos->norm2();
+	double const extent2 = this->extent2(that);
+	if (dist2 < extent2) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
+void Particle::addNeighbor (Particle *particle)
+{
+	Particle *that = particle;
+	this->vl->add(that);
+}
+
+void Particle::clearVerletList ()
+{
+	this->vl->clear();
+}
+
+size_t Particle::sizeVerletList () const
+{
+	return this->vl->numel();
+}
+
+#if defined(DEBUG) && DEBUG
 void Particle::buildVerletList (Particle **begin, Particle **end)
 {
+	size_t pairs = 0;
+	this->clearVerletList();
 	for (Particle **particles = begin; particles != end; ++particles) {
 		Particle *particle = *particles;
 		Particle *that = particle;
 		if (this == that) {
 			continue;
 		}
+
+		if (this->isNeighbor(that)) {
+			this->addNeighbor(that);
+			++pairs;
+		}
+	}
+
+	if (this->sizeVerletList() != pairs) {
+		os::print("FAIL");
 	}
 }
+#else
+void Particle::buildVerletList (Particle **begin, Particle **end)
+{
+	this->clearVerletList();
+	for (Particle **particles = begin; particles != end; ++particles) {
+		Particle *particle = *particles;
+		Particle *that = particle;
+		if (this == that) {
+			continue;
+		}
+
+		if (this->isNeighbor(that)) {
+			this->addNeighbor(that);
+		}
+	}
+}
+#endif
 
 /*
 
