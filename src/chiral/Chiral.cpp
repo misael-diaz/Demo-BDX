@@ -12,13 +12,13 @@ Chiral::Chiral (Vector *r,
 		Vector *d,
 		Vector *F,
 		Vector *T,
-		List *list,
+		VerletList *vl,
 		ID *id,
 		Kind *kind,
 		double const a,
 		double const b,
 		double const c):
-		Spheroid(r, u, E, d, F, T, list, id, kind, a, b),
+		Spheroid(r, u, E, d, F, T, vl, id, kind, a, b),
 		_chiral_(c)
 {
 	return;

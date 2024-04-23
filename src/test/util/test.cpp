@@ -29,6 +29,7 @@
 #include "Logger.h"
 #include "System.h"
 #include "List.h"
+#include "VerletList.h"
 #include "BDX.h"
 
 #define COMPILE 0
@@ -64,7 +65,7 @@ Particle *_Particle(Vector *r,
 		    Vector *d,
 		    Vector *F,
 		    Vector *T,
-		    List *list,
+		    VerletList *vl,
 		    ID *id,
 		    Kind *kind,
 		    double const a,
@@ -78,7 +79,7 @@ Particle *_Particle(Vector *r,
 		    Vector *d,
 		    Vector *F,
 		    Vector *T,
-		    List *list,
+		    VerletList *vl,
 		    ID *id,
 		    Kind *kind,
 		    double const a,
@@ -119,7 +120,7 @@ Particle *_Particle (Vector *r,
 		     Vector *d,
 		     Vector *F,
 		     Vector *T,
-		     List *list,
+		     VerletList *vl,
 		     ID *id,
 		     Kind *kind,
 		     double const a,
@@ -131,23 +132,23 @@ Particle *_Particle (Vector *r,
 	switch(k)
 	{
 		case kind::SPHERE:
-		particle = new Sphere(r, u, E, d, F, T, list, id, kind, a);
+		particle = new Sphere(r, u, E, d, F, T, vl, id, kind, a);
 		break;
 
 		case kind::JANUS:
-		particle = new Janus(r, u, E, d, F, T, list, id, kind, a);
+		particle = new Janus(r, u, E, d, F, T, vl, id, kind, a);
 		break;
 
 		case kind::SPHEROID:
-		particle = new Spheroid(r, u, E, d, F, T, list, id, kind, a, b);
+		particle = new Spheroid(r, u, E, d, F, T, vl, id, kind, a, b);
 		break;
 
 		case kind::CHIRAL:
-		particle = new Chiral(r, u, E, d, F, T, list, id, kind, a, b, c);
+		particle = new Chiral(r, u, E, d, F, T, vl, id, kind, a, b, c);
 		break;
 
 		default:
-		particle = new Sphere(r, u, E, d, F, T, list, id, kind, a);
+		particle = new Sphere(r, u, E, d, F, T, vl, id, kind, a);
 	}
 
 	return particle;
@@ -303,10 +304,10 @@ void tutil10 (void)
 		Vector *d = new Vector(0, 0, 1);
 		Vector *F = new Vector();
 		Vector *T = new Vector();
-		List *list = new List(new Stack());
+		VerletList *vl = new VerletList(new List(new Stack()), new Vector());
 		double const frand_max = RAND_MAX;
 		double const a = rand() / frand_max;
-		Sphere *sphere = new Sphere(r, u, E, d, F, T, list, id, kind, a);
+		Sphere *sphere = new Sphere(r, u, E, d, F, T, vl, id, kind, a);
 		printf("radius: %f\n", sphere->radius());
 		spheres[i] = sphere;
 	}
@@ -331,10 +332,10 @@ void tutil10 (void)
 		Vector *d = new Vector(0, 0, 1);
 		Vector *F = new Vector();
 		Vector *T = new Vector();
-		List *list = new List(new Stack());
+		VerletList *vl = new VerletList(new List(new Stack()), new Vector());
 		double const frand_max = RAND_MAX;
 		double const a = rand() / frand_max;
-		Sphere *sphere = new Sphere(r, u, E, d, F, T, list, id, kind, a);
+		Sphere *sphere = new Sphere(r, u, E, d, F, T, vl, id, kind, a);
 		spheres[i] = sphere;
 	}
 
@@ -363,12 +364,12 @@ void tutil11 (void)
 		Vector *d = new Vector(0, 0, 1);
 		Vector *F = new Vector();
 		Vector *T = new Vector();
-		List *list = new List(new Stack());
+		VerletList *vl = new VerletList(new List(new Stack()), new Vector());
 		double const frand_max = RAND_MAX;
 		double const a = rand() / frand_max;
 		double const b = ASPECT_RATIO * a;
 		double const c = rand() / frand_max;
-		Particle *particle = _Particle(r, u, E, d, F, T, list, id, kind, a, b, c);
+		Particle *particle = _Particle(r, u, E, d, F, T, vl, id, kind, a, b, c);
 		particles[i] = particle;
 	}
 
@@ -410,12 +411,12 @@ void tutil11 (void)
 		Vector *d = new Vector(0, 0, 1);
 		Vector *F = new Vector();
 		Vector *T = new Vector();
-		List *list = new List(new Stack());
+		VerletList *vl = new VerletList(new List(new Stack()), new Vector());
 		double const frand_max = RAND_MAX;
 		double const a = rand() / frand_max;
 		double const b = ASPECT_RATIO * a;
 		double const c = rand() / frand_max;
-		Particle *particle = _Particle(r, u, E, d, F, T, list, id, kind, a, b, c);
+		Particle *particle = _Particle(r, u, E, d, F, T, vl, id, kind, a, b, c);
 		particles[i] = particle;
 	}
 
@@ -444,12 +445,12 @@ void tutil12 (void)
 		Vector *d = new Vector(0, 0, 1);
 		Vector *F = new Vector();
 		Vector *T = new Vector();
-		List *list = new List(new Stack());
+		VerletList *vl = new VerletList(new List(new Stack()), new Vector());
 		double const frand_max = RAND_MAX;
 		double const a = rand() / frand_max;
 		double const b = ASPECT_RATIO * a;
 		double const c = rand() / frand_max;
-		Particle *particle = _Particle(r, u, E, d, F, T, list, id, kind, a, b, c);
+		Particle *particle = _Particle(r, u, E, d, F, T, vl, id, kind, a, b, c);
 		stack->add((void*) particle);
 	}
 
@@ -495,12 +496,12 @@ void tutil12 (void)
 		Vector *d = new Vector(0, 0, 1);
 		Vector *F = new Vector();
 		Vector *T = new Vector();
-		List *list = new List(new Stack());
+		VerletList *vl = new VerletList(new List(new Stack()), new Vector());
 		double const frand_max = RAND_MAX;
 		double const a = rand() / frand_max;
 		double const b = ASPECT_RATIO * a;
 		double const c = rand() / frand_max;
-		Particle *particle = _Particle(r, u, E, d, F, T, list, id, kind, a, b, c);
+		Particle *particle = _Particle(r, u, E, d, F, T, vl, id, kind, a, b, c);
 		stack->add((void*) particle);
 	}
 
@@ -529,12 +530,12 @@ void tutil13 (void)
 		Vector *d = new Vector(0, 0, 1);
 		Vector *F = new Vector();
 		Vector *T = new Vector();
-		List *list = new List(new Stack());
+		VerletList *vl = new VerletList(new List(new Stack()), new Vector());
 		double const frand_max = RAND_MAX;
 		double const a = rand() / frand_max;
 		double const b = ASPECT_RATIO * a;
 		double const c = rand() / frand_max;
-		Particle *particle = _Particle(r, u, E, d, F, T, list, id, kind, a, b, c);
+		Particle *particle = _Particle(r, u, E, d, F, T, vl, id, kind, a, b, c);
 		handler->add(particle);
 	}
 
@@ -567,12 +568,12 @@ void tutil13 (void)
 		Vector *d = new Vector(0, 0, 1);
 		Vector *F = new Vector();
 		Vector *T = new Vector();
-		List *list = new List(new Stack());
+		VerletList *vl = new VerletList(new List(new Stack()), new Vector());
 		double const frand_max = RAND_MAX;
 		double const a = rand() / frand_max;
 		double const b = ASPECT_RATIO * a;
 		double const c = rand() / frand_max;
-		Particle *particle = _Particle(r, u, E, d, F, T, list, id, kind, a, b, c);
+		Particle *particle = _Particle(r, u, E, d, F, T, vl, id, kind, a, b, c);
 		handler->add(particle);
 	}
 
@@ -790,8 +791,8 @@ void tutil19 (void)
 		Vector *d = new Vector(0, 0, 1);
 		Vector *F = new Vector();
 		Vector *T = new Vector();
-		List *list = new List(new Stack());
-		Particle *particle = _Particle(r, u, E, d, F, T, list, id, kind, a, 0, 0);
+		VerletList *vl = new VerletList(new List(new Stack()), new Vector());
+		Particle *particle = _Particle(r, u, E, d, F, T, vl, id, kind, a, 0, 0);
 		handler->add(particle);
 
 		it += 3; // skips optional director (of zeros)
@@ -881,8 +882,8 @@ void tutil21 (void)
 		Vector *d = new Vector(0, 0, 1);
 		Vector *F = new Vector();
 		Vector *T = new Vector();
-		List *list = new List(new Stack());
-		Particle *particle = _Particle(r, u, E, d, F, T, list, id, kind, a, 0, 0);
+		VerletList *vl = new VerletList(new List(new Stack()), new Vector());
+		Particle *particle = _Particle(r, u, E, d, F, T, vl, id, kind, a, 0, 0);
 		handler->add(particle);
 
 		it += 3; // skips optional director (of zeros)

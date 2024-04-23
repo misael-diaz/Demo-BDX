@@ -12,11 +12,11 @@ Sphere::Sphere (Vector *r,
 		Vector *d,
 		Vector *F,
 		Vector *T,
-		List *list,
+		VerletList *vl,
 		ID *id,
 		Kind *kind,
 		double const a):
-		Particle(r, u, E, d, F, T, list, id, kind, a)
+		Particle(r, u, E, d, F, T, vl, id, kind, a)
 {
 	return;
 }

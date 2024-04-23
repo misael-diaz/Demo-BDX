@@ -13,7 +13,7 @@ Particle::Particle (Vector *r,
 		    Vector *d,
 		    Vector *F,
 		    Vector *T,
-		    List *list,
+		    VerletList *vl,
 		    ID *id,
 		    Kind *kind,
 		    double const a):
@@ -24,7 +24,7 @@ Particle::Particle (Vector *r,
 	this->d = d;
 	this->F = F;
 	this->T = T;
-	this->list = list;
+	this->vl = vl;
 	this->id = id;
 	this->kind = kind;
 	this->__radius__ = a;
