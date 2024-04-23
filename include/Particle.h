@@ -43,6 +43,7 @@ struct Particle : BDXObject
 	void _translate_(double const mobility);
 	void _rotate_(double const mobility);
 	void _orient_(double const mobility);
+	double contact(const Particle *particle) const;
 	void buildVerletList(Particle **begin, Particle **end);
 	void BrownianMotion();
 	void txt(void *stream) const;

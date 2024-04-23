@@ -129,6 +129,12 @@ double Particle::radius () const
 	return this->__radius__;
 }
 
+double Particle::contact (const Particle *particle) const
+{
+	const Particle *that = particle;
+	return (this->radius() + that->radius());
+}
+
 void Particle::buildVerletList (Particle **begin, Particle **end)
 {
 	for (Particle **particles = begin; particles != end; ++particles) {
