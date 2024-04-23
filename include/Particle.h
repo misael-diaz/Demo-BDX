@@ -44,7 +44,12 @@ struct Particle : BDXObject
 	void _rotate_(double const mobility);
 	void _orient_(double const mobility);
 	double contact(const Particle *particle) const;
+	double extent2(const Particle *particle) const;
+	bool isNeighbor(const Particle *particle) const;
+	void addNeighbor(Particle *particle);
+	size_t sizeVerletList() const;
 	void buildVerletList(Particle **begin, Particle **end);
+	void clearVerletList();
 	void BrownianMotion();
 	void txt(void *stream) const;
 	double radius() const;
