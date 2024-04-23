@@ -36,6 +36,15 @@ void Vector::txt (void *stream) const
 	fprintf(f, "%.15e %.15e %.15e ", this->x, this->y, this->z);
 }
 
+double Vector::norm2 ()
+{
+	double const norm2 = (this->x * this->x +
+			      this->y * this->y +
+			      this->z * this->z);
+
+	return norm2;
+}
+
 void Vector::unit ()
 {
 	double const norm = sqrt(this->x * this->x +
@@ -51,6 +60,13 @@ void Vector::zero ()
 	this->x = 0.0;
 	this->y = 0.0;
 	this->z = 0.0;
+}
+
+void vector::sub (Vector *w, const Vector *u, const Vector *v)
+{
+	w->x = u->x - v->x;
+	w->y = u->y - v->y;
+	w->z = u->z - v->z;
 }
 
 void vector::cross (Vector *w, const Vector *u, const Vector *v)

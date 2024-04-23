@@ -11,11 +11,13 @@ struct Vector {
 	void *operator new(size_t size);
 	void operator delete(void *p);
 	void txt(void *stream) const;
+	double norm2();
 	void unit();
 	void zero();
 };
 
 namespace vector {
+	void sub(Vector *w, const Vector *u, const Vector *v);
 	void cross(Vector *w, const Vector *u, const Vector *v);
 };
 
