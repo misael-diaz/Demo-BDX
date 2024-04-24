@@ -225,7 +225,7 @@ void *util::fopen (const char *filename, const char *mode)
 		Util_CloseFiles();
 		Util_Clear();
 		fprintf(stderr, "util::fopen: %s\n", strerror(errno));
-		exit(EXIT_FAILURE);
+		util::quit();
 	}
 
 	return p;
@@ -248,7 +248,7 @@ void *util::malloc (size_t const sz)
 		Util_CloseFiles();
 		Util_Clear();
 		fprintf(stderr, "util::malloc: %s\n", strerror(errno));
-		exit(EXIT_FAILURE);
+		util::quit();
 	}
 
 	return p;
@@ -272,10 +272,15 @@ char *util::strcpy (const char *string)
 		Util_CloseFiles();
 		Util_Clear();
 		fprintf(stderr, "util::strcpy: %s\n", strerror(errno));
-		exit(EXIT_FAILURE);
+		util::quit();
 	}
 
 	return p;
+}
+
+void util::quit (void)
+{
+	exit(EXIT_FAILURE);
 }
 
 /*

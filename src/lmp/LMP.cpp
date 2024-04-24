@@ -32,7 +32,7 @@ void *lmp::load (void)
 		os::error("lmp::load: IO READ ERROR\n");
 		util::fclose(lmp);
 		util::clearall();
-		exit(EXIT_FAILURE);
+		util::quit();
 	}
 
 	util::fclose(lmp);
