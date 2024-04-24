@@ -4,6 +4,7 @@
 #include <cstddef>
 
 namespace util {
+	void  quit(void);
 	void  clearall(void);
 	void *free(void *p);
 	void *malloc(size_t const sz);

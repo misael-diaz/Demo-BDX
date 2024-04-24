@@ -1,7 +1,6 @@
 #include <cstring>
 #include <cstdlib>
 #include <cstdio>
-#include <cerrno>
 
 #include "os.h"
 #include "util.h"
@@ -300,7 +299,7 @@ static void *Cfg_ReadJSON (FILE ***f)
 		Cfg_CloseJSON(f);
 		util::clearall();
 		os::error("Config::load: error\n");
-		exit(EXIT_FAILURE);
+		util::quit();
 	}
 
 	return json;
@@ -323,7 +322,7 @@ void Config::parse ()
 	if (!Cfg_Parse(json)) {
 		util::clearall();
 		os::error("Config::config: syntax error in conf.json\n");
-		exit(EXIT_FAILURE);
+		util::quit();
 	}
 
 	Stack *stack = new Stack();
