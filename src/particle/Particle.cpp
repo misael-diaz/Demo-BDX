@@ -134,6 +134,27 @@ double Particle::radius () const
 	return this->__radius__;
 }
 
+// NOTE:
+// if the user forgets to adds the interaction ranges (for the particle kinds of interest)
+// to these tables we will be able to determine that and complain accordingly as long as
+// these tables remain static (zero initialized) in the `config` module
+bool Particle::checkInteractionTable (const Particle **begin, const Particle **end) const
+{
+	for (const Particle **particles = begin; particles != end; ++particles) {
+		const Particle *particle = *particles;
+		const Particle *that = particle;
+		if (that == this) {
+			continue;
+		}
+		double const tbl = config::particleInteractionRange(this, that);
+		double const xtbl = config::particleExtendedInteractionRange(this, that);
+		if (tbl == 0 || xtbl == 0) {
+			return false;
+		}
+	}
+	return true;
+}
+
 double Particle::contact (const Particle *particle) const
 {
 	const Particle *that = particle;

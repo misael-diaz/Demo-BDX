@@ -8,6 +8,7 @@
 #include "Stack.h"
 #include "BDXObject.h"
 #include "BoundingBox.h"
+#include "Handler.h"
 #include "Particle.h"
 #include "Config.h"
 #include "System.h"
@@ -372,6 +373,29 @@ void Config::config ()
 			continue;
 		}
 	}
+}
+
+static void cfg_saneCheckInteractionTable (const System *sys)
+{
+	Handler *h = sys->handler;
+	Particle **begin = h->begin();
+	Particle **end = h->end();
+	for (Particle **particles = begin; particles != end; ++particles) {
+		const Particle *particle = *particles;
+		const Particle **begin_const = (const Particle**) begin;
+		const Particle **end_const = (const Particle**) end;
+		bool const sane = particle->checkInteractionTable(begin_const, end_const);
+		if (!sane) {
+			os::error("Config::sane: InteractionTableError\n");
+			util::quit();
+		}
+	}
+}
+
+void Config::sane ()
+{
+	const System *sys = this->app->system;
+	cfg_saneCheckInteractionTable(sys);
 }
 
 double config::particleInteractionRange(const Particle *p1, const Particle *p2)
