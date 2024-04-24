@@ -43,6 +43,7 @@ struct Particle : BDXObject
 	void _translate_(double const mobility);
 	void _rotate_(double const mobility);
 	void _orient_(double const mobility);
+	bool checkInteractionTable(const Particle **begin, const Particle **end) const;
 	double contact(const Particle *particle) const;
 	double extent2(const Particle *particle) const;
 	bool isNeighbor(const Particle *particle) const;

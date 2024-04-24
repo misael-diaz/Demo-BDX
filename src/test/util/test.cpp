@@ -662,7 +662,7 @@ void tutil16 (void)
 	cfg->load();
 	cfg->parse();
 	cfg->config();
-	App->_exec_ = true;
+	App->_exec_ = false;
 	App->looper->loop();
 	util::clearall();
 }
@@ -798,7 +798,7 @@ void tutil19 (void)
 		it += 3; // skips optional director (of zeros)
 	}
 
-	App->_exec_ = true;
+	App->_exec_ = false;
 	App->looper->loop();
 	util::clearall();
 }
@@ -817,6 +817,7 @@ void tutil20 (void)
 
 void tutil21(void)
 - imports LAMMPS spheres data
+- performs sane checks (verifies that the particle interaction-range tables have been set)
 - performs a 15 minute simulation test run
 - checks that no particle is outside the system boundaries when the BDX simulation ends
 - dumps the particle and simulation data to plain text file
@@ -889,6 +890,8 @@ void tutil21 (void)
 		it += 3; // skips optional director (of zeros)
 	}
 
+	os::print("performing sane-checks\n");
+	cfg->sane();
 	os::print("executing BDX test-run\n");
 	App->_exec_ = true;
 	App->looper->loop();
