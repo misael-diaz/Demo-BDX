@@ -818,6 +818,7 @@ void tutil20 (void)
 void tutil21(void)
 - imports LAMMPS spheres data
 - performs sane checks (verifies that the particle interaction-range tables have been set)
+- obtains the minimum contact distance (stored in the respective particle data member)
 - performs a 15 minute simulation test run
 - checks that no particle is outside the system boundaries when the BDX simulation ends
 - dumps the particle and simulation data to plain text file
@@ -862,9 +863,10 @@ void tutil21 (void)
 	void *data = lmp::load();
 	size_t const num_particles = lmp::parse(data, stack);
 	const double **it = (const double**) stack->begin();
+	double const radius = 2.0;
 	for (size_t i = 0; i != num_particles; ++i) {
 		// we can double the radius `a' because the spheres are non-interacting
-		double const a = 2.0;
+		double const a = radius;
 		ID *id = new ID(i);
 		Kind *kind = new Kind(kind::SPHERE);
 
@@ -892,6 +894,7 @@ void tutil21 (void)
 
 	os::print("performing sane-checks\n");
 	cfg->sane();
+	cfg->late_config();
 	os::print("executing BDX test-run\n");
 	App->_exec_ = true;
 	App->looper->loop();
@@ -924,6 +927,24 @@ void tutil21 (void)
 		os::print("FAIL\n");
 	} else {
 		os::print("PASS\n");
+	}
+
+	double minContactDistance = INFINITY;
+	const Particle **begin_const = (const Particle**) h->begin();
+	const Particle **end_const = (const Particle**) h->end();
+	for (const Particle **parts = begin_const; parts != end_const; ++parts) {
+		const Particle *particle = *parts;
+		if (particle->getMinContactDistance() < minContactDistance) {
+			minContactDistance = particle->getMinContactDistance();
+		}
+	}
+
+	// we have uniformly-sized spheres of radius `radius`
+	os::print("min-contact-distance-test:");
+	if (2.0 * radius != minContactDistance) {
+		printf("FAIL\n");
+	} else {
+		printf("PASS\n");
 	}
 
 	util::clearall();

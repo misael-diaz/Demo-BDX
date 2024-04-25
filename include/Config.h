@@ -20,6 +20,8 @@ struct Config
 	void load();
 	void parse();
 	void config();
+	void _late_config_minContactDistance_();
+	void late_config();
 	void sane();
 	void *operator new(size_t size);
 	void operator delete(void *p);
