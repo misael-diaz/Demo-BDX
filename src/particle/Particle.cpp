@@ -35,6 +35,7 @@ Particle::Particle (Vector *r,
 	this->__radius__ = a;
 	this->__rotational_mobility_scaling__= (1.0 / sqrt(a * a * a));
 	this->__translational_mobility_scaling__ = (1.0 / sqrt(a));
+	this->__contact_distance_min__ = (2.0 * a);
 }
 
 void *Particle::operator new (size_t size)
@@ -113,6 +114,33 @@ void Particle::BrownianMotion ()
 	this->_translate_(translational_mobility);
 	this->_rotate_(rotational_mobility);
 	this->_orient_(rotational_mobility);
+}
+
+void Particle::minContactDistance (const Particle **begin, const Particle **end)
+{
+	double min = INFINITY;
+	for (const Particle **particles = begin; particles != end; ++particles) {
+		const Particle *particle = *particles;
+		const Particle *that = particle;
+		if (that == this) {
+			continue;
+		}
+		double const contact = this->contact(that);
+		if (contact < min) {
+			min = contact;
+		}
+	}
+	this->__contact_distance_min__ = min;
+}
+
+double Particle::getMinContactDistance () const
+{
+	return this->__contact_distance_min__;
+}
+
+void Particle::setMinContactDistance (double const contact_distance_min)
+{
+	this->__contact_distance_min__ = contact_distance_min;
 }
 
 void Particle::txt (void *stream) const

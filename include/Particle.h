@@ -22,6 +22,7 @@ struct Particle : BDXObject
 	double __radius__ = 1.0;
 	double __translational_mobility_scaling__ = 1.0;
 	double __rotational_mobility_scaling__ = 1.0;
+	double __contact_distance_min__ = (2.0 * __radius__);
 	Particle(Vector *r,
 		 Vector *u,
 		 Vector *E,
@@ -45,6 +46,9 @@ struct Particle : BDXObject
 	void _orient_(double const mobility);
 	bool checkInteractionTable(const Particle **begin, const Particle **end) const;
 	double contact(const Particle *particle) const;
+	void minContactDistance(const Particle **begin, const Particle **end);
+	double getMinContactDistance() const;
+	void setMinContactDistance(double const);
 	double extent2(const Particle *particle) const;
 	bool isNeighbor(const Particle *particle) const;
 	void addNeighbor(Particle *particle);

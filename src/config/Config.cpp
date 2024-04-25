@@ -1,3 +1,4 @@
+#include <cmath>
 #include <cstring>
 #include <cstdlib>
 #include <cstdio>
@@ -373,6 +374,38 @@ void Config::config ()
 			continue;
 		}
 	}
+}
+
+void Config::_late_config_minContactDistance_ ()
+{
+	System *sys = this->app->system;
+	Handler *h = sys->handler;
+	Particle **begin = h->begin();
+	Particle **end = h->end();
+	const Particle **begin_const = (const Particle**) begin;
+	const Particle **end_const = (const Particle**) end;
+	for (Particle **particles = begin; particles != end; ++particles) {
+		Particle *particle = *particles;
+		particle->minContactDistance(begin_const, end_const);
+	}
+
+	double minContactDistance = INFINITY;
+	for (const Particle **parts = begin_const; parts != end_const; ++parts) {
+		const Particle *particle = *parts;
+		if (particle->getMinContactDistance() < minContactDistance) {
+			minContactDistance = particle->getMinContactDistance();
+		}
+	}
+
+	for (Particle **particles = begin; particles != end; ++particles) {
+		Particle *particle = *particles;
+		particle->setMinContactDistance(minContactDistance);
+	}
+}
+
+void Config::late_config ()
+{
+	this->_late_config_minContactDistance_();
 }
 
 static void cfg_saneCheckInteractionTable (const System *sys)
