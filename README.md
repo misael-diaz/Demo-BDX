@@ -5,5 +5,5 @@ Do not intend to rely on the STL for this one.
 
 I have borrowed from GPL'd id Software code.
 
-Sample Video of Simulation:
+Sample Video of Simulation (click on the image below to watch on youtube):
 [![Watch the video](https://img.youtube.com/vi/BrQCCio_Z5c/hqdefault.jpg)](https://youtu.be/BrQCCio_Z5c)
