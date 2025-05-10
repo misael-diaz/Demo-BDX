@@ -11,13 +11,25 @@ struct Particle : BDXObject
 	double dx;
 	double dy;
 	double dz;
+	/* Brownian displacement vector */
+	double dB_x;
+	double dB_y;
+	double dB_z;
 	/* force vector */
 	double F_x;
 	double F_y;
 	double F_z;
+	/* Brownian force vector */
+	double FB_x;
+	double FB_y;
+	double FB_z;
 	double _radius_;
 	double _mobilityLinear_;
 	double _mobilityBrownianLinear_;
+	bool _ForceExec_;
+	bool _BrownianForceExec_;
+	bool _BrownianShiftExec_;
+	bool _TranslateExec_;
 	Particle(
 			long const feat,
 			double const x,
@@ -30,8 +42,10 @@ struct Particle : BDXObject
 	void operator delete(void *p);
 	double radius() const;
 	virtual void interact_compute(struct Particle const * const Particle) = 0;
-	void BrownianForce();
+	void BrownianForce(struct Random * const __restrict__ prng);
+	void BrownianShift();
 	void translate();
+	void update();
 };
 
 #endif

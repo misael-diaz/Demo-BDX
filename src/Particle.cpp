@@ -1,3 +1,5 @@
+#include <cstdio>
+#include <cstdlib>
 #include <cmath>
 #include "util.hpp"
 #include "Particle.hpp"
@@ -20,12 +22,19 @@ Particle::Particle (
 	this->dx = 0.0;
 	this->dy = 0.0;
 	this->dz = 0.0;
+	this->dB_x = 0.0;
+	this->dB_y = 0.0;
+	this->dB_z = 0.0;
 	this->F_x = 0.0;
 	this->F_y = 0.0;
 	this->F_z = 0.0;
 	this->_radius_ = radius;
 	this->_mobilityLinear_ = (time_step / radius);
 	this->_mobilityBrownianLinear_ = sqrt((2.0 * time_step) / radius);
+	this->_ForceExec_ = false;
+	this->_BrownianForceExec_ = false;
+	this->_BrownianShiftExec_ = false;
+	this->_TranslateExec_ = false;
 }
 
 void *Particle::operator new (size_t size)
@@ -40,22 +49,70 @@ void Particle::operator delete (void *p)
 
 void Particle::translate ()
 {
-	this->x += this->dx;
-	this->y += this->dy;
-	this->z += this->dz;
+	if (this->_TranslateExec_ || !this->_ForceExec_ || !this->_BrownianShiftExec_) {
+		fprintf(stderr, "%s\n", "Particle::translate: ImplementationError");
+		util::clearall();
+		util::quit();
+	}
+
+	this->dx = (_mobilityLinear_ * (this->F_x));
+	this->dy = (_mobilityLinear_ * (this->F_y));
+	this->dz = (_mobilityLinear_ * (this->F_z));
+
+	this->x += ((this->dx) + (this->dB_x));
+	this->y += ((this->dy) + (this->dB_y));
+	this->z += ((this->dz) + (this->dB_z));
+
+	this->_TranslateExec_ = true;
 }
 
-// TODO: implement by adding the Brownian force to the force vector
-void Particle::BrownianForce ()
+void Particle::BrownianForce (struct Random * const __restrict__ prng)
 {
-	this->F_x += 0.0;
-	this->F_y += 0.0;
-	this->F_z += 0.0;
+	if (this->_BrownianForceExec_ || !this->_ForceExec_) {
+		fprintf(stderr, "%s\n", "Particle::BrownianForce: ImplementationError");
+		util::clearall();
+		util::quit();
+	}
+
+	this->FB_x = util::random(prng);
+	this->FB_y = util::random(prng);
+	this->FB_z = util::random(prng);
+
+	this->_BrownianForceExec_ = true;
+}
+
+void Particle::BrownianShift ()
+{
+	if (this->_BrownianShiftExec_ || !this->_BrownianForceExec_) {
+		fprintf(stderr, "%s\n", "Particle::BrownianShift: ImplementationError");
+		util::clearall();
+		util::quit();
+	}
+
+	this->dB_x = ((this->_mobilityBrownianLinear_) * (this->FB_x));
+	this->dB_y = ((this->_mobilityBrownianLinear_) * (this->FB_y));
+	this->dB_z = ((this->_mobilityBrownianLinear_) * (this->FB_z));
+
+	this->_BrownianShiftExec_ = true;
 }
 
 double Particle::radius () const
 {
 	return this->_radius_;
+}
+
+void Particle::update ()
+{
+	if (!this->_TranslateExec_) {
+		fprintf(stderr, "%s\n", "Particle::update: ImplementationError");
+		util::clearall();
+		util::quit();
+	}
+
+	this->_ForceExec_ = false;
+	this->_BrownianForceExec_ = false;
+	this->_BrownianShiftExec_ = false;
+	this->_TranslateExec_ = false;
 }
 
 /*

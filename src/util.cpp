@@ -2,9 +2,82 @@
 #include <cstdlib>
 #include <cstring>
 #include <cerrno>
+#include <cmath>
+#include <time.h>
 #include "util.hpp"
 
 #define HASH ((size_t) 0xdb0f1d1d0dec2023)
+#define BDX_RAND_PERIOD (0xffffffffffffffffLU)
+
+static long xorshift64 (struct Random * const __restrict__ prng)
+{
+	long x = prng->state;
+	x ^= (x << 13);
+	x ^= (x >> 7);
+	x ^= (x << 17);
+	prng->state = x;
+	return x;
+}
+
+static void random_SeedPRNG (struct Random * const __restrict__ prng)
+{
+	long const t = time(NULL);
+	prng->state = (t)? t : 0xffffffffffffffff;
+	prng->seeded = 0x0000000000000001L;
+}
+
+static double random_UniformPseudoRandomNumberGenerator (
+		struct Random * const __restrict__ prng)
+{
+	if (!prng->seeded) {
+		random_SeedPRNG(prng);
+		prng->draws = 0LU;
+		prng->cycles = 0L;
+	} else if (BDX_RAND_PERIOD == prng->draws) {
+		random_SeedPRNG(prng);
+		prng->draws = 0LU;
+		prng->cycles++;
+	}
+
+	double constexpr offset = (1L << 63);
+	double constexpr of = -offset;
+	double constexpr sc = 1.0 / (2.0 * of);
+	double const ur = xorshift64(prng);
+	double const ur_scaled = sc * (of + ur);
+	prng->draws++;
+	return ur_scaled;
+}
+
+static double random_GaussianPseudoRandomNumberGenerator (
+		struct Random * const __restrict__ prng)
+{
+	if (prng->cached) {
+		prng->cached = 0L;
+		return prng->next;
+	}
+	double (*uprng)(struct Random * const __restrict__ prng) = (
+		random_UniformPseudoRandomNumberGenerator
+	);
+	double const inf = (INFINITY);
+	double r = inf;
+	double x = inf;
+	double y = inf;
+	while (1.0 < r) {
+		x = (2.0 * uprng(prng) - 1.0);
+		y = (2.0 * uprng(prng) - 1.0);
+		r = ((x * x) + (y * y));
+	}
+
+	r = sqrt((-2.0 * log(r)) / r);
+	prng->next = (r * y);
+	prng->cached = 1L;
+	return (r * x);
+}
+
+static double grand (struct Random * const __restrict__ prng)
+{
+	return random_GaussianPseudoRandomNumberGenerator(prng);
+}
 
 struct m_chain_s {
 	struct m_chain_s *prev;
@@ -130,6 +203,11 @@ void util::clearall (void)
 void util::quit (void)
 {
 	exit(EXIT_FAILURE);
+}
+
+double util::random (struct Random * const __restrict__ prng)
+{
+	return grand(prng);
 }
 
 /*

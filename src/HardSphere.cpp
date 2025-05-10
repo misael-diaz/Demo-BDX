@@ -1,4 +1,6 @@
 #include <cmath>
+#include <cstdio>
+#include <cstdlib>
 #include "util.hpp"
 #include "HardSphere.hpp"
 
@@ -36,9 +38,17 @@ void HardSphere::operator delete (void *p)
 // TODO: we only have the code that resets the force, implement steric repulsion
 void HardSphere::interact_compute (struct Particle const * const particle)
 {
+	if (this->_ForceExec_) {
+		fprintf(stderr,
+			"%s\n",
+			"HardSphere::interact_compute: ImplementationError");
+		util::clearall();
+		util::quit();
+	}
 	this->F_x = 0;
 	this->F_y = 0;
 	this->F_z = 0;
+	this->_ForceExec_ = true;
 }
 
 /*
