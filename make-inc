@@ -8,15 +8,33 @@
 # Defines the include file for building the program with GNU make.
 #
 # Copyright (c) 2023 Misael Diaz-Maldonado
-# This file is released under the GNU General Public License as published
-# by the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
+#
+# This file is released under the GNU General Public License version 3 only
+# as published by the Free Software Foundation.
 #
 
-GLOBALS = -DGLOBAL_TIME_START=0.0\
-	  -DGLOBAL_TIME_END=1.0\
-	  -DGLOBAL_TIME_STEP=1.52587890625e-05\
-	  -DGLOBAL_TIME_STEP_LOGGER=0.015625
-CXX = g++-10
-CXXOPT = -DGXX=1 -DDEBUG=1 $(GLOBALS) -std=gnu++11 -g -Wall -Wextra -Wformat -O0
-LIBS = -lgfortran
+# GNU C Compiler
+
+CXX = g++
+
+# GNU C++ Compiler flags
+
+# flags for development  and debugging:
+CXXDEV = -std=gnu++11\
+	 -g\
+	 -Wall\
+	 -Wextra\
+	 -Wformat\
+	 -O0\
+	 -gdwarf-4
+
+# flags for production:
+CXXRUN = $(CFG)\
+	 -UCFG_DEBUG\
+	 -std=gnu++11\
+	 -g\
+	 -O1\
+	 -fno-math-errno\
+	 -ftree-vectorize\
+	 -fopt-info-vec=vectorizer.log\
+	 -mavx512vnni

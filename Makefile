@@ -9,21 +9,31 @@
 # Defines the Makefile for building the program with GNU make.
 #
 # Copyright (c) 2023 Misael Diaz-Maldonado
-# This file is released under the GNU General Public License as published
-# by the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
+#
+# This file is released under the GNU General Public License version 3 only
+# as published by the Free Software Foundation.
 #
 
 include make-inc
+
+mode=run
+
+ifeq ($(mode),run)
+	CXXOPT=$(CXXRUN)
+else
+	CXXOPT=$(CXXDEV)
+endif
+
+LIBS=-lm
 
 export CXX
 export CXXOPT
 export LIBS
 
-all: srcs
+all: BDX
 
-srcs:
+BDX:
+	@mkdir -p obj && mkdir -p bin
 	@$(MAKE) -C src
-
 clean:
 	@$(MAKE) -C src clean

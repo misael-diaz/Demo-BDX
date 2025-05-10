@@ -1,0 +1,33 @@
+#
+# BDX					December 05, 2023
+#
+# source: src/make-inc
+# author: @misael-diaz
+#
+# Synopsis:
+# Defines the include file for building the program with GNU make.
+#
+# Copyright (c) 2023 Misael Diaz-Maldonado
+# This file is released under the GNU General Public License version 2 only
+# as published by the Free Software Foundation.
+#
+
+BDX_H = bdx.hpp
+UTIL_H = util.hpp
+BDX_OBJECT_H = BDXObject.hpp
+PARTICLE_H = Particle.hpp
+HARD_SPHERE_H = HardSphere.hpp
+
+UTIL_CXX = util.cpp
+BDX_OBJECT_CXX = BDXObject.cpp
+PARTICLE_CXX = Particle.cpp
+HARD_SPHERE_CXX = HardSphere.cpp
+MAIN_CXX = main.cpp
+
+UTIL_OBJ = ../obj/util.o
+BDX_OBJECT_OBJ = ../obj/BDXObject.o
+PARTICLE_OBJ = ../obj/Particle.o
+HARD_SPHERE_OBJ = ../obj/HardSphere.o
+MAIN_OBJ = ../obj/main.o
+
+BDX = ../bin/bdx.bin
