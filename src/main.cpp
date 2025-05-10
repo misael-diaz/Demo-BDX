@@ -6,7 +6,11 @@
 
 int main (void)
 {
+	struct Random random = {};
+	double constexpr time_begin = 0.0;
+	double constexpr time_end = 1.0;
 	double constexpr time_step = 1.52587890625e-05;
+	double constexpr num_steps = ((time_end - time_begin) / time_step);
 	size_t const sz = BDX_NUM_PARTICLES * sizeof(struct Particle*);
 	struct Particle **particles = (struct Particle**) util::malloc(sz);
 	if (!particles) {
@@ -14,6 +18,7 @@ int main (void)
 		util::quit();
 	}
 
+	// initialization
 	memset(particles, 0, sz);
 	for (long i = 0; i != BDX_NUM_PARTICLES; ++i) {
 		long const feat = BDX_FEAT_HS;
@@ -42,6 +47,23 @@ int main (void)
 		}
 
 		particles[i] = particle;
+	}
+
+	// main BDX loop
+	for (long step = 0; step != num_steps; ++step) {
+		for (long i = 0; i != BDX_NUM_PARTICLES; ++i) {
+			for (long j = 0; j != BDX_NUM_PARTICLES; ++j) {
+				if (i == j) {
+					continue;
+				}
+				particles[i]->interact_compute(particles[j]);
+			}
+			particles[i]->_ForceExec_ = true;
+			particles[i]->BrownianForce(&random);
+			particles[i]->BrownianShift();
+			particles[i]->translate();
+			particles[i]->update();
+		}
 	}
 
 	util::clearall();
