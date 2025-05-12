@@ -13,6 +13,7 @@
 #
 
 BDX_H = bdx.hpp
+SYS_H = sys.hpp
 UTIL_H = util.hpp
 BDX_OBJECT_H = BDXObject.hpp
 HANDLER_H = Handler.hpp

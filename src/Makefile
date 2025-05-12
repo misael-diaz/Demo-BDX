@@ -44,6 +44,7 @@ $(HANDLER_OBJ): \
 	$(CXX) $(CXXOPT) -c $(HANDLER_CXX) -o $(HANDLER_OBJ)
 $(MAIN_OBJ): \
 	$(BDX_H) \
+	$(SYS_H) \
 	$(UTIL_H) \
 	$(BDX_OBJECT_H) \
 	$(PARTICLE_H) \

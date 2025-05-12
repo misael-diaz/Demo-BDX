@@ -1,6 +1,7 @@
 #include <cstdio>
 #include <cstring>
 #include "bdx.hpp"
+#include "sys.hpp"
 #include "util.hpp"
 #include "HardSphere.hpp"
 #include "Handler.hpp"
@@ -28,11 +29,19 @@ int main (void)
 
 	// initialization
 	memset(particles, 0, sz);
-	for (long i = 0; i != BDX_NUM_PARTICLES; ++i) {
-		long const feat = BDX_FEAT_HS;
-		double const x = 0;
-		double const y = 0;
-		double const z = 0;
+	for (long id = 0; id != BDX_NUM_PARTICLES; ++id) {
+		constexpr long feat = BDX_FEAT_HS;
+		constexpr long msk = BDX_MSK_CELL;
+		constexpr long shf = BDX_SHF_CELL;
+		long const i = (id & msk);
+		long const j = ((id >> shf) & msk);
+		long const k = (((id >> shf) >> shf) & msk);
+		double const i_f64 = i;
+		double const j_f64 = j;
+		double const k_f64 = k;
+		double const x = (((i_f64 * cl) + cc) - hl);
+		double const y = (((j_f64 * cl) + cc) - hl);
+		double const z = (((k_f64 * cl) + cc) - hl);
 		double const radius = 1.0;
 		double const repulsionHS = 1.0;
 		double const r = radius;
@@ -54,7 +63,7 @@ int main (void)
 			util::quit();
 		}
 
-		particles[i] = particle;
+		particles[id] = particle;
 	}
 
 	// main BDX loop

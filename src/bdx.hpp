@@ -1,7 +1,13 @@
 #ifndef BDX_HPP
 #define BDX_HPP
 
-#define BDX_NUM_PARTICLES 512
+#define BDX_SHF_CELL 3
+#define BDX_MSK_CELL ( (1L << BDX_SHF_CELL) - 1L )
+#define BDX_NUM_CELLS_X (1L << BDX_SHF_CELL)
+#define BDX_NUM_CELLS_Y (1L << BDX_SHF_CELL)
+#define BDX_NUM_CELLS_Z (1L << BDX_SHF_CELL)
+#define BDX_NUM_PARTICLES (BDX_NUM_CELLS_X * BDX_NUM_CELLS_Y * BDX_NUM_CELLS_Z)
+#define BDX_VOLUME_FRACTION 0.5
 
 #define BDX_FEAT_HS (1L << 0)
 #define BDX_FEAT_LJ (1L << 1)
