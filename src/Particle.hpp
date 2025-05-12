@@ -41,6 +41,7 @@ struct Particle : BDXObject
 	void *operator new(size_t size);
 	void operator delete(void *p);
 	double radius() const;
+	double sqdist(struct Particle const * const particle) const;
 	virtual void interact_compute(struct Particle const * const Particle) = 0;
 	void BrownianForce(struct Random * const __restrict__ prng);
 	void BrownianShift();

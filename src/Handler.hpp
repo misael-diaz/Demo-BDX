@@ -10,6 +10,7 @@ struct Handler
 	Handler(long const num_particles, struct Particle * const * const particles);
 	void *operator new(size_t size);
 	void operator delete(void *p);
+	double mindist() const;
 	void interact_compute();
 	void BrownianForce(struct Random * const __restrict__ prng);
 	void BrownianShift();

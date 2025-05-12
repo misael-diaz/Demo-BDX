@@ -66,6 +66,16 @@ int main (void)
 		particles[id] = particle;
 	}
 
+	double constexpr contact_distance_particles = 2.0;
+	double const min_distance_particles = handler->mindist();
+	if (min_distance_particles > contact_distance_particles) {
+		fprintf(stderr, "%s\n", "BDX: ParticleOverlapError");
+		fprintf(stderr, "BDX: min particle-distance: %lf\n", handler->mindist());
+		util::clearall();
+		util::quit();
+	}
+	fprintf(stdout, "BDX: min particle-distance: %lf\n", handler->mindist());
+
 	// main BDX loop
 	for (long step = 0; step != num_steps; ++step) {
 		handler->interact_compute();

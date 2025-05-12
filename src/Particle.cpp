@@ -101,6 +101,24 @@ double Particle::radius () const
 	return this->_radius_;
 }
 
+double Particle::sqdist (struct Particle const * const particle) const
+{
+	struct Particle const * const that = particle;
+	double const x1 = this->x;
+	double const y1 = this->y;
+	double const z1 = this->z;
+	double const x2 = that->x;
+	double const y2 = that->y;
+	double const z2 = that->z;
+	double const squared_distance = (
+		((x1 - x2) * (x1 - x2)) +
+		((y1 - y2) * (y1 - y2)) +
+		((z1 - z2) * (z1 - z2))
+	);
+	double const res = squared_distance;
+	return res;
+}
+
 void Particle::update ()
 {
 	if (!this->_TranslateExec_) {

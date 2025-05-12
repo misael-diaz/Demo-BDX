@@ -70,6 +70,22 @@ void Handler::update ()
 	}
 }
 
+double Handler::mindist () const
+{
+	double min = INFINITY;
+	for (long i = 0; i != (this->num_particles - 1L); ++i) {
+		struct Particle const * const particle = particles[i];
+		for (long j = (i + 1L); j != this->num_particles; ++j) {
+			struct Particle const * const other_particle = particles[j];
+			double const sqd = particle->sqdist(other_particle);
+			if (min > sqd) {
+				min = sqd;
+			}
+		}
+	}
+	return sqrt(min);
+}
+
 /*
 
 BDX                                             December 31, 2023
