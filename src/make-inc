@@ -15,17 +15,20 @@
 BDX_H = bdx.hpp
 UTIL_H = util.hpp
 BDX_OBJECT_H = BDXObject.hpp
+HANDLER_H = Handler.hpp
 PARTICLE_H = Particle.hpp
 HARD_SPHERE_H = HardSphere.hpp
 
 UTIL_CXX = util.cpp
 BDX_OBJECT_CXX = BDXObject.cpp
+HANDLER_CXX = Handler.cpp
 PARTICLE_CXX = Particle.cpp
 HARD_SPHERE_CXX = HardSphere.cpp
 MAIN_CXX = main.cpp
 
 UTIL_OBJ = ../obj/util.o
 BDX_OBJECT_OBJ = ../obj/BDXObject.o
+HANDLER_OBJ = ../obj/Handler.o
 PARTICLE_OBJ = ../obj/Particle.o
 HARD_SPHERE_OBJ = ../obj/HardSphere.o
 MAIN_OBJ = ../obj/main.o

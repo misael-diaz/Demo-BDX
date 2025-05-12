@@ -3,6 +3,7 @@
 #include "bdx.hpp"
 #include "util.hpp"
 #include "HardSphere.hpp"
+#include "Handler.hpp"
 
 int main (void)
 {
@@ -15,6 +16,13 @@ int main (void)
 	struct Particle **particles = (struct Particle**) util::malloc(sz);
 	if (!particles) {
 		fprintf(stderr, "%s\n", "BDX: ContainerMallocError");
+		util::quit();
+	}
+
+	struct Handler *handler = new Handler(BDX_NUM_PARTICLES, particles);
+	if (!handler) {
+		fprintf(stderr, "%s\n", "BDX: HandlerMallocError");
+		util::clearall();
 		util::quit();
 	}
 
@@ -51,19 +59,11 @@ int main (void)
 
 	// main BDX loop
 	for (long step = 0; step != num_steps; ++step) {
-		for (long i = 0; i != BDX_NUM_PARTICLES; ++i) {
-			for (long j = 0; j != BDX_NUM_PARTICLES; ++j) {
-				if (i == j) {
-					continue;
-				}
-				particles[i]->interact_compute(particles[j]);
-			}
-			particles[i]->_ForceExec_ = true;
-			particles[i]->BrownianForce(&random);
-			particles[i]->BrownianShift();
-			particles[i]->translate();
-			particles[i]->update();
-		}
+		handler->interact_compute();
+		handler->BrownianForce(&random);
+		handler->BrownianShift();
+		handler->translate();
+		handler->update();
 	}
 
 	util::clearall();

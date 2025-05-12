@@ -37,6 +37,11 @@ $(HARD_SPHERE_OBJ): \
 	$(HARD_SPHERE_H) \
 	$(HARD_SPHERE_CXX)
 	$(CXX) $(CXXOPT) -c $(HARD_SPHERE_CXX) -o $(HARD_SPHERE_OBJ)
+$(HANDLER_OBJ): \
+	$(UTIL_H) \
+	$(PARTICLE_H) \
+	$(HANDLER_CXX)
+	$(CXX) $(CXXOPT) -c $(HANDLER_CXX) -o $(HANDLER_OBJ)
 $(MAIN_OBJ): \
 	$(BDX_H) \
 	$(UTIL_H) \
@@ -47,6 +52,7 @@ $(MAIN_OBJ): \
 	$(BDX_OBJECT_OBJ) \
 	$(PARTICLE_OBJ) \
 	$(HARD_SPHERE_OBJ) \
+	$(HANDLER_OBJ) \
 	$(MAIN_CXX)
 	$(CXX) $(CXXOPT) -c $(MAIN_CXX) -o $(MAIN_OBJ)
 $(BDX): $(MAIN_OBJ)
@@ -55,6 +61,7 @@ $(BDX): $(MAIN_OBJ)
 		$(BDX_OBJECT_OBJ) \
 		$(PARTICLE_OBJ) \
 		$(HARD_SPHERE_OBJ) \
+		$(HANDLER_OBJ) \
 		$(MAIN_OBJ) \
 		-o \
 		$(BDX) \
