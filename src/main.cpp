@@ -102,6 +102,7 @@ int main (void)
 		handler->BrownianForce(&random);
 		handler->BrownianShift();
 		handler->translate();
+		handler->PBC(bl, bw, bh);
 		handler->update();
 	}
 

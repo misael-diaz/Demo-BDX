@@ -51,6 +51,7 @@ struct Particle : BDXObject
 			double const W,
 			double const H) const;
 	virtual void interact_compute(struct Particle const * const Particle) = 0;
+	void PBC(double const L, double const W, double const H);
 	void BrownianForce(struct Random * const __restrict__ prng);
 	void BrownianShift();
 	void translate();

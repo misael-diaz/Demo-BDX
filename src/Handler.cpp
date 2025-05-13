@@ -125,6 +125,14 @@ double Handler::mindistp (double const L, double const W, double const H) const
 	return sqrt(min);
 }
 
+void Handler::PBC (double const L, double const W, double const H)
+{
+	for (long i = 0; i != this->num_particles; ++i) {
+		struct Particle * const particle = particles[i];
+		particle->PBC(L, W, H);
+	}
+}
+
 /*
 
 BDX                                             December 31, 2023

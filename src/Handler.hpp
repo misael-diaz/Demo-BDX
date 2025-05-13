@@ -12,6 +12,7 @@ struct Handler
 	void operator delete(void *p);
 	double mindist() const;
 	double mindistp(double const L, double const W, double const H) const;
+	void PBC(double const L, double const W, double const H);
 	void interact_compute();
 	void BrownianForce(struct Random * const __restrict__ prng);
 	void BrownianShift();

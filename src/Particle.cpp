@@ -177,6 +177,13 @@ double Particle::MinImage (struct Particle const * const particle,
 	return d;
 }
 
+void Particle::PBC (double const L, double const W, double const H)
+{
+	this->x = MinImageBase(this->x, L);
+	this->y = MinImageBase(this->y, W);
+	this->z = MinImageBase(this->z, H);
+}
+
 void Particle::update ()
 {
 	if (!this->_TranslateExec_) {
