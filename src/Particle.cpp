@@ -127,6 +127,12 @@ long Particle::id () const
 	return this->_id_;
 }
 
+double Particle::contact (struct Particle const * const particle) const
+{
+	struct Particle const * const that = particle;
+	return (this->radius() + that->radius());
+}
+
 double Particle::sqdist (struct Particle const * const particle) const
 {
 	struct Particle const * const that = particle;

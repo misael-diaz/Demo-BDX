@@ -51,6 +51,7 @@ struct Particle : BDXObject
 	long feat() const;
 	long id() const;
 	double radius() const;
+	double contact(struct Particle const * const particle) const;
 	double sqdist(struct Particle const * const particle) const;
 	double MinImageBase(double const dx, double const L) const;
 	double MinImageX(struct Particle const * const particle, double const L) const;
