@@ -119,6 +119,64 @@ double Particle::sqdist (struct Particle const * const particle) const
 	return res;
 }
 
+// we could generalize the implementation with bitwise operations
+double Particle::MinImageBase (double const dx, double const L) const
+{
+	double res = 0;
+	if (0 < dx) {
+		if ((+0.5 * L) < dx) {
+			res = (dx - L);
+		} else {
+			res = dx;
+		}
+	} else {
+		if ((-0.5 * L) > dx) {
+			res = (dx + L);
+		} else {
+			res = dx;
+		}
+	}
+	return res;
+}
+
+double Particle::MinImageX (struct Particle const * const particle, double const L) const
+{
+	struct Particle const * const that = particle;
+	double dx = (this->x - that->x);
+	return MinImageBase(dx, L);
+}
+
+double Particle::MinImageY (struct Particle const * const particle, double const W) const
+{
+	struct Particle const * const that = particle;
+	double dy = (this->y - that->y);
+	return MinImageBase(dy, W);
+}
+
+double Particle::MinImageZ (struct Particle const * const particle, double const H) const
+{
+	struct Particle const * const that = particle;
+	double dz = (this->z - that->z);
+	return MinImageBase(dz, H);
+}
+
+// returns the shortest squared distance (of the pair), accounts for the box periodicity
+double Particle::MinImage (struct Particle const * const particle,
+		double const L,
+		double const W,
+		double const H) const
+{
+	double const dx = MinImageX(particle, L);
+	double const dy = MinImageY(particle, W);
+	double const dz = MinImageZ(particle, H);
+	double const d = (
+		(dx * dx) +
+		(dy * dy) +
+		(dz * dz)
+	);
+	return d;
+}
+
 void Particle::update ()
 {
 	if (!this->_TranslateExec_) {

@@ -86,6 +86,22 @@ double Handler::mindist () const
 	return sqrt(min);
 }
 
+double Handler::mindistp (double const L, double const W, double const H) const
+{
+	double min = INFINITY;
+	for (long i = 0; i != (this->num_particles - 1L); ++i) {
+		struct Particle const * const particle = particles[i];
+		for (long j = (i + 1L); j != this->num_particles; ++j) {
+			struct Particle const * const other_particle = particles[j];
+			double const sqd = particle->MinImage(other_particle, L, W, H);
+			if (min > sqd) {
+				min = sqd;
+			}
+		}
+	}
+	return sqrt(min);
+}
+
 /*
 
 BDX                                             December 31, 2023

@@ -28,6 +28,8 @@ constexpr double cell_center = (0.5 * cell_length);
 constexpr double cc = cell_center;
 constexpr double cl = cell_length;
 constexpr double bl = box_length;
+constexpr double bw = box_width;
+constexpr double bh = box_height;
 constexpr double hl = (0.5 * box_length);
 
 #endif
