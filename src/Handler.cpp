@@ -176,6 +176,7 @@ void Handler::check_overlap () const
 			}
 		}
 	}
+	fprintf(stdout, "%s\n", "Handler::check_overlap: DONE");
 }
 
 void Handler::PBC ()
