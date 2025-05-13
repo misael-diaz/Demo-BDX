@@ -20,12 +20,12 @@ struct Handler
 	void operator delete(void *p);
 	double mindist() const;
 	double mindistp () const;
-	void PBC();
 	void interact_compute();
 	void BrownianForce();
 	void BrownianShift();
 	void translate();
 	void update();
+	void PBC();
 };
 
 #endif
