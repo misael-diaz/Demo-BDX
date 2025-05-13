@@ -98,6 +98,8 @@ int main (void)
 		util::quit();
 	}
 
+	handler->check_overlap();
+
 	double mindist = 0;
 	if (min_distance_particles > min_image_distance_particles) {
 		mindist = min_image_distance_particles;

@@ -19,7 +19,8 @@ struct Handler
 	void *operator new(size_t size);
 	void operator delete(void *p);
 	double mindist() const;
-	double mindistp () const;
+	double mindistp() const;
+	void check_overlap() const;
 	void interact_compute();
 	void BrownianForce();
 	void BrownianShift();

@@ -132,6 +132,52 @@ double Handler::mindistp () const
 	return sqrt(min);
 }
 
+void Handler::check_overlap () const
+{
+	double const L = this->box->length();
+	double const W = this->box->width();
+	double const H = this->box->height();
+	double const HL = (0.5 * L);
+	double const HW = (0.5 * W);
+	double const HH = (0.5 * H);
+	double const HL2 = (HL * HL);
+	double const HW2 = (HW * HW);
+	double const HH2 = (HH * HH);
+	for (long i = 0; i != (this->num_particles - 1L); ++i) {
+		struct Particle const * const particle = this->particles[i];
+		for (long j = (i + 1L); j != this->num_particles; ++j) {
+			struct Particle const * const other_particle = this->particles[j];
+			double const dx = particle->MinImageX(other_particle, L);
+			double const dy = particle->MinImageY(other_particle, W);
+			double const dz = particle->MinImageZ(other_particle, H);
+			double const dx2 = (dx * dx);
+			double const dy2 = (dy * dy);
+			double const dz2 = (dz * dz);
+			if (
+				(HL2 < dx2) ||
+				(HW2 < dy2) ||
+				(HH2 < dz2)
+			   ) {
+				fprintf(stderr,
+					"Handler::mindistp: %s\n",
+					"ImplMinImageError");
+				util::clearall();
+				util::quit();
+			}
+			double const sqd = particle->MinImage(other_particle, L, W, H);
+			double const contact = particle->contact(other_particle);
+			double const contact2 = (contact * contact);
+			if (contact2 > sqd) {
+				fprintf(stderr,
+					"Handler::check_overlap: %s\n",
+					"ParticleOverlapError");
+				util::clearall();
+				util::quit();
+			}
+		}
+	}
+}
+
 void Handler::PBC ()
 {
 	double const L = this->box->length();
