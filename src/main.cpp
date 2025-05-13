@@ -101,8 +101,6 @@ int main (void)
 	}
 
 	fprintf(stdout, "BDX: min particle-distance: %lf\n", mindist);
-	util::clearall();
-	util::quit();
 
 	// main BDX loop
 	for (long step = 0; step != num_steps; ++step) {
