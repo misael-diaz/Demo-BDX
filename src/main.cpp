@@ -9,6 +9,7 @@
 int main (void)
 {
 	struct Random random = {};
+	struct Random *prng = &random;
 	double constexpr time_begin = 0.0;
 	double constexpr time_end = 1.0;
 	double constexpr time_step = 1.52587890625e-05;
@@ -20,7 +21,7 @@ int main (void)
 		util::quit();
 	}
 
-	struct Handler *handler = new Handler(BDX_NUM_PARTICLES, particles);
+	struct Handler *handler = new Handler(BDX_NUM_PARTICLES, particles, prng);
 	if (!handler) {
 		fprintf(stderr, "%s\n", "BDX: HandlerMallocError");
 		util::clearall();
@@ -99,7 +100,7 @@ int main (void)
 	// main BDX loop
 	for (long step = 0; step != num_steps; ++step) {
 		handler->interact_compute();
-		handler->BrownianForce(&random);
+		handler->BrownianForce();
 		handler->BrownianShift();
 		handler->translate();
 		handler->PBC(bl, bw, bh);

@@ -7,14 +7,15 @@ struct Handler
 {
 	long num_particles;
 	struct Particle * const * particles;
-	Handler(long const num_particles, struct Particle * const * const particles);
+	struct Random * random;
+	Handler(long const num_particles, struct Particle * const * const particles, struct Random * const random);
 	void *operator new(size_t size);
 	void operator delete(void *p);
 	double mindist() const;
 	double mindistp(double const L, double const W, double const H) const;
 	void PBC(double const L, double const W, double const H);
 	void interact_compute();
-	void BrownianForce(struct Random * const __restrict__ prng);
+	void BrownianForce();
 	void BrownianShift();
 	void translate();
 	void update();

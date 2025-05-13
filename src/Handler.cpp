@@ -6,11 +6,13 @@
 
 Handler::Handler (
 			long const num_particles,
-			struct Particle * const * const particles
+			struct Particle * const * const particles,
+			struct Random * const random
 		)
 {
 	this->num_particles = num_particles;
 	this->particles = particles;
+	this->random = random;
 }
 
 void *Handler::operator new (size_t size)
@@ -46,11 +48,11 @@ void Handler::translate ()
 	}
 }
 
-void Handler::BrownianForce (struct Random * const __restrict__ prng)
+void Handler::BrownianForce ()
 {
 	for (long i = 0; i != this->num_particles; ++i) {
 		struct Particle * const particle = particles[i];
-		particle->BrownianForce(prng);
+		particle->BrownianForce(random);
 	}
 }
 
