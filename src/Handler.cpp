@@ -89,10 +89,33 @@ double Handler::mindist () const
 double Handler::mindistp (double const L, double const W, double const H) const
 {
 	double min = INFINITY;
+	double const HL = (0.5 * L);
+	double const HW = (0.5 * W);
+	double const HH = (0.5 * H);
+	double const HL2 = (HL * HL);
+	double const HW2 = (HW * HW);
+	double const HH2 = (HH * HH);
 	for (long i = 0; i != (this->num_particles - 1L); ++i) {
 		struct Particle const * const particle = particles[i];
 		for (long j = (i + 1L); j != this->num_particles; ++j) {
 			struct Particle const * const other_particle = particles[j];
+			double const dx = particle->MinImageX(other_particle, L);
+			double const dy = particle->MinImageY(other_particle, W);
+			double const dz = particle->MinImageZ(other_particle, H);
+			double const dx2 = (dx * dx);
+			double const dy2 = (dy * dy);
+			double const dz2 = (dz * dz);
+			if (
+				(HL2 < dx2) ||
+				(HW2 < dy2) ||
+				(HH2 < dz2)
+			   ) {
+				fprintf(stderr,
+					"Handler::mindistp: %s\n",
+					"ImplMinImageError");
+				util::clearall();
+				util::quit();
+			}
 			double const sqd = particle->MinImage(other_particle, L, W, H);
 			if (min > sqd) {
 				min = sqd;
