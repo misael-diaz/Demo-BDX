@@ -10,7 +10,12 @@ struct Handler
 	struct Particle * const * particles;
 	struct Random * random;
 	struct Box * box;
-	Handler(long const num_particles, struct Particle * const * const particles, struct Random * const random, struct Box * const box);
+	Handler(
+			long const num_particles,
+			struct Particle * const * const particles,
+			struct Random * const random,
+			struct Box * const box
+	       );
 	void *operator new(size_t size);
 	void operator delete(void *p);
 	double mindist() const;
