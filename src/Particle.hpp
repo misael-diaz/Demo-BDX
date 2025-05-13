@@ -6,7 +6,10 @@
 
 struct Particle : BDXObject
 {
+	long _kind_;
+	long _group_;
 	long _feat_;
+	long _id_;
 	/* displacement vector */
 	double dx;
 	double dy;
@@ -31,7 +34,10 @@ struct Particle : BDXObject
 	bool _BrownianShiftExec_;
 	bool _TranslateExec_;
 	Particle(
+			long const kind,
+			long const group,
 			long const feat,
+			long const id,
 			double const x,
 			double const y,
 			double const z,
@@ -40,6 +46,10 @@ struct Particle : BDXObject
 		);
 	void *operator new(size_t size);
 	void operator delete(void *p);
+	long kind() const;
+	long group() const;
+	long feat() const;
+	long id() const;
 	double radius() const;
 	double sqdist(struct Particle const * const particle) const;
 	double MinImageBase(double const dx, double const L) const;

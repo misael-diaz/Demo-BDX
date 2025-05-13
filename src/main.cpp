@@ -38,6 +38,8 @@ int main (void)
 	// initialization
 	memset(particles, 0, sz);
 	for (long id = 0; id != BDX_NUM_PARTICLES; ++id) {
+		constexpr long kind = BDX_KIND_HS;
+		constexpr long group = 1L;
 		constexpr long feat = BDX_FEAT_HS;
 		constexpr long msk = BDX_MSK_CELL;
 		constexpr long shf = BDX_SHF_CELL;
@@ -56,7 +58,10 @@ int main (void)
 		double const dt = time_step;
 
 		struct Particle *particle = new HardSphere(
+			kind,
+			group,
 			feat,
+			id,
 			x,
 			y,
 			z,

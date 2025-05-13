@@ -5,7 +5,10 @@
 #include "Particle.hpp"
 
 Particle::Particle (
+			long const kind,
+			long const group,
 			long const feat,
+			long const id,
 			double const x,
 			double const y,
 			double const z,
@@ -18,7 +21,10 @@ Particle::Particle (
 			z
 		 )
 {
+	this->_kind_ = kind;
+	this->_group_ = group;
 	this->_feat_ = feat;
+	this->_id_ = id;
 	this->dx = 0.0;
 	this->dy = 0.0;
 	this->dz = 0.0;
@@ -99,6 +105,26 @@ void Particle::BrownianShift ()
 double Particle::radius () const
 {
 	return this->_radius_;
+}
+
+long Particle::kind () const
+{
+	return this->_kind_;
+}
+
+long Particle::group () const
+{
+	return this->_group_;
+}
+
+long Particle::feat () const
+{
+	return this->_feat_;
+}
+
+long Particle::id () const
+{
+	return this->_id_;
 }
 
 double Particle::sqdist (struct Particle const * const particle) const

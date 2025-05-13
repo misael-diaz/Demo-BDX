@@ -8,7 +8,10 @@ struct HardSphere : Particle
 {
 	double _repulsionHS_;
 	HardSphere(
+			long const kind,
+			long const group,
 			long const feat,
+			long const id,
 			double const x,
 			double const y,
 			double const z,

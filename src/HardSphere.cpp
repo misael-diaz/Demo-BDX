@@ -5,7 +5,10 @@
 #include "HardSphere.hpp"
 
 HardSphere::HardSphere (
+			long const kind,
+			long const group,
 			long const feat,
+			long const id,
 			double const x,
 			double const y,
 			double const z,
@@ -14,7 +17,10 @@ HardSphere::HardSphere (
 			double const repulsionHS
 		) :
 	Particle(
+			kind,
+			group,
 			feat,
+			id,
 			x,
 			y,
 			z,
