@@ -1,26 +1,23 @@
-#ifndef GUARD_HANDLER_HPP
-#define GUARD_HANDLER_HPP
+#ifndef GUARD_BDX_BOX_HPP
+#define GUARD_BDX_BOX_HPP
 
-#include "Particle.hpp"
-#include "Box.hpp"
+#include "BDXObject.hpp"
 
-struct Handler
+struct Box : BDXObject
 {
-	long num_particles;
-	struct Particle * const * particles;
-	struct Random * random;
-	struct Box * box;
-	Handler(long const num_particles, struct Particle * const * const particles, struct Random * const random, struct Box * const box);
+	double L;
+	double W;
+	double H;
+	Box(
+		double const length,
+		double const width,
+		double const height
+	   );
+	double length() const;
+	double width() const;
+	double height() const;
 	void *operator new(size_t size);
 	void operator delete(void *p);
-	double mindist() const;
-	double mindistp () const;
-	void PBC();
-	void interact_compute();
-	void BrownianForce();
-	void BrownianShift();
-	void translate();
-	void update();
 };
 
 #endif
@@ -44,7 +41,7 @@ You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 author: @misael-diaz
-source: Handler.hpp
+source: Box.hpp
 
 References:
 [0] A Koenig and B Moo, Accelerated C++ Practical Programming by Example.

@@ -21,7 +21,14 @@ int main (void)
 		util::quit();
 	}
 
-	struct Handler *handler = new Handler(BDX_NUM_PARTICLES, particles, prng);
+	struct Box *box = new Box(box_length, box_width, box_height);
+	if (!box) {
+		fprintf(stderr, "%s\n", "BDX: BoxMallocError");
+		util::clearall();
+		util::quit();
+	}
+
+	struct Handler *handler = new Handler(BDX_NUM_PARTICLES, particles, prng, box);
 	if (!handler) {
 		fprintf(stderr, "%s\n", "BDX: HandlerMallocError");
 		util::clearall();
@@ -76,7 +83,7 @@ int main (void)
 		util::quit();
 	}
 
-	double const min_image_distance_particles = handler->mindistp(bl, bw, bh);
+	double const min_image_distance_particles = handler->mindistp();
 	if (min_image_distance_particles < contact_distance_particles) {
 		fprintf(stderr, "%s\n", "BDX: ParticleOverlapError");
 		fprintf(stderr,
@@ -103,7 +110,7 @@ int main (void)
 		handler->BrownianForce();
 		handler->BrownianShift();
 		handler->translate();
-		handler->PBC(bl, bw, bh);
+		handler->PBC();
 		handler->update();
 	}
 

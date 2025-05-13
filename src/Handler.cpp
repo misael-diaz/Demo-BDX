@@ -7,12 +7,14 @@
 Handler::Handler (
 			long const num_particles,
 			struct Particle * const * const particles,
-			struct Random * const random
+			struct Random * const random,
+			struct Box * const box
 		)
 {
 	this->num_particles = num_particles;
 	this->particles = particles;
 	this->random = random;
+	this->box = box;
 }
 
 void *Handler::operator new (size_t size)
@@ -88,9 +90,12 @@ double Handler::mindist () const
 	return sqrt(min);
 }
 
-double Handler::mindistp (double const L, double const W, double const H) const
+double Handler::mindistp () const
 {
 	double min = INFINITY;
+	double const L = this->box->length();
+	double const W = this->box->width();
+	double const H = this->box->height();
 	double const HL = (0.5 * L);
 	double const HW = (0.5 * W);
 	double const HH = (0.5 * H);
@@ -127,8 +132,11 @@ double Handler::mindistp (double const L, double const W, double const H) const
 	return sqrt(min);
 }
 
-void Handler::PBC (double const L, double const W, double const H)
+void Handler::PBC ()
 {
+	double const L = this->box->length();
+	double const W = this->box->width();
+	double const H = this->box->height();
 	for (long i = 0; i != this->num_particles; ++i) {
 		struct Particle * const particle = particles[i];
 		particle->PBC(L, W, H);
