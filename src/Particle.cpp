@@ -55,9 +55,9 @@ void Particle::translate ()
 		util::quit();
 	}
 
-	this->dx = (_mobilityLinear_ * (this->F_x));
-	this->dy = (_mobilityLinear_ * (this->F_y));
-	this->dz = (_mobilityLinear_ * (this->F_z));
+	this->dx = ((this->_mobilityLinear_) * (this->F_x));
+	this->dy = ((this->_mobilityLinear_) * (this->F_y));
+	this->dz = ((this->_mobilityLinear_) * (this->F_z));
 
 	this->x += ((this->dx) + (this->dB_x));
 	this->y += ((this->dy) + (this->dB_y));
