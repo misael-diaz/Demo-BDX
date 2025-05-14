@@ -12,10 +12,17 @@ application.
 We know how many entities we will simulate beforehand and that number will not change
 throughout the simulation. We are also able to optimize the application (via domain
 partitioning) with a simple user-defined data structure backed by C-style arrays
-that we don't see the need to introduce the `std::vector`. If we ever need more complex
+so that we don't see the need to introduce the `std::vector`. If we ever need more complex
 data structures we shall seriously consider leveraging the STL to develop this
 application. And last but not least, this is a demo meant to showcase my ability
-to solve problems with core language features.
+to solve problems with just core language features. Just going to add that the creator
+of C++ Bjarne Stroupstrup knows that developers are free to use his programming language
+as they see fit, he has also said that mastering C++ is not about using the latest
+features but known when and how to use all of them. He also admits it is not possible to
+implement the most performant features of the STL without (carefully) using all the core
+features of C++ (
+source: Lex Friedman's [podcast](https://www.youtube.com/watch?v=uTxRF5ag27A)
+).
 
 We have borrowed from GPL'd id Software code.
 
