@@ -17,6 +17,7 @@ int main (void)
 	struct Particle **particles = (struct Particle**) util::malloc(sz);
 	if (!particles) {
 		fprintf(stderr, "%s\n", "BDX: ContainerMallocError");
+		util::clearall();
 		util::quit();
 	}
 
