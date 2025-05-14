@@ -2,6 +2,7 @@
 #include <cstdlib>
 #include <cmath>
 #include "util.hpp"
+#include "Random.hpp"
 #include "Particle.hpp"
 
 Particle::Particle (
@@ -72,7 +73,7 @@ void Particle::translate ()
 	this->_TranslateExec_ = true;
 }
 
-void Particle::BrownianForce (struct Random * const __restrict__ prng)
+void Particle::BrownianForce (struct Random * const __restrict__ random)
 {
 	if (this->_BrownianForceExec_ || !this->_ForceExec_) {
 		fprintf(stderr, "%s\n", "Particle::BrownianForce: ImplementationError");
@@ -80,9 +81,9 @@ void Particle::BrownianForce (struct Random * const __restrict__ prng)
 		util::quit();
 	}
 
-	this->FB_x = util::random(prng);
-	this->FB_y = util::random(prng);
-	this->FB_z = util::random(prng);
+	this->FB_x = random->rand();
+	this->FB_y = random->rand();
+	this->FB_z = random->rand();
 
 	this->_BrownianForceExec_ = true;
 }

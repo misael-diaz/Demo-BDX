@@ -54,7 +54,7 @@ void Handler::BrownianForce ()
 {
 	for (long i = 0; i != this->num_particles; ++i) {
 		struct Particle * const particle = this->particles[i];
-		particle->BrownianForce(random);
+		particle->BrownianForce(this->random);
 	}
 }
 

@@ -20,6 +20,11 @@ all: $(BDX)
 
 $(UTIL_OBJ): $(UTIL_CXX)
 	$(CXX) $(CXXOPT) -c $(UTIL_CXX) -o $(UTIL_OBJ)
+$(RANDOM_OBJ): \
+	$(UTIL_H) \
+	$(RANDOM_H) \
+	$(RANDOM_CXX)
+	$(CXX) $(CXXOPT) -c $(RANDOM_CXX) -o $(RANDOM_OBJ)
 $(BDX_OBJECT_OBJ): \
 	$(UTIL_H) \
 	$(BDX_OBJECT_H) \
@@ -33,6 +38,7 @@ $(BOX_OBJ): \
 	$(CXX) $(CXXOPT) -c $(BOX_CXX) -o $(BOX_OBJ)
 $(PARTICLE_OBJ): \
 	$(UTIL_H) \
+	$(RANDOM_H) \
 	$(BDX_OBJECT_H) \
 	$(PARTICLE_H) \
 	$(PARTICLE_CXX)
@@ -47,6 +53,7 @@ $(HARD_SPHERE_OBJ): \
 $(HANDLER_OBJ): \
 	$(UTIL_H) \
 	$(BOX_H) \
+	$(RANDOM_H) \
 	$(PARTICLE_H) \
 	$(HANDLER_CXX)
 	$(CXX) $(CXXOPT) -c $(HANDLER_CXX) -o $(HANDLER_OBJ)
@@ -55,10 +62,12 @@ $(MAIN_OBJ): \
 	$(SYS_H) \
 	$(BOX_H) \
 	$(UTIL_H) \
+	$(RANDOM_H) \
 	$(BDX_OBJECT_H) \
 	$(PARTICLE_H) \
 	$(HARD_SPHERE_H) \
 	$(UTIL_OBJ) \
+	$(RANDOM_OBJ) \
 	$(BOX_OBJ) \
 	$(BDX_OBJECT_OBJ) \
 	$(PARTICLE_OBJ) \
@@ -69,6 +78,7 @@ $(MAIN_OBJ): \
 $(BDX): $(MAIN_OBJ)
 	$(CXX) $(CXXOPT) \
 		$(UTIL_OBJ) \
+		$(RANDOM_OBJ) \
 		$(BOX_OBJ) \
 		$(BDX_OBJECT_OBJ) \
 		$(PARTICLE_OBJ) \

@@ -2,14 +2,12 @@
 #define GUARD_BDX_UTIL_HPP
 
 #include <cstddef>
-#include "PRNG.hpp"
 
 namespace util {
 	void  quit(void);
 	void  clearall(void);
 	void *free(void *p);
 	void *malloc(size_t const sz);
-	double random(struct Random * const __restrict__ prng);
 };
 
 #endif

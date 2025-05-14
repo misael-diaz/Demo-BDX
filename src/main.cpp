@@ -3,22 +3,12 @@
 #include "bdx.hpp"
 #include "sys.hpp"
 #include "util.hpp"
+#include "Random.hpp"
 #include "HardSphere.hpp"
 #include "Handler.hpp"
 
 int main (void)
 {
-	struct Random random = {
-		.id = BDX_ID_PRNG,
-		.state = 0L,
-		.seeded = 0L,
-		.cycles = 0L,
-		.period = BDX_RAND_PERIOD,
-		.draws = 0LU,
-		.cached = 0L,
-		.next = 0L,
-	};
-	struct Random *prng = &random;
 	double constexpr time_begin = 0.0;
 	double constexpr time_end = 1.0;
 	double constexpr time_step = 1.52587890625e-05;
@@ -30,6 +20,13 @@ int main (void)
 		util::quit();
 	}
 
+	struct Random *random = new Random();
+	if (!random) {
+		fprintf(stderr, "%s\n", "BDX: RandomGeneratorMallocError");
+		util::clearall();
+		util::quit();
+	}
+
 	struct Box *box = new Box(box_length, box_width, box_height);
 	if (!box) {
 		fprintf(stderr, "%s\n", "BDX: BoxMallocError");
@@ -37,7 +34,7 @@ int main (void)
 		util::quit();
 	}
 
-	struct Handler *handler = new Handler(BDX_NUM_PARTICLES, particles, prng, box);
+	struct Handler *handler = new Handler(BDX_NUM_PARTICLES, particles, random, box);
 	if (!handler) {
 		fprintf(stderr, "%s\n", "BDX: HandlerMallocError");
 		util::clearall();
