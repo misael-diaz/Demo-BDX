@@ -22,7 +22,8 @@ features but to know when and how to use them. He also admits it is not possible
 implement the most performant features of the STL without (carefully) using all the core
 features of C++ (
 source: Lex Friedman's [podcast](https://www.youtube.com/watch?v=uTxRF5ag27A)
-).
+). This is enough reason for me to be on the path of mastering the use of C-style
+pointers; only then I shall be able to appreciate the facilities of smart pointers.
 
 We have borrowed from GPL'd id Software code.
 
