@@ -39,9 +39,60 @@ void Handler::operator delete (void *p)
 	p = util::free(p);
 }
 
-void Handler::interact_compute ()
+
+void Handler::__kernel_interact_compute__ (
+		struct Particle * const particle,
+		struct Bin const * const bin)
+{
+	for (long idx = 0; idx != bin->size(); ++idx) {
+		long const neigh_id = bin->_store_[idx];
+		struct Particle const * const neighbor = (
+			this->particles[neigh_id]
+		);
+		particle->interact_compute(
+			neighbor,
+			this->box->length(),
+			this->box->width(),
+			this->box->height()
+		);
+	}
+}
+
+void Handler::__partition_interact_compute__ (
+		struct Particle * const particle,
+		long const i,
+		long const j,
+		long const k)
 {
 	long const msk = (num_cell_x - 1L);
+	for (long du = -1; du != 2; ++du) {
+		long const u = ((i + du) & msk);
+		for (long dv = -1; dv != 2; ++dv) {
+			long const v = ((j + dv) & msk);
+			for (long dw = -1; dw != 2; ++dw) {
+				long const w = ((k + dw) & msk);
+				long const id_bin = (
+						(num_bins_x * num_bins_y) * w +
+						(num_bins_x) * v +
+						u
+				);
+				if ((0L > id_bin) || (num_bins < id_bin)) {
+					fprintf(stderr,
+						"%s\n",
+						"Handler::__interact_compute_kernel__: "
+						"ImplError");
+					util::clearall();
+					util::quit();
+				}
+				struct Bin const * const bin = this->bins[id_bin];
+				this->__kernel_interact_compute__(particle, bin);
+			}
+		}
+	}
+}
+
+void Handler::interact_compute ()
+{
 	for (long id_particle = 0; id_particle != this->num_particles; ++id_particle) {
 		struct Particle * const particle = this->particles[id_particle];
 		double const x = particle->x;
@@ -50,40 +101,12 @@ void Handler::interact_compute ()
 		long const i = (x + hl) * cl_inv;
 		long const j = (y + hl) * cl_inv;
 		long const k = (z + hl) * cl_inv;
-		for (long du = -1; du != 2; ++du) {
-			long const u = ((i + du) & msk);
-			for (long dv = -1; dv != 2; ++dv) {
-				long const v = ((j + dv) & msk);
-				for (long dw = -1; dw != 2; ++dw) {
-					long const w = ((k + dw) & msk);
-					long const id_bin = (
-							(num_bins_x * num_bins_y) * w +
-							(num_bins_x) * v +
-							u
-					);
-					if ((0L > id_bin) || (num_bins < id_bin)) {
-						fprintf(stderr,
-							"%s\n",
-							"Handler::partition: ImplError");
-						util::clearall();
-						util::quit();
-					}
-					struct Bin const * const bin = this->bins[id_bin];
-					for (long idx = 0; idx != bin->size(); ++idx) {
-						long const neigh_id = bin->_store_[idx];
-						struct Particle * const neighbor = (
-							this->particles[neigh_id]
-						);
-						particle->interact_compute(
-							neighbor,
-							this->box->length(),
-							this->box->width(),
-							this->box->height()
-						);
-					}
-				}
-			}
-		}
+		this->__partition_interact_compute__(
+			particle,
+			i,
+			j,
+			k
+		);
 		particle->_ForceExec_ = true;
 	}
 }

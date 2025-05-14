@@ -33,6 +33,16 @@ struct Handler
 	double mindist() const;
 	double mindistp() const;
 	void check_overlap() const;
+	void __kernel_interact_compute__(
+		struct Particle * const particle,
+		struct Bin const * const bin
+	);
+	void __partition_interact_compute__(
+		struct Particle * const particle,
+		long const i,
+		long const j,
+		long const k
+	);
 	void interact_compute();
 	void BrownianForce();
 	void BrownianShift();
