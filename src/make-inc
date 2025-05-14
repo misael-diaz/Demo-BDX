@@ -15,6 +15,7 @@
 BDX_H = bdx.hpp
 SYS_H = sys.hpp
 BOX_H = Box.hpp
+BIN_H = Bin.hpp
 UTIL_H = util.hpp
 RANDOM_H = Random.hpp
 BDX_OBJECT_H = BDXObject.hpp
@@ -25,6 +26,7 @@ HARD_SPHERE_H = HardSphere.hpp
 UTIL_CXX = util.cpp
 RANDOM_CXX = Random.cpp
 BOX_CXX = Box.cpp
+BIN_CXX = Bin.cpp
 BDX_OBJECT_CXX = BDXObject.cpp
 HANDLER_CXX = Handler.cpp
 PARTICLE_CXX = Particle.cpp
@@ -33,6 +35,7 @@ MAIN_CXX = main.cpp
 
 UTIL_OBJ = ../obj/util.o
 BOX_OBJ = ../obj/Box.o
+BIN_OBJ = ../obj/Bin.o
 BDX_OBJECT_OBJ = ../obj/BDXObject.o
 RANDOM_OBJ = ../obj/Random.o
 HANDLER_OBJ = ../obj/Handler.o
