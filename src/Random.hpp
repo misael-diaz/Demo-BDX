@@ -31,10 +31,7 @@ struct Random {
 BDX                                             December 31, 2023
 
 Synopsis:
-Pseudo-Random Number Generator RANDOM header.
-Notes:
-We use Marsaglia's xorshift64 RANDOM for debugging, otherwise we use GLIBC's RANDOM for
-production runs depending on the value of the global MACRO CFG_XORSHIFT64.
+Pseudo-Random Number Generator PRNG header.
 
 Copyright (C) 2023 Misael Diaz-Maldonado
 
