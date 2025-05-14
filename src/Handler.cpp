@@ -74,7 +74,12 @@ void Handler::interact_compute ()
 						struct Particle * const neighbor = (
 							this->particles[neigh_id]
 						);
-						particle->interact_compute(neighbor);
+						particle->interact_compute(
+							neighbor,
+							this->box->length(),
+							this->box->width(),
+							this->box->height()
+						);
 					}
 				}
 			}

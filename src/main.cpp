@@ -78,7 +78,7 @@ int main (void)
 		double const y = (((j_f64 * cl) + cc) - hl);
 		double const z = (((k_f64 * cl) + cc) - hl);
 		double const radius = 1.0;
-		double const repulsionHS = 1.0;
+		double const repulsionHS = 1024.0;
 		double const r = radius;
 		double const dt = time_step;
 

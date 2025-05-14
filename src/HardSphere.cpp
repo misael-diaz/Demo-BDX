@@ -42,15 +42,42 @@ void HardSphere::operator delete (void *p)
 }
 
 // TODO: we only have the code that resets the force, implement steric repulsion
-void HardSphere::interact_compute (struct Particle const * const particle)
+void HardSphere::interact_compute (
+		struct Particle const * const particle,
+		double const L,
+		double const W,
+		double const H)
 {
 	struct Particle const * const that = particle;
 	if (that == this) {
 		return;
 	}
-	this->F_x = 0;
-	this->F_y = 0;
-	this->F_z = 0;
+	double const rep = this->_repulsionHS_;
+	double const contact = this->contact(that);
+	double const contact2 = (contact * contact);
+	double const dx = this->MinImageX(that, L);
+	double const dy = this->MinImageY(that, W);
+	double const dz = this->MinImageZ(that, H);
+	double const r2 = (
+			(dx * dx) +
+			(dy * dy) +
+			(dz * dz)
+	);
+	if (contact2 > r2) {
+		double const r = sqrt(r2);
+		double const r_inv = (1.0 / r);
+		double const F = rep * r_inv;
+		this->F_x = F;
+		this->F_y = F;
+		this->F_z = F;
+		this->F_x *= dx;
+		this->F_y *= dy;
+		this->F_z *= dz;
+	} else {
+		this->F_x = 0;
+		this->F_y = 0;
+		this->F_z = 0;
+	}
 }
 
 /*
