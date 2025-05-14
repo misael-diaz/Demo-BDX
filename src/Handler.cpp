@@ -111,6 +111,11 @@ void Handler::partition ()
 		util::quit();
 	}
 
+	for (long id_bin = 0; id_bin != this->num_bins; ++id_bin) {
+		struct Bin * const bin = this->bins[id_bin];
+		bin->clear();
+	}
+
 	for (long id_particle = 0; id_particle != this->num_particles; ++id_particle) {
 		struct Particle const * const particle = this->particles[id_particle];
 		double const x = particle->x;
