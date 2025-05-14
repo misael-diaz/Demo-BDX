@@ -22,7 +22,7 @@ void Bin::operator delete(void *p)
 
 long Bin::size () const
 {
-	return ((this->_avail_ - this->_begin_) / sizeof(*this->_begin_));
+	return (this->_avail_ - this->_begin_);
 }
 
 void Bin::clear ()

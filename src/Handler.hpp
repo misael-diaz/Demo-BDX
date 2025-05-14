@@ -36,6 +36,7 @@ struct Handler
 	void BrownianForce();
 	void BrownianShift();
 	void translate();
+	void partition();
 	void update();
 	void PBC();
 };

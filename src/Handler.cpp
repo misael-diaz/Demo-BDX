@@ -1,6 +1,7 @@
 #include <cstdio>
 #include <cstdlib>
 #include <cmath>
+#include "sys.hpp"
 #include "util.hpp"
 #include "Handler.hpp"
 
@@ -57,6 +58,36 @@ void Handler::translate ()
 	for (long i = 0; i != this->num_particles; ++i) {
 		struct Particle * const particle = this->particles[i];
 		particle->translate();
+	}
+}
+
+void Handler::partition ()
+{
+	// TODO: assert that num_bin_x, num_bin_y, and num_bin_z are exact powers of two
+	if (
+		(num_particles != num_bins) ||
+		((num_bins_x != num_bins_y) || (num_bins_x != num_bins_z))
+	) {
+		fprintf(stderr, "%s\n", "Handler::partition: UXConfigError");
+		util::clearall();
+		util::quit();
+	}
+
+	for (long id_particle = 0; id_particle != this->num_particles; ++id_particle) {
+		struct Particle const * const particle = this->particles[id_particle];
+		double const x = particle->x;
+		double const y = particle->y;
+		double const z = particle->z;
+		long const i = (x + hl) * cl_inv;
+		long const j = (y + hl) * cl_inv;
+		long const k = (z + hl) * cl_inv;
+		long const id_bin = (
+			(num_bins_x * num_bins_y) * k +
+			(num_bins_x) * j +
+			i
+		);
+		struct Bin * const bin = this->bins[id_bin];
+		bin->push_back(id_particle);
 	}
 }
 

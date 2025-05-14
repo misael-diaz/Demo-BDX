@@ -114,9 +114,16 @@ int main (void)
 		bins[id] = bin;
 	}
 
-	// disables main loop execution for now
-	util::clearall();
-	util::quit();
+	handler->partition();
+	for (long id = 0; id != BDX_NUM_BINS; ++id) {
+		struct Bin const * const bin = bins[id];
+		if (1L != bin->size()) {
+			fprintf(stderr, "%s\n", "BDX: BinPartitionImplError");
+			util::clearall();
+			util::quit();
+		}
+	}
+	fprintf(stdout, "%s\n", "BDX: partitioning: DONE");
 
 	double constexpr contact_distance_particles = 2.0;
 	double const min_distance_particles = handler->mindist();
