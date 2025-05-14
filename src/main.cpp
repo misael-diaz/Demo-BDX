@@ -8,7 +8,16 @@
 
 int main (void)
 {
-	struct Random random = {};
+	struct Random random = {
+		.id = BDX_ID_PRNG,
+		.state = 0L,
+		.seeded = 0L,
+		.cycles = 0L,
+		.period = BDX_RAND_PERIOD,
+		.draws = 0LU,
+		.cached = 0L,
+		.next = 0L,
+	};
 	struct Random *prng = &random;
 	double constexpr time_begin = 0.0;
 	double constexpr time_end = 1.0;
