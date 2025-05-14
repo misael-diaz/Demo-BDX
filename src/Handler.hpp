@@ -16,6 +16,7 @@ struct Handler
 	struct Particle * const * particles;
 	struct Random * random;
 	struct Box * box;
+	bool __partitioned__;
 	Handler(
 			long num_bins,
 			long const num_bins_x,

@@ -157,6 +157,7 @@ int main (void)
 
 	// main BDX loop
 	for (long step = 0; step != num_steps; ++step) {
+		handler->partition();
 		handler->interact_compute();
 		handler->BrownianForce();
 		handler->BrownianShift();
