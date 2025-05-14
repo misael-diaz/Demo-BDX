@@ -13,10 +13,17 @@ int main (void)
 	double constexpr time_end = 1.0;
 	double constexpr time_step = 1.52587890625e-05;
 	double constexpr num_steps = ((time_end - time_begin) / time_step);
-	size_t const sz = BDX_NUM_PARTICLES * sizeof(struct Particle*);
-	struct Particle **particles = (struct Particle**) util::malloc(sz);
+	size_t const sz_bins = BDX_NUM_BINS * sizeof(struct Bin*);
+	struct Bin **bins = (struct Bin**) util::malloc(sz_bins);
+	if (!bins) {
+		fprintf(stderr, "%s\n", "BDX: BinContainerMallocError");
+		util::clearall();
+		util::quit();
+	}
+	size_t const sz_particles = BDX_NUM_PARTICLES * sizeof(struct Particle*);
+	struct Particle **particles = (struct Particle**) util::malloc(sz_particles);
 	if (!particles) {
-		fprintf(stderr, "%s\n", "BDX: ContainerMallocError");
+		fprintf(stderr, "%s\n", "BDX: ParticleContainerMallocError");
 		util::clearall();
 		util::quit();
 	}
@@ -35,7 +42,17 @@ int main (void)
 		util::quit();
 	}
 
-	struct Handler *handler = new Handler(BDX_NUM_PARTICLES, particles, random, box);
+	struct Handler *handler = new Handler(
+			BDX_NUM_BINS,
+			BDX_NUM_BINS_X,
+			BDX_NUM_BINS_Y,
+			BDX_NUM_BINS_Z,
+			BDX_NUM_PARTICLES,
+			bins,
+			particles,
+			random,
+			box
+	);
 	if (!handler) {
 		fprintf(stderr, "%s\n", "BDX: HandlerMallocError");
 		util::clearall();
@@ -43,7 +60,8 @@ int main (void)
 	}
 
 	// initialization
-	memset(particles, 0, sz);
+	memset(bins, 0, sz_bins);
+	memset(particles, 0, sz_particles);
 	for (long id = 0; id != BDX_NUM_PARTICLES; ++id) {
 		constexpr long kind = BDX_KIND_HS;
 		constexpr long group = 1L;
@@ -85,6 +103,20 @@ int main (void)
 
 		particles[id] = particle;
 	}
+
+	for (long id = 0; id != BDX_NUM_BINS; ++id) {
+		struct Bin * const bin = new Bin();
+		if (!bin) {
+			fprintf(stderr, "%s\n", "BDX: BinMallocError");
+			util::clearall();
+			util::quit();
+		}
+		bins[id] = bin;
+	}
+
+	// disables main loop execution for now
+	util::clearall();
+	util::quit();
 
 	double constexpr contact_distance_particles = 2.0;
 	double const min_distance_particles = handler->mindist();

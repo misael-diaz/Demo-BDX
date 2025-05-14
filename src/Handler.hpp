@@ -1,17 +1,28 @@
 #ifndef GUARD_HANDLER_HPP
 #define GUARD_HANDLER_HPP
 
+#include "Bin.hpp"
 #include "Particle.hpp"
 #include "Box.hpp"
 
 struct Handler
 {
+	long num_bins;
+	long num_bins_x;
+	long num_bins_y;
+	long num_bins_z;
 	long num_particles;
+	struct Bin * const * bins;
 	struct Particle * const * particles;
 	struct Random * random;
 	struct Box * box;
 	Handler(
+			long num_bins,
+			long const num_bins_x,
+			long const num_bins_y,
+			long const num_bins_z,
 			long const num_particles,
+			struct Bin * const * const bins,
 			struct Particle * const * const particles,
 			struct Random * const random,
 			struct Box * const box

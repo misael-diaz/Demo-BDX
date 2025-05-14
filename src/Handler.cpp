@@ -5,13 +5,23 @@
 #include "Handler.hpp"
 
 Handler::Handler (
+			long const num_bins,
+			long const num_bins_x,
+			long const num_bins_y,
+			long const num_bins_z,
 			long const num_particles,
+			struct Bin * const * const bins,
 			struct Particle * const * const particles,
 			struct Random * const random,
 			struct Box * const box
 		)
 {
+	this->num_bins = num_bins;
+	this->num_bins_x = num_bins_x;
+	this->num_bins_y = num_bins_y;
+	this->num_bins_z = num_bins_z;
 	this->num_particles = num_particles;
+	this->bins = bins;
 	this->particles = particles;
 	this->random = random;
 	this->box = box;
