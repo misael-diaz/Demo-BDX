@@ -1,5 +1,5 @@
-#ifndef GUARD_BDX_HARD_SPHERE_HPP
-#define GUARD_BDX_HARD_SPHERE_HPP
+#ifndef BDX_DEMO_HARD_SPHERE_HPP
+#define BDX_DEMO_HARD_SPHERE_HPP
 
 #include "util.hpp"
 #include "Particle.hpp"

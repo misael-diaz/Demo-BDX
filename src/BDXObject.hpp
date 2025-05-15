@@ -1,5 +1,5 @@
-#ifndef GUARD_BDX_OBJ_HPP
-#define GUARD_BDX_OBJ_HPP
+#ifndef BDX_DEMO_OBJ_HPP
+#define BDX_DEMO_OBJ_HPP
 
 struct BDXObject
 {

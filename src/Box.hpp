@@ -1,5 +1,5 @@
-#ifndef GUARD_BDX_BOX_HPP
-#define GUARD_BDX_BOX_HPP
+#ifndef BDX_DEMO_BOX_HPP
+#define BDX_DEMO_BOX_HPP
 
 #include "BDXObject.hpp"
 

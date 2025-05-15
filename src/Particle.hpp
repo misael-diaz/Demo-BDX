@@ -1,5 +1,5 @@
-#ifndef GUARD_BDX_PARTICLE_HPP
-#define GUARD_BDX_PARTICLE_HPP
+#ifndef BDX_DEMO_PARTICLE_HPP
+#define BDX_DEMO_PARTICLE_HPP
 
 #include "util.hpp"
 #include "BDXObject.hpp"

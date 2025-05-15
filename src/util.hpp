@@ -1,5 +1,5 @@
-#ifndef GUARD_BDX_UTIL_HPP
-#define GUARD_BDX_UTIL_HPP
+#ifndef BDX_DEMO_UTIL_HPP
+#define BDX_DEMO_UTIL_HPP
 
 #include <cstddef>
 
