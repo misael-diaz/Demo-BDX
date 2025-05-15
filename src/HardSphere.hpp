@@ -21,6 +21,10 @@ struct HardSphere : Particle
 		);
 	void *operator new(size_t size);
 	void operator delete(void *p);
+	void HS(struct Particle const * const Particle,
+			double const L,
+			double const W,
+			double const H);
 	void interact_compute(struct Particle const * const Particle,
 			double const L,
 			double const W,

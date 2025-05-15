@@ -42,7 +42,7 @@ void HardSphere::operator delete (void *p)
 	p = util::free(p);
 }
 
-void HardSphere::interact_compute (
+void HardSphere::HS (
 		struct Particle const * const particle,
 		double const L,
 		double const W,
@@ -90,6 +90,15 @@ void HardSphere::interact_compute (
 	this->F_x += F_x;
 	this->F_y += F_y;
 	this->F_z += F_z;
+}
+
+void HardSphere::interact_compute (
+		struct Particle const * const particle,
+		double const L,
+		double const W,
+		double const H)
+{
+	this->HS(particle, L, W, H);
 }
 
 /*
