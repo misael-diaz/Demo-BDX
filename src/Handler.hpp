@@ -1,5 +1,5 @@
-#ifndef GUARD_HANDLER_HPP
-#define GUARD_HANDLER_HPP
+#ifndef BDX_DEMO_HANDLER_HPP
+#define BDX_DEMO_HANDLER_HPP
 
 #include "Bin.hpp"
 #include "Particle.hpp"

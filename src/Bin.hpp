@@ -1,5 +1,5 @@
-#ifndef BDX_BIN_HPP
-#define BDX_BIN_HPP
+#ifndef BDX_DEMO_BIN_HPP
+#define BDX_DEMO_BIN_HPP
 
 #include "util.hpp"
 

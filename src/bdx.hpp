@@ -1,5 +1,5 @@
-#ifndef BDX_HPP
-#define BDX_HPP
+#ifndef BDX_DEMO_HPP
+#define BDX_DEMO_HPP
 
 #define BDX_SHF_CELL 3
 #define BDX_MSK_CELL ( (1L << BDX_SHF_CELL) - 1L )

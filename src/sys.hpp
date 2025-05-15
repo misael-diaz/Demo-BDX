@@ -1,5 +1,5 @@
-#ifndef BDX_SYS_HPP
-#define BDX_SYS_HPP
+#ifndef BDX_DEMO_SYS_HPP
+#define BDX_DEMO_SYS_HPP
 
 #include <cmath>
 #include "bdx.hpp"
