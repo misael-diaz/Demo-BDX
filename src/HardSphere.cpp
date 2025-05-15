@@ -1,6 +1,7 @@
 #include <cmath>
 #include <cstdio>
 #include <cstdlib>
+#include "bdx.hpp"
 #include "util.hpp"
 #include "HardSphere.hpp"
 
@@ -52,7 +53,13 @@ void HardSphere::interact_compute (
 	if (that == this) {
 		return;
 	}
-	double const rep = this->_repulsionHS_;
+	if (!(that->_feat_ & BDX_FEAT_HS)) {
+		fprintf(stderr, "%s\n", "HardSphere::interact_compute: UXConfigError");
+		util::clearall();
+		util::quit();
+	}
+	struct HardSphere const * const other = (struct HardSphere const*) particle;
+	double const rep = (0.5 * (this->_repulsionHS_ + other->_repulsionHS_));
 	double const contact = this->contact(that);
 	double const contact2 = (contact * contact);
 	double const dx = this->MinImageX(that, L);
