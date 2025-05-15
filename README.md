@@ -39,7 +39,8 @@ smart pointers.
 
 ## Influence of open-source game engines
 
-I have spent a considerable amount of time studying Quake's source code because I would
+I have spent a considerable amount of time studying Quake's source
+[code](https://github.com/id-Software/Quake-2) because I would
 like to create some games on my spare time. I have learned that I need to know a lot
 more such as graphics programming in order to understand Quake's source code but
 found out about how they did memory management and thought that would be useful for
