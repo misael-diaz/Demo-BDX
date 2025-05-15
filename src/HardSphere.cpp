@@ -63,21 +63,27 @@ void HardSphere::interact_compute (
 			(dy * dy) +
 			(dz * dz)
 	);
+	double F_x = 0.0;
+	double F_y = 0.0;
+	double F_z = 0.0;
 	if (contact2 > r2) {
 		double const r = sqrt(r2);
 		double const r_inv = (1.0 / r);
 		double const F = rep * r_inv;
-		this->F_x = F;
-		this->F_y = F;
-		this->F_z = F;
-		this->F_x *= dx;
-		this->F_y *= dy;
-		this->F_z *= dz;
+		F_x = F;
+		F_y = F;
+		F_z = F;
+		F_x *= dx;
+		F_y *= dy;
+		F_z *= dz;
 	} else {
-		this->F_x = 0;
-		this->F_y = 0;
-		this->F_z = 0;
+		F_x = 0;
+		F_y = 0;
+		F_z = 0;
 	}
+	this->F_x += F_x;
+	this->F_y += F_y;
+	this->F_z += F_z;
 }
 
 /*

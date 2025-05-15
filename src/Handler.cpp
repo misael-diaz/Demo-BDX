@@ -95,6 +95,13 @@ void Handler::interact_compute ()
 {
 	for (long id_particle = 0; id_particle != this->num_particles; ++id_particle) {
 		struct Particle * const particle = this->particles[id_particle];
+		particle->F_x = 0.0;
+		particle->F_y = 0.0;
+		particle->F_z = 0.0;
+	}
+
+	for (long id_particle = 0; id_particle != this->num_particles; ++id_particle) {
+		struct Particle * const particle = this->particles[id_particle];
 		double const x = particle->x;
 		double const y = particle->y;
 		double const z = particle->z;
