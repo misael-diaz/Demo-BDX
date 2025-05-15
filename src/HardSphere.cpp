@@ -42,7 +42,6 @@ void HardSphere::operator delete (void *p)
 	p = util::free(p);
 }
 
-// TODO: we only have the code that resets the force, implement steric repulsion
 void HardSphere::interact_compute (
 		struct Particle const * const particle,
 		double const L,
