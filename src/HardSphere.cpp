@@ -49,11 +49,8 @@ void HardSphere::HS (
 		double const H)
 {
 	struct Particle const * const that = particle;
-	if (that == this) {
-		return;
-	}
 	if (!(that->_feat_ & BDX_FEAT_HS)) {
-		fprintf(stderr, "%s\n", "HardSphere::interact_compute: UXConfigError");
+		fprintf(stderr, "%s\n", "HardSphere::HS: UXConfigError");
 		util::clearall();
 		util::quit();
 	}
@@ -98,6 +95,10 @@ void HardSphere::interact_compute (
 		double const W,
 		double const H)
 {
+	struct Particle const * const that = particle;
+	if (that == this) {
+		return;
+	}
 	this->HS(particle, L, W, H);
 }
 
