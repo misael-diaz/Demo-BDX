@@ -12,11 +12,11 @@ If you wish to perform Brownian dynamics simulations I encourage you to explore
 open-source projects such as [LAMMPS](https://github.com/lammps/lammps).
 
 Hopefully the demo can be understood as is without comments all over the place even for
-developers that are not familiar with Brownian dynamics simulations.
+developers who are not familiar with Brownian dynamics simulations.
 
 ## Rationale for not using the STL
 
-We do not intend to rely on the STL because there's no real need to develop this
+We do not intend to rely on the STL because there's no real need for developing this
 application.
 We know how many entities we will simulate beforehand and that number will not change
 throughout the simulation. We are also able to optimize the application (via domain
@@ -41,7 +41,7 @@ smart pointers.
 
 I have spent a considerable amount of time studying Quake's source code because I would
 like to create some games on my spare time. I have learned that I need to know a lot
-more such as graphics programming in order to do understand Quake's source code but
+more such as graphics programming in order to understand Quake's source code but
 found out about how they did memory management and thought that would be useful for
 some of my projects like this one.
 
