@@ -1,7 +1,6 @@
 #include <cstdio>
 #include <cstdlib>
 #include <cmath>
-#include "sys.hpp"
 #include "util.hpp"
 #include "Handler.hpp"
 
@@ -67,7 +66,7 @@ void Handler::__partition_interact_compute__ (
 		long const j,
 		long const k)
 {
-	long const msk = (num_cell_x - 1L);
+	long const msk = (this->num_bins_x - 1L);
 	for (long du = -1; du != 2; ++du) {
 		long const u = ((i + du) & msk);
 		for (long dv = -1; dv != 2; ++dv) {
@@ -96,6 +95,12 @@ void Handler::__partition_interact_compute__ (
 
 void Handler::interact_compute ()
 {
+	double const box_length = this->box->length();
+	double const half_length = (0.5 * box_length);
+	double const cell_length = (this->box->length() / ( (double) this->num_bins_x ));
+	double const cell_length_inv = (1.0 / cell_length);
+	double const cl_inv = cell_length_inv;
+	double const hl = half_length;
 	for (long id_particle = 0; id_particle != this->num_particles; ++id_particle) {
 		struct Particle * const particle = this->particles[id_particle];
 		particle->F_x = 0.0;
@@ -131,6 +136,12 @@ void Handler::translate ()
 
 void Handler::partition ()
 {
+	double const box_length = this->box->length();
+	double const half_length = (0.5 * box_length);
+	double const cell_length = (this->box->length() / ( (double) this->num_bins_x ));
+	double const cell_length_inv = (1.0 / cell_length);
+	double const cl_inv = cell_length_inv;
+	double const hl = half_length;
 	if (this->__partitioned__) {
 		return;
 	}
