@@ -134,6 +134,18 @@ void util::quit (void)
 	exit(EXIT_FAILURE);
 }
 
+bool util::is_base2 (double const x)
+{
+	if ((x <= 0) || (x < 2)) {
+		fprintf(stderr, "%s\n", "util::is_integer: InvalidInputError");
+		util::clearall();
+		util::quit();
+	}
+	double const lgx = log2(x);
+	bool const res = (floor(lgx) == ceil(lgx));
+	return res;
+}
+
 /*
 
 BDX                                             December 31, 2023

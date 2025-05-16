@@ -69,6 +69,7 @@ void Handler::__partition_interact_compute__ (
 	long const num_bins = this->_num_bins_;
 	long const num_bins_x = this->_num_bins_x_;
 	long const num_bins_y = this->_num_bins_y_;
+	long const num_bins_z = this->_num_bins_z_;
 	double const box_length = this->box->length();
 	double const radius_cutoff = this->_radius_cutoff_;
 	double const num_bins_x_f64 = (double) num_bins_x;
@@ -82,6 +83,17 @@ void Handler::__partition_interact_compute__ (
 		fprintf(stderr,
 			"%s\n",
 			"Handler::__partition_interact_compute__: UXConfigError");
+		util::clearall();
+		util::quit();
+	}
+	if (
+		(!util::is_base2(num_bins_x)) ||
+		(!util::is_base2(num_bins_y)) ||
+		(!util::is_base2(num_bins_z))
+	   ) {
+		fprintf(stderr,
+			"%s\n",
+			"Handler::__partition_interact_compute__: UXBinConfigError");
 		util::clearall();
 		util::quit();
 	}
@@ -118,6 +130,8 @@ void Handler::interact_compute ()
 {
 	long const num_particles = this->_num_particles_;
 	long const num_bins_x = this->_num_bins_x_;
+	long const num_bins_y = this->_num_bins_y_;
+	long const num_bins_z = this->_num_bins_z_;
 	double const num_bins_x_f64 = (double) num_bins_x;
 	double const box_length = this->box->length();
 	double const half_length = (0.5 * box_length);
@@ -125,6 +139,17 @@ void Handler::interact_compute ()
 	double const cell_length_inv = (1.0 / cell_length);
 	double const cl_inv = cell_length_inv;
 	double const hl = half_length;
+	if (
+		(!util::is_base2(num_bins_x)) ||
+		(!util::is_base2(num_bins_y)) ||
+		(!util::is_base2(num_bins_z))
+	   ) {
+		fprintf(stderr,
+			"%s\n",
+			"Handler::interact_compute: UXBinConfigError");
+		util::clearall();
+		util::quit();
+	}
 	for (long id_particle = 0; id_particle != num_particles; ++id_particle) {
 		struct Particle * const particle = this->particles[id_particle];
 		particle->F_x = 0.0;

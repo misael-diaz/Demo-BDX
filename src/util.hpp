@@ -8,6 +8,7 @@ namespace util {
 	void  clearall(void);
 	void *free(void *p);
 	void *malloc(size_t const sz);
+	bool is_base2(double const x);
 };
 
 #endif
