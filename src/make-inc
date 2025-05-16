@@ -24,6 +24,7 @@ HANDLER_H = Handler.hpp
 PARTICLE_H = Particle.hpp
 HARD_SPHERE_H = HardSphere.hpp
 LENNARD_JONES_SPHERE_H = LennardJonesSphere.hpp
+MORSE_SPHERE_H = MorseSphere.hpp
 
 UTIL_CXX = util.cpp
 RANDOM_CXX = Random.cpp
@@ -35,6 +36,7 @@ HANDLER_CXX = Handler.cpp
 PARTICLE_CXX = Particle.cpp
 HARD_SPHERE_CXX = HardSphere.cpp
 LENNARD_JONES_SPHERE_CXX = LennardJonesSphere.cpp
+MORSE_SPHERE_CXX = MorseSphere.cpp
 MAIN_CXX = main.cpp
 
 UTIL_OBJ = ../obj/util.o
@@ -47,6 +49,7 @@ HANDLER_OBJ = ../obj/Handler.o
 PARTICLE_OBJ = ../obj/Particle.o
 HARD_SPHERE_OBJ = ../obj/HardSphere.o
 LENNARD_JONES_SPHERE_OBJ = ../obj/LennardJonesSphere.o
+MORSE_SPHERE_OBJ = ../obj/MorseSphere.o
 MAIN_OBJ = ../obj/main.o
 
 BDX = ../bin/bdx.bin

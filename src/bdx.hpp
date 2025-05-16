@@ -17,8 +17,10 @@
 
 #define BDX_FEAT_HS (1L << 0)
 #define BDX_FEAT_LJ (1L << 1)
+#define BDX_FEAT_MP (1L << 2)
 
 #define BDX_KIND_HS (1L << 0)
 #define BDX_KIND_LJ (1L << 1)
+#define BDX_KIND_MP (1L << 2)
 
 #endif
