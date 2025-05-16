@@ -1,7 +1,9 @@
 # BDX Demo
 This is the open-source version of the Brownian Dynamics code BDX that I developed for the
 University of Puerto Rico - Mayagüez UPRM. The demo is a minimalistic version and has
-been implemented in an entirely different way. The BDX code leverages AVX512 instructions
+been implemented in an entirely different way and inspired by
+[LAMMPS](https://github.com/lammps/lammps) source code.
+The BDX code leverages AVX512 instructions
 for performance in HPC CPUs while this demo does not even try to perform such
 optimizations.
 
