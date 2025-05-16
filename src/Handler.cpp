@@ -69,9 +69,14 @@ void Handler::__partition_interact_compute__ (
 	long const num_bins = this->_num_bins_;
 	long const num_bins_x = this->_num_bins_x_;
 	long const num_bins_y = this->_num_bins_y_;
+	double const box_length = this->box->length();
+	double const radius_cutoff = this->_radius_cutoff_;
+	double const num_bins_x_f64 = (double) num_bins_x;
+	double const cell_length = (box_length / num_bins_x_f64);
+	long const span = ((long) ((radius_cutoff / cell_length)));
+	long const beg = -span;
+	long const cnt = (2L * span + 1L);
 	long const msk = (num_bins_x - 1L);
-	long const beg = -1;
-	long const cnt = 3;
 	for (long duno = 0; duno != cnt; ++duno) {
 		long const du = duno + beg;
 		long const u = ((i + du) & msk);
