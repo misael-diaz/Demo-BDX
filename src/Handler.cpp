@@ -77,6 +77,14 @@ void Handler::__partition_interact_compute__ (
 	long const beg = -span;
 	long const cnt = (2L * span + 1L);
 	long const msk = (num_bins_x - 1L);
+	long const count_max = 5;
+	if (count_max <= cnt) {
+		fprintf(stderr,
+			"%s\n",
+			"Handler::__partition_interact_compute__: UXConfigError");
+		util::clearall();
+		util::quit();
+	}
 	for (long duno = 0; duno != cnt; ++duno) {
 		long const du = duno + beg;
 		long const u = ((i + du) & msk);
