@@ -201,7 +201,8 @@ void Handler::partition ()
 	}
 
 	for (long id_particle = 0; id_particle != num_particles; ++id_particle) {
-		struct Particle const * const particle = this->system->particles()[id_particle];
+		struct Particle const * const * const ps = this->system->particles();
+		struct Particle const * const particle = ps[id_particle];
 		double const x = particle->x;
 		double const y = particle->y;
 		double const z = particle->z;
@@ -254,7 +255,9 @@ double Handler::mindist () const
 	for (long i = 0; i != (num_particles - 1L); ++i) {
 		struct Particle const * const particle = this->system->particles()[i];
 		for (long j = (i + 1L); j != num_particles; ++j) {
-			struct Particle const * const other_particle = this->system->particles()[j];
+			struct System * const system = this->system;
+			struct Particle const * const * const ps = system->particles();
+			struct Particle const * const other_particle = ps[j];
 			double const sqd = particle->sqdist(other_particle);
 			if (min > sqd) {
 				min = sqd;
@@ -280,7 +283,9 @@ double Handler::mindistp () const
 	for (long i = 0; i != (num_particles - 1L); ++i) {
 		struct Particle const * const particle = this->system->particles()[i];
 		for (long j = (i + 1L); j != num_particles; ++j) {
-			struct Particle const * const other_particle = this->system->particles()[j];
+			struct System * const system = this->system;
+			struct Particle const * const * const ps = system->particles();
+			struct Particle const * const other_particle = ps[j];
 			double const dx = particle->MinImageX(other_particle, L);
 			double const dy = particle->MinImageY(other_particle, W);
 			double const dz = particle->MinImageZ(other_particle, H);
@@ -322,7 +327,9 @@ void Handler::check_overlap () const
 	for (long i = 0; i != (num_particles - 1L); ++i) {
 		struct Particle const * const particle = this->system->particles()[i];
 		for (long j = (i + 1L); j != num_particles; ++j) {
-			struct Particle const * const other_particle = this->system->particles()[j];
+			struct System * const system = this->system;
+			struct Particle const * const * const ps = system->particles();
+			struct Particle const * const other_particle = ps[j];
 			double const dx = particle->MinImageX(other_particle, L);
 			double const dy = particle->MinImageY(other_particle, W);
 			double const dz = particle->MinImageZ(other_particle, H);
