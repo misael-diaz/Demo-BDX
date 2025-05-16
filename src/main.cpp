@@ -6,6 +6,7 @@
 #include "Random.hpp"
 #include "HardSphere.hpp"
 #include "LennardJonesSphere.hpp"
+#include "MorseSphere.hpp"
 #include "Handler.hpp"
 #include "System.hpp"
 
@@ -115,7 +116,7 @@ int main (void)
 		particles[id] = particle;
 	}
 
-	for (long id = (BDX_NUM_PARTICLES / 2); id != BDX_NUM_PARTICLES; ++id) {
+	for (long id = (BDX_NUM_PARTICLES / 2); id != (3 * BDX_NUM_PARTICLES) / 4; ++id) {
 		constexpr long kind = BDX_KIND_LJ;
 		constexpr long group = 1L;
 		constexpr long feat = (BDX_KIND_HS | BDX_KIND_LJ);
@@ -148,6 +149,56 @@ int main (void)
 			dt,
 			repulsionHS,
 			epsilonLJ
+		);
+
+		if (!particle) {
+			fprintf(stderr, "%s\n", "BDX: ParticleMallocError");
+			util::clearall();
+			util::quit();
+		}
+
+		particles[id] = particle;
+	}
+
+	for (long id = (3 * BDX_NUM_PARTICLES) / 4; id != BDX_NUM_PARTICLES; ++id) {
+		constexpr long kind = BDX_KIND_MP;
+		constexpr long group = 1L;
+		constexpr long feat = (BDX_KIND_HS | BDX_KIND_LJ | BDX_KIND_MP);
+		constexpr long msk = BDX_MSK_CELL;
+		constexpr long shf = BDX_SHF_CELL;
+		long const i = (id & msk);
+		long const j = ((id >> shf) & msk);
+		long const k = (((id >> shf) >> shf) & msk);
+		double const i_f64 = i;
+		double const j_f64 = j;
+		double const k_f64 = k;
+		double const x = (((i_f64 * cl) + cc) - hl);
+		double const y = (((j_f64 * cl) + cc) - hl);
+		double const z = (((k_f64 * cl) + cc) - hl);
+		double const radius = 1.0;
+		double const repulsionHS = 1024.0;
+		double const epsilonLJ = 1.0;
+		double const epsilonMP = 3.5;
+		double const rangeMP = 0.25;
+		double const equilibriumDistanceMP = 1.75;
+		double const r = radius;
+		double const dt = time_step;
+
+		struct Particle *particle = new MorseSphere(
+			kind,
+			group,
+			feat,
+			id,
+			x,
+			y,
+			z,
+			r,
+			dt,
+			repulsionHS,
+			epsilonLJ,
+			epsilonMP,
+			rangeMP,
+			equilibriumDistanceMP
 		);
 
 		if (!particle) {
