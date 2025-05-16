@@ -49,6 +49,7 @@ int main (void)
 			BDX_NUM_BINS_Y,
 			BDX_NUM_BINS_Z,
 			BDX_NUM_PARTICLES,
+			radius_cutoff,
 			bins,
 			particles,
 			random,

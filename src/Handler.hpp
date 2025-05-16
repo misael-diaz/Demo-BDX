@@ -12,6 +12,7 @@ struct Handler
 	long num_bins_y;
 	long num_bins_z;
 	long num_particles;
+	double _radius_cutoff_;
 	struct Bin * const * bins;
 	struct Particle * const * particles;
 	struct Random * random;
@@ -23,6 +24,7 @@ struct Handler
 			long const num_bins_y,
 			long const num_bins_z,
 			long const num_particles,
+			double const radius_cutoff,
 			struct Bin * const * const bins,
 			struct Particle * const * const particles,
 			struct Random * const random,

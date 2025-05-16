@@ -2,7 +2,6 @@
 #include <cstdio>
 #include <cstdlib>
 #include "bdx.hpp"
-#include "sys.hpp"
 #include "util.hpp"
 #include "LennardJonesSphere.hpp"
 
@@ -51,21 +50,12 @@ void LennardJonesSphere::LJ (
 		struct Particle const * const particle,
 		double const L,
 		double const W,
-		double const H)
+		double const H,
+		double const radius_cutoff)
 {
 	struct Particle const * const that = particle;
 	if (!(that->_feat_ & BDX_FEAT_LJ)) {
 		fprintf(stderr, "%s\n", "LennardJonesSphere::LJ: UXConfigError");
-		util::clearall();
-		util::quit();
-	}
-	// DEV: this is temporary hack so that we can reuse as much code as possible
-	if (
-			(box_length != L) ||
-			(box_width  != W) ||
-			(box_height != H)
-	   ) {
-		fprintf(stderr, "%s\n", "LennardJonesSphere::LJ: UXBoxDimensionError");
 		util::clearall();
 		util::quit();
 	}
@@ -84,7 +74,6 @@ void LennardJonesSphere::LJ (
 		sigma
 	);
 	double const kappa = (6.0 * epsilon * sigma6);
-	double const radius_cutoff = cell_length;
 	double const rc = radius_cutoff;
 	double const rc2 = (rc * rc);
 	double const rc_inv = (1.0 / rc);
@@ -156,17 +145,19 @@ void LennardJonesSphere::interact_compute (
 		struct Particle const * const particle,
 		double const L,
 		double const W,
-		double const H)
+		double const H,
+		double const radius_cutoff)
 {
+	double const rc = radius_cutoff;
 	struct Particle const * const that = particle;
 	if (that == this) {
 		return;
 	}
-	this->HS(particle, L, W, H);
+	this->HS(particle, L, W, H, rc);
 	if (!(that->_feat_ & BDX_FEAT_LJ)) {
 		return;
 	}
-	this->LJ(particle, L, W, H);
+	this->LJ(particle, L, W, H, rc);
 }
 
 /*

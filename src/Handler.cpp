@@ -11,6 +11,7 @@ Handler::Handler (
 			long const num_bins_y,
 			long const num_bins_z,
 			long const num_particles,
+			double const radius_cutoff,
 			struct Bin * const * const bins,
 			struct Particle * const * const particles,
 			struct Random * const random,
@@ -22,6 +23,7 @@ Handler::Handler (
 	this->num_bins_y = num_bins_y;
 	this->num_bins_z = num_bins_z;
 	this->num_particles = num_particles;
+	this->_radius_cutoff_ = radius_cutoff;
 	this->bins = bins;
 	this->particles = particles;
 	this->random = random;
@@ -53,7 +55,8 @@ void Handler::__kernel_interact_compute__ (
 			neighbor,
 			this->box->length(),
 			this->box->width(),
-			this->box->height()
+			this->box->height(),
+			this->_radius_cutoff_
 		);
 	}
 }

@@ -24,11 +24,13 @@ struct HardSphere : Particle
 	void HS(struct Particle const * const Particle,
 			double const L,
 			double const W,
-			double const H);
+			double const H,
+			double const R);
 	void interact_compute(struct Particle const * const Particle,
 			double const L,
 			double const W,
-			double const H);
+			double const H,
+			double const R);
 };
 
 #endif

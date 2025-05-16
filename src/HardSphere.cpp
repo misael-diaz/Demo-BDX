@@ -46,8 +46,10 @@ void HardSphere::HS (
 		struct Particle const * const particle,
 		double const L,
 		double const W,
-		double const H)
+		double const H,
+		double const radius_cutoff)
 {
+	double const rc = radius_cutoff;
 	struct Particle const * const that = particle;
 	if (!(that->_feat_ & BDX_FEAT_HS)) {
 		fprintf(stderr, "%s\n", "HardSphere::HS: UXConfigError");
@@ -93,13 +95,15 @@ void HardSphere::interact_compute (
 		struct Particle const * const particle,
 		double const L,
 		double const W,
-		double const H)
+		double const H,
+		double const radius_cutoff)
 {
+	double const rc = radius_cutoff;
 	struct Particle const * const that = particle;
 	if (that == this) {
 		return;
 	}
-	this->HS(particle, L, W, H);
+	this->HS(particle, L, W, H, rc);
 }
 
 /*
