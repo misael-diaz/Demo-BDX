@@ -70,11 +70,16 @@ void Handler::__partition_interact_compute__ (
 	long const num_bins_x = this->_num_bins_x_;
 	long const num_bins_y = this->_num_bins_y_;
 	long const msk = (num_bins_x - 1L);
-	for (long du = -1; du != 2; ++du) {
+	long const beg = -1;
+	long const cnt = 3;
+	for (long duno = 0; duno != cnt; ++duno) {
+		long const du = duno + beg;
 		long const u = ((i + du) & msk);
-		for (long dv = -1; dv != 2; ++dv) {
+		for (long dvno = 0; dvno != cnt; ++dvno) {
+			long const dv = dvno + beg;
 			long const v = ((j + dv) & msk);
-			for (long dw = -1; dw != 2; ++dw) {
+			for (long dwno = 0; dwno != cnt; ++dwno) {
+				long const dw = dwno + beg;
 				long const w = ((k + dw) & msk);
 				long const id_bin = (
 						(num_bins_x * num_bins_y) * w +
