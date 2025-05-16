@@ -3,32 +3,17 @@
 
 #include "Bin.hpp"
 #include "Particle.hpp"
+#include "System.hpp"
 #include "Box.hpp"
 
 struct Handler
 {
-	long _num_bins_;
-	long _num_bins_x_;
-	long _num_bins_y_;
-	long _num_bins_z_;
-	long _num_particles_;
-	double _radius_cutoff_;
-	struct Bin * const * bins;
-	struct Particle * const * particles;
+	struct System * system;
 	struct Random * random;
-	struct Box * box;
 	bool __partitioned__;
 	Handler(
-			long num_bins,
-			long const num_bins_x,
-			long const num_bins_y,
-			long const num_bins_z,
-			long const num_particles,
-			double const radius_cutoff,
-			struct Bin * const * const bins,
-			struct Particle * const * const particles,
-			struct Random * const random,
-			struct Box * const box
+			struct System * const system,
+			struct Random * const random
 	       );
 	void *operator new(size_t size);
 	void operator delete(void *p);

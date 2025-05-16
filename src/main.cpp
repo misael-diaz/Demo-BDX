@@ -7,6 +7,7 @@
 #include "HardSphere.hpp"
 #include "LennardJonesSphere.hpp"
 #include "Handler.hpp"
+#include "System.hpp"
 
 int main (void)
 {
@@ -42,8 +43,7 @@ int main (void)
 		util::clearall();
 		util::quit();
 	}
-
-	struct Handler *handler = new Handler(
+	struct System *system = new System(
 			BDX_NUM_BINS,
 			BDX_NUM_BINS_X,
 			BDX_NUM_BINS_Y,
@@ -52,8 +52,17 @@ int main (void)
 			radius_cutoff,
 			bins,
 			particles,
-			random,
 			box
+	);
+	if (!system) {
+		fprintf(stderr, "%s\n", "BDX: SystemMallocError");
+		util::clearall();
+		util::quit();
+	}
+
+	struct Handler *handler = new Handler(
+			system,
+			random
 	);
 	if (!handler) {
 		fprintf(stderr, "%s\n", "BDX: HandlerMallocError");
