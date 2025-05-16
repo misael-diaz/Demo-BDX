@@ -17,11 +17,11 @@ Handler::Handler (
 			struct Box * const box
 		)
 {
-	this->num_bins = num_bins;
-	this->num_bins_x = num_bins_x;
-	this->num_bins_y = num_bins_y;
-	this->num_bins_z = num_bins_z;
-	this->num_particles = num_particles;
+	this->_num_bins_ = num_bins;
+	this->_num_bins_x_ = num_bins_x;
+	this->_num_bins_y_ = num_bins_y;
+	this->_num_bins_z_ = num_bins_z;
+	this->_num_particles_ = num_particles;
 	this->_radius_cutoff_ = radius_cutoff;
 	this->bins = bins;
 	this->particles = particles;
@@ -66,7 +66,10 @@ void Handler::__partition_interact_compute__ (
 		long const j,
 		long const k)
 {
-	long const msk = (this->num_bins_x - 1L);
+	long const num_bins = this->_num_bins_;
+	long const num_bins_x = this->_num_bins_x_;
+	long const num_bins_y = this->_num_bins_y_;
+	long const msk = (num_bins_x - 1L);
 	for (long du = -1; du != 2; ++du) {
 		long const u = ((i + du) & msk);
 		for (long dv = -1; dv != 2; ++dv) {
@@ -95,20 +98,23 @@ void Handler::__partition_interact_compute__ (
 
 void Handler::interact_compute ()
 {
+	long const num_particles = this->_num_particles_;
+	long const num_bins_x = this->_num_bins_x_;
+	double const num_bins_x_f64 = (double) num_bins_x;
 	double const box_length = this->box->length();
 	double const half_length = (0.5 * box_length);
-	double const cell_length = (this->box->length() / ( (double) this->num_bins_x ));
+	double const cell_length = (box_length / num_bins_x_f64);
 	double const cell_length_inv = (1.0 / cell_length);
 	double const cl_inv = cell_length_inv;
 	double const hl = half_length;
-	for (long id_particle = 0; id_particle != this->num_particles; ++id_particle) {
+	for (long id_particle = 0; id_particle != num_particles; ++id_particle) {
 		struct Particle * const particle = this->particles[id_particle];
 		particle->F_x = 0.0;
 		particle->F_y = 0.0;
 		particle->F_z = 0.0;
 	}
 
-	for (long id_particle = 0; id_particle != this->num_particles; ++id_particle) {
+	for (long id_particle = 0; id_particle != num_particles; ++id_particle) {
 		struct Particle * const particle = this->particles[id_particle];
 		double const x = particle->x;
 		double const y = particle->y;
@@ -128,7 +134,8 @@ void Handler::interact_compute ()
 
 void Handler::translate ()
 {
-	for (long i = 0; i != this->num_particles; ++i) {
+	long const num_particles = this->_num_particles_;
+	for (long i = 0; i != num_particles; ++i) {
 		struct Particle * const particle = this->particles[i];
 		particle->translate();
 	}
@@ -136,9 +143,15 @@ void Handler::translate ()
 
 void Handler::partition ()
 {
+	long const num_bins = this->_num_bins_;
+	long const num_bins_x = this->_num_bins_x_;
+	long const num_bins_y = this->_num_bins_y_;
+	long const num_bins_z = this->_num_bins_z_;
+	long const num_particles = this->_num_particles_;
+	double const num_bins_x_f64 = (double) num_bins_x;
 	double const box_length = this->box->length();
 	double const half_length = (0.5 * box_length);
-	double const cell_length = (this->box->length() / ( (double) this->num_bins_x ));
+	double const cell_length = (box_length / num_bins_x_f64);
 	double const cell_length_inv = (1.0 / cell_length);
 	double const cl_inv = cell_length_inv;
 	double const hl = half_length;
@@ -155,12 +168,12 @@ void Handler::partition ()
 		util::quit();
 	}
 
-	for (long id_bin = 0; id_bin != this->num_bins; ++id_bin) {
+	for (long id_bin = 0; id_bin != num_bins; ++id_bin) {
 		struct Bin * const bin = this->bins[id_bin];
 		bin->clear();
 	}
 
-	for (long id_particle = 0; id_particle != this->num_particles; ++id_particle) {
+	for (long id_particle = 0; id_particle != num_particles; ++id_particle) {
 		struct Particle const * const particle = this->particles[id_particle];
 		double const x = particle->x;
 		double const y = particle->y;
@@ -181,7 +194,8 @@ void Handler::partition ()
 
 void Handler::BrownianForce ()
 {
-	for (long i = 0; i != this->num_particles; ++i) {
+	long const num_particles = this->_num_particles_;
+	for (long i = 0; i != num_particles; ++i) {
 		struct Particle * const particle = this->particles[i];
 		particle->BrownianForce(this->random);
 	}
@@ -189,7 +203,8 @@ void Handler::BrownianForce ()
 
 void Handler::BrownianShift ()
 {
-	for (long i = 0; i != this->num_particles; ++i) {
+	long const num_particles = this->_num_particles_;
+	for (long i = 0; i != num_particles; ++i) {
 		struct Particle * const particle = this->particles[i];
 		particle->BrownianShift();
 	}
@@ -197,7 +212,8 @@ void Handler::BrownianShift ()
 
 void Handler::update ()
 {
-	for (long i = 0; i != this->num_particles; ++i) {
+	long const num_particles = this->_num_particles_;
+	for (long i = 0; i != num_particles; ++i) {
 		struct Particle * const particle = this->particles[i];
 		particle->update();
 	}
@@ -207,9 +223,10 @@ void Handler::update ()
 double Handler::mindist () const
 {
 	double min = INFINITY;
-	for (long i = 0; i != (this->num_particles - 1L); ++i) {
+	long const num_particles = this->_num_particles_;
+	for (long i = 0; i != (num_particles - 1L); ++i) {
 		struct Particle const * const particle = this->particles[i];
-		for (long j = (i + 1L); j != this->num_particles; ++j) {
+		for (long j = (i + 1L); j != num_particles; ++j) {
 			struct Particle const * const other_particle = this->particles[j];
 			double const sqd = particle->sqdist(other_particle);
 			if (min > sqd) {
@@ -232,9 +249,10 @@ double Handler::mindistp () const
 	double const HL2 = (HL * HL);
 	double const HW2 = (HW * HW);
 	double const HH2 = (HH * HH);
-	for (long i = 0; i != (this->num_particles - 1L); ++i) {
+	long const num_particles = this->_num_particles_;
+	for (long i = 0; i != (num_particles - 1L); ++i) {
 		struct Particle const * const particle = this->particles[i];
-		for (long j = (i + 1L); j != this->num_particles; ++j) {
+		for (long j = (i + 1L); j != num_particles; ++j) {
 			struct Particle const * const other_particle = this->particles[j];
 			double const dx = particle->MinImageX(other_particle, L);
 			double const dy = particle->MinImageY(other_particle, W);
@@ -264,6 +282,7 @@ double Handler::mindistp () const
 
 void Handler::check_overlap () const
 {
+	long const num_particles = this->_num_particles_;
 	double const L = this->box->length();
 	double const W = this->box->width();
 	double const H = this->box->height();
@@ -273,9 +292,9 @@ void Handler::check_overlap () const
 	double const HL2 = (HL * HL);
 	double const HW2 = (HW * HW);
 	double const HH2 = (HH * HH);
-	for (long i = 0; i != (this->num_particles - 1L); ++i) {
+	for (long i = 0; i != (num_particles - 1L); ++i) {
 		struct Particle const * const particle = this->particles[i];
-		for (long j = (i + 1L); j != this->num_particles; ++j) {
+		for (long j = (i + 1L); j != num_particles; ++j) {
 			struct Particle const * const other_particle = this->particles[j];
 			double const dx = particle->MinImageX(other_particle, L);
 			double const dy = particle->MinImageY(other_particle, W);
@@ -314,7 +333,8 @@ void Handler::PBC ()
 	double const L = this->box->length();
 	double const W = this->box->width();
 	double const H = this->box->height();
-	for (long i = 0; i != this->num_particles; ++i) {
+	long const num_particles = this->_num_particles_;
+	for (long i = 0; i != num_particles; ++i) {
 		struct Particle * const particle = this->particles[i];
 		particle->PBC(L, W, H);
 	}

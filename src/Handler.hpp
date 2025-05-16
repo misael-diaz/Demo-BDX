@@ -7,11 +7,11 @@
 
 struct Handler
 {
-	long num_bins;
-	long num_bins_x;
-	long num_bins_y;
-	long num_bins_z;
-	long num_particles;
+	long _num_bins_;
+	long _num_bins_x_;
+	long _num_bins_y_;
+	long _num_bins_z_;
+	long _num_particles_;
 	double _radius_cutoff_;
 	struct Bin * const * bins;
 	struct Particle * const * particles;
